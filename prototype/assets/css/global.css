@@ -1,0 +1,305 @@
+/* ==========================================================================
+   Lorena Campillo Peluquería — global.css
+   Dirección estética "Espejo": el filete doble de su logo como sistema,
+   bandas negras y claras alternas, latón solo para los premios.
+   ========================================================================== */
+
+/* --- Fuentes ------------------------------------------------------------ */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('../fonts/fraunces.woff2') format('woff2-variations');
+  font-weight: 300 700;
+  font-stretch: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  src: url('../fonts/instrument-sans.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* --- Tokens ------------------------------------------------------------- */
+:root {
+  /* Color: su blanco y negro. El latón sale del filete de su propio pie. */
+  --negro:        #0B0B0B;
+  --negro-suave:  #161614;
+  --blanco:       #FFFFFF;
+  --perla:        #F4F2EF;
+  --tinta:        #14140F;
+  --humo:         #5A5952;
+  /* 4,6:1 sobre perla — las etiquetas pequeñas deben ser legibles */
+  --humo-claro:   #6E6C64;
+  --linea:        #C9C5BD;
+  --linea-oscura: #3A3A36;
+  --laton:        #A8865A;   /* filetes y adornos sobre claro, nunca texto pequeño */
+  --laton-texto:  #7A5F36;   /* 4,9:1 sobre blanco — el latón cuando lleva texto */
+  --laton-claro:  #C9AA7C;   /* sobre negro: 7,4:1 */
+
+  /* Tipografía */
+  --display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --texto:   'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+  /* Escala tipográfica */
+  --t-hero:   clamp(2.75rem, 1.4rem + 6.2vw, 6rem);
+  --t-xxl:    clamp(2rem, 1.2rem + 3.4vw, 3.5rem);
+  --t-xl:     clamp(1.5rem, 1.1rem + 1.7vw, 2.25rem);
+  --t-l:      clamp(1.25rem, 1.05rem + 0.85vw, 1.625rem);
+  --t-cuerpo: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --t-pie:    0.9375rem;
+  --t-micro:  0.75rem;
+
+  /* Retícula */
+  --ancho:   1180px;
+  --margen:  clamp(20px, 5vw, 64px);
+  --seccion: clamp(60px, 9vw, 120px);
+
+  /* Movimiento */
+  --suave:  cubic-bezier(.22, .61, .36, 1);
+  --muelle: cubic-bezier(.34, 1.4, .5, 1);
+
+  /* Profundidad: base -> elevado -> flotante, tintada en negro */
+  --sombra-base:     0 1px 2px rgba(11, 11, 11, .05);
+  --sombra-elevada:  0 10px 28px -12px rgba(11, 11, 11, .22);
+  --sombra-flotante: 0 24px 60px -20px rgba(11, 11, 11, .34);
+}
+
+/* --- Reinicio ----------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--blanco);
+  color: var(--tinta);
+  font-family: var(--texto);
+  font-size: var(--t-cuerpo);
+  line-height: 1.7;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: 0;          /* tracking natural, nunca negativo */
+  margin: 0;
+  text-wrap: balance;
+}
+
+p { margin: 0; text-wrap: pretty; }
+
+a { color: inherit; }
+
+/* --- Accesibilidad ------------------------------------------------------ */
+:focus-visible {
+  outline: 2px solid var(--laton);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.sobre-negro :focus-visible { outline-color: var(--laton-claro); }
+
+.saltar {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -120%);
+  z-index: 100;
+  background: var(--negro);
+  color: var(--blanco);
+  padding: .75rem 1.25rem;
+  font-size: var(--t-pie);
+  text-decoration: none;
+  transition: transform .2s var(--suave);
+}
+.saltar:focus-visible { transform: translate(-50%, 0); }
+
+.solo-lectores {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Estructura --------------------------------------------------------- */
+.envoltura {
+  width: 100%;
+  max-width: var(--ancho);
+  margin-inline: auto;
+  padding-inline: var(--margen);
+}
+
+.seccion { padding-block: var(--seccion); }
+
+.sobre-negro {
+  background: var(--negro);
+  color: var(--blanco);
+}
+.sobre-perla { background: var(--perla); }
+
+/* --- La firma: el filete doble de su logo ------------------------------- */
+/* Dos líneas paralelas, como las que enmarcan su logotipo. Es el separador
+   de toda la página y el subrayado de los titulares. */
+.filete {
+  border: 0;
+  height: 5px;
+  margin: 0;
+  background:
+    linear-gradient(var(--linea), var(--linea)) top    / 100% 1px no-repeat,
+    linear-gradient(var(--linea), var(--linea)) bottom / 100% 1px no-repeat;
+}
+.sobre-negro .filete {
+  background:
+    linear-gradient(var(--linea-oscura), var(--linea-oscura)) top    / 100% 1px no-repeat,
+    linear-gradient(var(--linea-oscura), var(--linea-oscura)) bottom / 100% 1px no-repeat;
+}
+.filete--laton {
+  background:
+    linear-gradient(var(--laton), var(--laton)) top    / 100% 1px no-repeat,
+    linear-gradient(var(--laton), var(--laton)) bottom / 100% 1px no-repeat;
+}
+/* Filete corto que subraya un titular */
+.filete--corto { width: 72px; }
+
+/* Antetítulo en versalitas, con el filete a la izquierda */
+.antetitulo {
+  display: flex;
+  align-items: center;
+  gap: .875rem;
+  font-family: var(--texto);
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--humo);
+  margin: 0 0 1.25rem;
+}
+.antetitulo::before {
+  content: '';
+  width: 40px;
+  height: 5px;
+  flex: none;
+  background:
+    linear-gradient(currentColor, currentColor) top    / 100% 1px no-repeat,
+    linear-gradient(currentColor, currentColor) bottom / 100% 1px no-repeat;
+  opacity: .5;
+}
+.sobre-negro .antetitulo { color: var(--laton-claro); }
+
+/* --- Botones ------------------------------------------------------------ */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .625rem;
+  padding: .9375rem 1.75rem;
+  font-family: var(--texto);
+  font-size: var(--t-pie);
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--negro);
+  background: var(--negro);
+  color: var(--blanco);
+  cursor: pointer;
+  transition: background-color .25s var(--suave),
+              color .25s var(--suave),
+              transform .25s var(--muelle),
+              box-shadow .25s var(--suave);
+}
+.boton:hover {
+  background: var(--blanco);
+  color: var(--negro);
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-elevada);
+}
+.boton:active { transform: translateY(0); }
+
+.boton--linea {
+  background: transparent;
+  color: var(--negro);
+}
+.boton--linea:hover {
+  background: var(--negro);
+  color: var(--blanco);
+}
+
+.sobre-negro .boton {
+  border-color: var(--blanco);
+  background: var(--blanco);
+  color: var(--negro);
+}
+.sobre-negro .boton:hover {
+  background: transparent;
+  color: var(--blanco);
+}
+.sobre-negro .boton--linea {
+  background: transparent;
+  color: var(--blanco);
+}
+.sobre-negro .boton--linea:hover {
+  background: var(--blanco);
+  color: var(--negro);
+}
+
+/* --- Enlaces de texto: subrayado que crece desde la izquierda ----------- */
+.enlace {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size .3s var(--suave);
+}
+.enlace:hover, .enlace:focus-visible { background-size: 100% 1px; }
+
+/* --- Marco de foto: el espejo del salón --------------------------------- */
+/* Los espejos del salón son rectángulos de marco negro retroiluminados.
+   Cada foto se monta igual: marco fino, luz detrás. */
+.marco {
+  position: relative;
+  overflow: hidden;
+  background: var(--negro);
+  box-shadow: var(--sombra-elevada);
+}
+.marco img {
+  width: 100%;
+  transition: transform .7s var(--suave);
+}
+.marco:hover img { transform: scale(1.02); }
+
+/* --- Movimiento: aparición al hacer scroll ------------------------------ */
+.aparece {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.aparece.visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity .75s var(--suave), transform .75s var(--suave);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .aparece { opacity: 1; transform: none; }
+}

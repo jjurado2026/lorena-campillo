@@ -1,0 +1,521 @@
+/* ==========================================================================
+   Lorena Campillo Peluquería — home.css
+   Mobile-first: todo se diseña a 390 px y luego se amplía. Es el encargo.
+   ========================================================================== */
+
+/* ================= Cabecera ================= */
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--linea-oscura);
+}
+
+.cabecera__interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 68px;
+  padding-block: .75rem;
+}
+
+.cabecera__logo {
+  display: block;
+  flex: none;
+  line-height: 0;
+}
+.cabecera__logo img {
+  width: 180px;
+  height: auto;
+  transition: opacity .25s var(--suave);
+}
+.cabecera__logo:hover img { opacity: .78; }
+
+/* Menú: fuera de pantalla en móvil, desplegable */
+.nav {
+  position: fixed;
+  inset: 68px 0 auto;
+  background: var(--negro);
+  border-bottom: 1px solid var(--linea-oscura);
+  padding: 0 var(--margen);
+  max-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: max-height .4s var(--suave), visibility .4s;
+}
+.nav.abierto {
+  max-height: 22rem;
+  visibility: visible;
+  padding-block: 1rem 1.5rem;
+}
+
+.nav__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+.nav__lista a {
+  display: block;
+  padding: .625rem 0;
+  font-size: 1.0625rem;
+  text-decoration: none;
+  color: var(--blanco);
+}
+
+.cabecera__tel {
+  display: none;
+  align-items: center;
+  gap: .4375rem;
+  font-size: var(--t-pie);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  color: var(--blanco);
+  transition: color .25s var(--suave);
+}
+.cabecera__tel:hover { color: var(--laton-claro); }
+
+/* Botón de menú: tres filetes, como los del logo */
+.menu-boton {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 1px solid var(--linea-oscura);
+  color: var(--blanco);
+  cursor: pointer;
+  transition: background-color .25s var(--suave), border-color .25s var(--suave);
+}
+.menu-boton:hover { background: var(--negro-suave); border-color: var(--humo); }
+.menu-boton:active { transform: scale(.96); }
+
+.menu-boton__barras,
+.menu-boton__barras::before,
+.menu-boton__barras::after {
+  content: '';
+  display: block;
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  transition: transform .3s var(--suave), opacity .2s var(--suave);
+}
+.menu-boton__barras { position: relative; }
+.menu-boton__barras::before { position: absolute; top: -6px; }
+.menu-boton__barras::after  { position: absolute; top: 6px; }
+
+.menu-boton[aria-expanded="true"] .menu-boton__barras { background: transparent; }
+.menu-boton[aria-expanded="true"] .menu-boton__barras::before { transform: translateY(6px) rotate(45deg); }
+.menu-boton[aria-expanded="true"] .menu-boton__barras::after  { transform: translateY(-6px) rotate(-45deg); }
+
+/* ================= Hero ================= */
+.hero { padding-block: clamp(40px, 8vw, 84px) clamp(48px, 9vw, 96px); }
+
+.hero__interior {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 6vw, 56px);
+}
+
+.hero__titulo {
+  font-size: var(--t-hero);
+  font-variation-settings: 'opsz' 120, 'SOFT' 20;
+  font-weight: 300;
+  line-height: .96;
+  margin-bottom: 1.5rem;
+}
+.hero__titulo .linea {
+  display: block;
+  overflow: hidden;
+}
+.hero__titulo .linea > span {
+  display: block;
+  transform: translateY(102%);
+  animation: subir .95s var(--suave) forwards;
+}
+.hero__titulo .linea:nth-child(1) > span { animation-delay: .05s; }
+.hero__titulo .linea:nth-child(2) > span { animation-delay: .17s; }
+.hero__titulo .linea:nth-child(3) > span { animation-delay: .29s; }
+
+/* La tercera línea es la categoría: más pequeña, en versalitas y en latón */
+.hero__titulo .linea--sub > span {
+  font-family: var(--texto);
+  font-size: clamp(.8125rem, .6rem + .85vw, 1.0625rem);
+  font-weight: 600;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--laton-texto);
+  padding-top: 1.125rem;
+}
+
+@keyframes subir { to { transform: none; } }
+
+.hero__filete {
+  margin-bottom: 1.75rem;
+  opacity: 0;
+  animation: entrar-filete .7s var(--suave) .45s forwards;
+}
+@keyframes entrar-filete {
+  from { opacity: 0; transform: scaleX(0); transform-origin: left; }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero__parrafo {
+  color: var(--humo);
+  max-width: 54ch;
+  opacity: 0;
+  animation: fundido .8s var(--suave) .55s forwards;
+}
+
+.hero__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 2rem;
+  opacity: 0;
+  animation: fundido .8s var(--suave) .68s forwards;
+}
+
+@keyframes fundido {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero__figura {
+  margin: 0;
+  opacity: 0;
+  animation: fundido 1s var(--suave) .3s forwards;
+}
+.hero__figura .marco { max-width: 460px; margin-inline: auto; }
+
+/* ================= Banda de premios ================= */
+.banda { padding-block: clamp(36px, 6vw, 60px); }
+
+.banda__filete { opacity: .6; }
+
+.banda__texto {
+  font-family: var(--display);
+  font-variation-settings: 'opsz' 60, 'SOFT' 20;
+  font-size: var(--t-xl);
+  font-weight: 300;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+  padding-block: clamp(18px, 3.5vw, 30px);
+  margin: 0;
+}
+.banda__texto em {
+  font-style: italic;
+  color: var(--laton-claro);
+}
+
+/* ================= El salón ================= */
+.salon__interior {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 6vw, 56px);
+}
+
+.salon__titulo {
+  font-size: var(--t-xxl);
+  font-variation-settings: 'opsz' 80, 'SOFT' 20;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+.salon__texto p { color: var(--humo); max-width: 58ch; }
+.salon__texto p + p { margin-top: 1.125rem; }
+
+.salon__fotos {
+  display: grid;
+  gap: 1rem;
+}
+.salon__foto { margin: 0; }
+/* Las fotos llenan su celda con proporción fija: son los espejos de la pared */
+.salon__foto img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.salon__foto--b img { aspect-ratio: 3 / 4; }
+
+/* ================= Cita ================= */
+.cita { padding-block: clamp(64px, 11vw, 132px); }
+
+.cita__interior { display: grid; place-items: center; }
+
+.cita__texto {
+  margin: 0;
+  max-width: 18ch;
+  text-align: center;
+}
+.cita__texto p {
+  font-family: var(--display);
+  font-variation-settings: 'opsz' 144, 'SOFT' 40;
+  font-size: clamp(1.875rem, 1.1rem + 3.4vw, 3.75rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.14;
+  margin: 0;
+}
+.cita__texto p::before { content: '«'; color: var(--laton); margin-right: .1em; }
+.cita__texto p::after  { content: '»'; color: var(--laton); margin-left: .1em; }
+
+.cita__firma {
+  display: grid;
+  justify-items: center;
+  gap: 1.125rem;
+  margin-top: 2rem;
+}
+.cita__firma cite {
+  font-family: var(--texto);
+  font-size: var(--t-micro);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--laton-claro);
+}
+
+/* ================= Galardones ================= */
+.galardones__cabeza { margin-bottom: clamp(32px, 5vw, 52px); }
+.galardones__titulo {
+  font-size: var(--t-xxl);
+  font-variation-settings: 'opsz' 80, 'SOFT' 20;
+  font-weight: 300;
+  max-width: 20ch;
+}
+
+.galardones__tira {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--linea);
+  border: 1px solid var(--linea);
+}
+.galardones__tira li {
+  display: grid;
+  place-items: center;
+  background: var(--blanco);
+  padding: 1.75rem 1.125rem;
+  min-height: 132px;
+}
+.galardones__tira img {
+  max-height: 80px;
+  width: auto;
+  filter: grayscale(1) contrast(1.15);
+  opacity: .78;
+  transition: filter .35s var(--suave), opacity .35s var(--suave),
+              transform .35s var(--muelle);
+}
+.galardones__tira li:hover img {
+  filter: none;
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* ================= Contacto ================= */
+.contacto__interior {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 5vw, 52px);
+}
+
+.contacto__titulo {
+  font-size: var(--t-xl);
+  font-variation-settings: 'opsz' 60, 'SOFT' 20;
+  font-weight: 300;
+  max-width: 18ch;
+  margin-bottom: 1.25rem;
+}
+.contacto__intro { color: var(--humo); max-width: 52ch; }
+.contacto__intro .enlace {
+  display: inline-block;
+  padding-block: .25rem;
+  font-weight: 600;
+  color: var(--tinta);
+}
+.contacto__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 1.75rem;
+}
+
+.datos { margin: 0; }
+.datos__fila {
+  display: grid;
+  gap: .3125rem;
+  padding-block: 1.125rem;
+  border-top: 1px solid var(--linea);
+}
+.datos__fila:last-child { border-bottom: 1px solid var(--linea); }
+
+.datos dt {
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--humo-claro);
+}
+.datos dd {
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+/* Teléfono y correo son los enlaces que más se pulsan: área cómoda al dedo */
+.datos dd .enlace {
+  display: inline-block;
+  padding-block: .375rem;
+  min-height: 24px;
+}
+
+.horario {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 22rem;
+  font-variant-numeric: tabular-nums;
+}
+.horario + .horario { margin-top: .25rem; }
+.horario--cerrado { color: var(--humo); }
+
+/* ================= Pie ================= */
+.pie { padding-block: clamp(48px, 7vw, 72px) clamp(96px, 9vw, 72px); }
+
+.pie__interior { display: grid; justify-items: center; gap: 1.5rem; text-align: center; }
+
+.pie__filete { width: clamp(180px, 40vw, 260px); opacity: .85; }
+.pie__logo   { width: clamp(180px, 46vw, 230px); }
+
+.pie__datos {
+  font-size: var(--t-pie);
+  color: #C2C0B9;
+  font-variant-numeric: tabular-nums;
+}
+.pie__datos .enlace {
+  display: inline-block;
+  padding-block: .3125rem;
+  color: var(--blanco);
+}
+/* 5,3:1 sobre negro: el aviso legal también se lee */
+.pie__legal { font-size: var(--t-micro); color: #908E86; }
+
+/* ================= Barra fija en móvil ================= */
+.barra-movil {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 60;
+  padding: .625rem var(--margen) calc(.625rem + env(safe-area-inset-bottom));
+  background: rgba(11, 11, 11, .94);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--linea-oscura);
+  transform: translateY(100%);
+  transition: transform .35s var(--suave);
+}
+.barra-movil.visible { transform: none; }
+
+.barra-movil__accion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  width: 100%;
+  padding: .875rem;
+  background: var(--blanco);
+  color: var(--negro);
+  font-size: var(--t-pie);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+  transition: background-color .25s var(--suave);
+}
+.barra-movil__accion:active { background: var(--laton-claro); }
+.barra-movil__accion:focus-visible { outline-color: var(--laton-claro); outline-offset: -4px; }
+
+/* ==========================================================================
+   Tableta: 700 px
+   ========================================================================== */
+@media (min-width: 700px) {
+  .cabecera__logo img { width: 230px; }
+  .cabecera__tel { display: inline-flex; }
+  .menu-boton { display: none; }
+
+  .nav {
+    position: static;
+    max-height: none;
+    visibility: visible;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin-left: auto;
+  }
+  .nav__lista {
+    flex-direction: row;
+    gap: clamp(1rem, 2.4vw, 2rem);
+  }
+  .nav__lista a {
+    padding: 0;
+    font-size: var(--t-pie);
+    letter-spacing: .04em;
+  }
+
+  /* Dos espejos enfrentados y desfasados, como la pared del salón */
+  .salon__fotos {
+    grid-template-columns: 1.15fr .85fr;
+    align-items: start;
+    gap: clamp(12px, 1.6vw, 20px);
+  }
+  .salon__foto--b { margin-top: clamp(28px, 6vw, 72px); }
+
+  .galardones__tira { grid-template-columns: repeat(3, 1fr); }
+
+  .barra-movil { display: none; }
+  .pie { padding-bottom: clamp(48px, 7vw, 72px); }
+}
+
+/* ==========================================================================
+   Escritorio: 960 px — el hero se parte en dos
+   ========================================================================== */
+@media (min-width: 960px) {
+  .hero__interior {
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(40px, 6vw, 88px);
+  }
+  .hero__texto  { flex: 1 1 54%; }
+  .hero__figura { flex: 1 1 46%; }
+  .hero__figura .marco { max-width: none; }
+  .hero__figura img { aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 28%; }
+
+  .salon__interior {
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(40px, 5vw, 72px);
+  }
+  .salon__texto  { flex: 0 1 36%; }
+  .salon__fotos  { flex: 1 1 64%; }
+
+  .contacto__interior { flex-direction: row; gap: clamp(48px, 7vw, 100px); }
+  .contacto__texto { flex: 1 1 52%; }
+  .contacto__datos { flex: 1 1 48%; }
+
+  .galardones__tira { grid-template-columns: repeat(6, 1fr); }
+}
+
+/* ==========================================================================
+   Pantalla grande: 1240 px
+   ========================================================================== */
+@media (min-width: 1240px) {
+  .galardones__titulo { max-width: 24ch; }
+}
