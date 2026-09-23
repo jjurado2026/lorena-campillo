@@ -1,0 +1,210 @@
+/* ==========================================================================
+   Lorena Campillo Peluquería — base.css
+   Dirección "SANGRE / LÁMINA": la arquitectura de su salón es la dirección
+   de arte. Blanco y negro porque su local es blanco y negro. Latón sólo
+   para los seis galardones, tomado del adorno de su propio pie de página.
+
+   Regla medida (no estética): ninguna de sus fotos tiene una región donde
+   el texto blanco alcance AA sin un velo de .90 que borraría la foto.
+   Por eso foto y tipografía NO se superponen: la foto va limpia, laminada,
+   y el texto va sobre tinta o sobre suelo sólidos.
+   ========================================================================== */
+
+/* --- Fuentes ------------------------------------------------------------ */
+/* OJO: el peso por defecto de Big Shoulders es 100 (Thin). Todo elemento
+   que no declare 'wght' sale en hairline. Siempre explícito. */
+@font-face {
+  font-family: 'Big Shoulders';
+  src: url('../fonts/bigshoulders-var-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                 U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Source Serif 4';
+  src: url('../fonts/sourceserif4-var-latin.woff2') format('woff2');
+  font-weight: 200 900;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                 U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD;
+}
+
+/* --- Tokens ------------------------------------------------------------- */
+:root {
+  /* Color. Los tres primeros son objetos de su salón, no una paleta elegida. */
+  --tinta:  #0B0B0B;   /* el azulejo negro */
+  --suelo:  #F2F2F0;   /* el suelo blanco */
+  --laton:  #A8865A;   /* el adorno de volutas de su pie */
+  /* Latón medido: 5,83:1 sobre tinta (AA) · 3,01:1 sobre suelo (SUSPENDE).
+     Por eso el latón sólo aparece en bloques oscuros. */
+  --laton-claro: #C9A876;
+  --humo:   rgba(255, 255, 255, .62);
+  --humo-tinta: #5C5C58;
+  --linea-clara: rgba(255, 255, 255, .16);
+  --linea-oscura: rgba(11, 11, 11, .14);
+
+  /* Tipografía */
+  --display: 'Big Shoulders', 'Arial Narrow', Impact, sans-serif;
+  --texto:   'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+  /* Anchuras reales medidas con fontTools sobre el woff2 (wght 800, opsz 72).
+     Permiten justificar palabras distintas a la misma columna. */
+  --w-lorena:   2.689;
+  --w-campillo: 3.556;
+
+  /* Retícula */
+  --gutter: 20px;
+  --ancho: 1240px;
+  --seccion: clamp(64px, 11vw, 132px);
+}
+
+@media (min-width: 900px) {
+  :root { --gutter: 40px; }
+}
+
+/* --- Reinicio ----------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--tinta);
+  color: var(--suelo);
+  font-family: var(--texto);
+  font-size: 17px;
+  line-height: 1.5;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+h1, h2, h3 { margin: 0; font-weight: 400; }
+p { margin: 0; }
+a { color: inherit; }
+ul, ol, dl, dd { margin: 0; padding: 0; list-style: none; }
+
+/* --- Accesibilidad ------------------------------------------------------ */
+:focus-visible {
+  outline: 2px solid var(--laton);
+  outline-offset: 3px;
+}
+.claro :focus-visible { outline-color: var(--tinta); }
+
+.saltar {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  z-index: 200;
+  transform: translate(-50%, -130%);
+  background: var(--suelo);
+  color: var(--tinta);
+  padding: 14px 22px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.saltar:focus-visible { transform: translate(-50%, 0); }
+
+.oculto {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Estructura --------------------------------------------------------- */
+.env {
+  width: 100%;
+  max-width: var(--ancho);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.seccion { padding-block: var(--seccion); }
+
+/* Bloque claro: se invierte la tinta. El latón NO se usa aquí (3,01:1). */
+.claro {
+  background: var(--suelo);
+  color: var(--tinta);
+}
+
+/* --- Piezas tipográficas ------------------------------------------------ */
+/* El antetítulo es el "crédito" editorial: 13px justo debajo de un titular
+   enorme. El salto de escala ES el efecto, no el tamaño del titular. */
+.credito {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: var(--humo);
+}
+.claro .credito { color: var(--humo-tinta); }
+
+.titular {
+  font-family: var(--display);
+  font-weight: 800;
+  font-variation-settings: 'wght' 800, 'opsz' 72;
+  text-transform: uppercase;
+  line-height: .86;
+  letter-spacing: .005em;
+}
+
+/* Números y horas: tabulares para que las columnas cuadren */
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* --- Acciones ----------------------------------------------------------- */
+.accion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;            /* diana real */
+  padding: 13px 26px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid currentColor;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.accion--solido {
+  background: var(--suelo);
+  color: var(--tinta);
+  border-color: var(--suelo);
+}
+.claro .accion--solido {
+  background: var(--tinta);
+  color: var(--suelo);
+  border-color: var(--tinta);
+}
+.accion--linea { background: transparent; }
+
+/* --- Filete de latón ---------------------------------------------------- */
+.filete {
+  display: block;
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--laton);
+  opacity: .42;
+}
