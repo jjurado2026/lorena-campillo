@@ -1,169 +1,127 @@
-/* ==========================================================================
-   Lorena Campillo Peluquería — movimiento.css
-   SISTEMA "EL TRAZO"
-   --------------------------------------------------------------------------
-   Idea rectora: en un salón nada aparece de la nada — algo PASA por encima.
-   La mano traza, la tijera recorre, la luz del espejo barre. Por eso aquí
-   nada hace fade + translateY: todo se REVELA POR BARRIDO (clip-path), en
-   el eje en que ese objeto se lee. El movimiento es el gesto del oficio.
+/* =====================================================================
+   LORENA CAMPILLO — v3 «Azulejo» · movimiento
+   Solo transform y opacity. Jerarquía:
+   · expresivo, una vez: el mosaico se coloca pieza a pieza y el esmalte brilla
+   · medio: las fotos se descubren (una capa se retira hacia arriba)
+   · microgestos: cada pictograma hace su gesto (la tijera corta…)
+   · nulo: el texto no se anima; lo que se usa a menudo (fichas, menú) es inmediato o casi
+   Nada en bucle. Con movimiento reducido o ?ss, todo quieto y visible.
+   Todo lo oculto depende de html.js: sin JavaScript la página se ve entera.
+   ===================================================================== */
 
-   Reglas duras:
-   - Solo transform, opacity y clip-path. Cero animación de layout.
-   - Nunca transition-all. Nunca infinite.
-   - prefers-reduced-motion -> estado final completo, nunca roto.
-   ========================================================================== */
-
-/* Sin @property el navegador trata la variable como cadena y NO interpola:
-   el barrido saltaría en seco. Con tipo declarado, es continuo. */
-@property --trazo { syntax: '<percentage>'; initial-value: 100%; inherits: false; }
-
-:root {
-  /* Curvas propias. Ninguna es ease / ease-in-out de fábrica. */
-  --mano:   cubic-bezier(.62, .03, .32, 1);  /* trazo humano: arranca, acelera, posa */
-  --tijera: cubic-bezier(.16, 1, .3, 1);     /* corte: golpe seco, reposo largo */
-  --roce:   cubic-bezier(.2, .8, .3, 1);     /* micro-interacción de un solo toque */
-
-  --t-trazo: 1500ms;   /* la firma escribiéndose: se ve una vez, puede durar */
-  --t-corte:  620ms;   /* revelado de bloque */
-  --t-roce:   220ms;   /* hover / focus */
-  --t-toque:  120ms;   /* :active — el dedo no espera */
+/* ---------- 1 · El mosaico se coloca (el único escalonado de la página) ---------- */
+@keyframes colocar {
+  from { opacity: 0; transform: translateY(16px) scale(.965); }
+  to   { opacity: 1; transform: none; }
+}
+html.js:not(.quieto) .mosaico--hero > .az {
+  transform-origin: 50% 100%;
+  animation: colocar .8s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 95ms + 60ms);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-
-  /* ═══════════ 1 · LA FIRMA SE ESCRIBE ═══════════
-     El logo es un manuscrito de trazo fino: no aparece, una mano lo escribe.
-     Es raster con alfa, así que stroke-dashoffset es imposible: el color va
-     de fondo, el logo de máscara, y lo que se anima es un clip-path.
-     Medido sobre el alfa real: la tinta se reparte entre 5,2% y 11,8% por
-     doceavo, sin huecos — el barrido lee como escritura, no como cortina. */
-  .js .firma--escribe {
-    clip-path: inset(0 var(--trazo) 0 0);
-    animation: escribir var(--t-trazo) var(--mano) forwards;
-  }
-  @keyframes escribir { to { --trazo: 0%; } }
-
-  /* Sin soporte de @property, un fundido honesto en lugar de un salto seco */
-  @supports not (background: paint(x)) {
-    .firma--escribe { clip-path: none; animation: aparece-firma 900ms var(--mano) forwards; }
-    @keyframes aparece-firma { from { opacity: 0 } to { opacity: 1 } }
-  }
-
-  /* ═══════════ 2 · EL HERO ═══════════
-     Los retardos se solapan a propósito: cada pieza entra cuando la anterior
-     tiene cuerpo, no cuando acaba. Se lee como una sola acción continua. */
-
-  /* El nombre NO se desplaza: se descubre. Es el gesto de la tijera. */
-  .js .hero .an-nombre {
-    clip-path: inset(0 100% 0 0);
-    animation: descubrir var(--t-corte) var(--tijera) forwards;
-    animation-play-state: paused;
-  }
-  .js .hero.listo .an-nombre { animation-play-state: running; }
-  .hero.listo .palabra--1 { animation-delay: 260ms; }
-  .hero.listo .palabra--2 { animation-delay: 400ms; }
-  @keyframes descubrir { to { clip-path: inset(0 0 0 0); } }
-
-  /* Lo secundario sí sube, apenas 8px: es acompañamiento, no protagonista */
-  .js .hero .an-sube {
-    opacity: 0;
-    transform: translate3d(0, 8px, 0);
-    animation: sube 560ms var(--tijera) forwards;
-    animation-play-state: paused;
-  }
-  .js .hero.listo .an-sube { animation-play-state: running; }
-  .hero.listo .hero__premios { animation-delay: 620ms; }
-  .hero.listo .hero__frase   { animation-delay: 760ms; }
-  .hero.listo .hero__cta     { animation-delay: 880ms; }
-  @keyframes sube { to { opacity: 1; transform: none; } }
-
-  /* La foto se asienta: un desahogo lento, como el "espacio de relax" suyo */
-  .hero__foto {
-    transform: scale(1.04);
-    transition: transform 1600ms var(--tijera);
-  }
-  .hero.listo .hero__foto { transform: scale(1); }
-
-  /* ═══════════ 3 · REVELADO AL ENTRAR EN PANTALLA ═══════════
-     Un único gesto en toda la página, no un catálogo de efectos.
-     Condicionado a .js: sin JavaScript el contenido nunca queda oculto. */
-  .js .corte {
-    clip-path: inset(0 0 100% 0);
-    opacity: .001;
-    transition: clip-path var(--t-corte) var(--tijera),
-                opacity 240ms linear;
-    transition-delay: calc(var(--n, 0) * 70ms);
-  }
-  .js .corte.visto { clip-path: inset(0 0 0 0); opacity: 1; }
-
-  /* La lámina se descubre en horizontal: la mano pasa por encima.
-     Sólo se oculta mientras el observer esté vivo (.js), para que sin
-     JavaScript la foto se vea siempre. */
-  .js .lamina__marco {
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 760ms var(--mano);
-  }
-  .js .lamina__marco.visto { clip-path: inset(0 0 0 0); }
+/* ---------- 2 · El brillo del esmalte ---------- */
+.brillo::after {
+  content: ''; position: absolute; inset: -12%; z-index: 1; pointer-events: none;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 36%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, 0) 64%);
+  transform: translateX(-110%);
 }
-
-/* ═══════════ 4 · MICRO-INTERACCIONES ═══════════
-   Fuera del bloque reduced-motion sólo lo que es respuesta directa al dedo
-   o al puntero: no son animaciones de entrada, son estados. */
-
-/* Servicio: el filete de latón se traza bajo el nombre */
-.serv__enl { --trazado: 0; }
-.serv__nom { position: relative; }
-.serv__nom::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: -.06em;
-  height: 2px;
-  background: var(--laton);
-  transform: scaleX(var(--trazado));
-  transform-origin: left;
-  transition: transform 320ms var(--roce);
+@media (hover: hover) {
+  .brillo:hover::after { transform: translateX(110%); transition: transform 1s var(--ease-out); }
 }
-.serv__enl:hover,
-.serv__enl:focus-visible { --trazado: 1; }
+@keyframes brillo { from { transform: translateX(-110%); } to { transform: translateX(110%); } }
+/* Una sola pasada al colocarse la pieza de los premios */
+html.js:not(.quieto) .az--premios::after { animation: brillo 1.25s var(--ease-out) .95s 1; }
 
-/* En táctil no hay hover: el filete ya está trazado */
-@media (hover: none) {
-  .serv__enl { --trazado: 1; }
-  .serv__nom::after { opacity: .5; }
+/* ---------- 3 · Fotos: una capa que se retira ---------- */
+html.js:not(.quieto) .foto[data-revela] { --capa: var(--porcelana-2); }
+html.js:not(.quieto) .trayectoria .foto[data-revela] { --capa: var(--negro-2); }
+html.js:not(.quieto) .foto[data-revela]::after {
+  content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: var(--capa);
+  transform-origin: 50% 0;
+  transition: transform .95s var(--ease-capa);
 }
-
-/* Pedir cita: el latón lo recorre. El texto nunca se mueve. */
-.accion::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--laton);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 320ms var(--roce);
+html.js:not(.quieto) .foto[data-revela] img {
+  transform: scale(1.08);
+  transition: transform 1.3s var(--ease-out);
 }
-.accion:hover::before,
-.accion:focus-visible::before { transform: scaleX(1); }
-.accion:hover { color: var(--tinta); border-color: var(--laton); }
-.accion:active { transform: translateY(1px); transition: transform var(--t-toque) var(--roce); }
+html.js:not(.quieto) .foto[data-revela].visible::after { transform: scaleY(0); }
+html.js:not(.quieto) .foto[data-revela].visible img { transform: none; }
+/* Después, el zoom suave de la tarjeta vuelve a mandar */
+html.js:not(.quieto) .serv:hover .foto.visible img { transform: scale(1.03); transition-duration: .6s; }
 
-/* Los datos que venden no se ganan la atención moviéndose:
-   el teléfono, el horario y los seis galardones no tienen entrada animada. */
+/* ---------- 4 · El hilo del tiempo se tiende ---------- */
+html.js:not(.quieto) .linea[data-revela]::before {
+  transform: scaleY(0); transform-origin: 50% 0;
+  transition: transform 1.6s var(--ease-out) .15s;
+}
+html.js:not(.quieto) .linea[data-revela].visible::before { transform: none; }
 
+/* ---------- 5 · Microgestos de los pictogramas ---------- */
+.picto g, .picto path { transform-box: view-box; }
+.picto--tijera .p-a, .picto--tijera .p-b { transform-origin: 12px 12px; }
+.picto--color .p-brocha { transform-origin: 20px 2.5px; }
+.picto--gota .p-gota { transform-origin: 11px 20px; }
+.picto--gota .p-destello { transform-origin: 19px 5px; }
+.picto--carmin .p-barra { transform-origin: 12px 11px; }
+.picto--bigote path { transform-origin: 12px 13px; }
+
+@keyframes tijera-a { 0%, 50%, 100% { transform: none; } 25%, 75% { transform: rotate(-17deg); } }
+@keyframes tijera-b { 0%, 50%, 100% { transform: none; } 25%, 75% { transform: rotate(17deg); } }
+@keyframes brocha   { 0%, 100% { transform: none; } 45% { transform: rotate(-13deg); } }
+@keyframes aire     { 0%, 100% { transform: none; opacity: 1; } 50% { transform: translateX(2.4px); opacity: .25; } }
+@keyframes gota     { 0%, 100% { transform: none; } 40% { transform: translateY(-1.8px) scale(1.04); } }
+@keyframes destello { 0% { transform: none; } 60% { transform: rotate(90deg) scale(1.3); } 100% { transform: rotate(90deg); } }
+@keyframes barra    { 0%, 100% { transform: none; } 45% { transform: translateY(-2.6px); } }
+@keyframes bigote   { 0%, 100% { transform: none; } 30% { transform: rotate(-8deg); } 65% { transform: rotate(6deg); } }
+
+html.js:not(.quieto) .serv.gesto .picto--tijera .p-a  { animation: tijera-a .62s var(--ease-out); }
+html.js:not(.quieto) .serv.gesto .picto--tijera .p-b  { animation: tijera-b .62s var(--ease-out); }
+html.js:not(.quieto) .serv.gesto .picto--color .p-brocha { animation: brocha .7s var(--ease-muelle); }
+html.js:not(.quieto) .serv.gesto .picto--secador .p-aire { animation: aire .45s var(--ease-out) 2; }
+html.js:not(.quieto) .serv.gesto .picto--gota .p-gota { animation: gota .6s var(--ease-muelle); }
+html.js:not(.quieto) .serv.gesto .picto--gota .p-destello { animation: destello .6s var(--ease-out); }
+html.js:not(.quieto) .serv.gesto .picto--carmin .p-barra { animation: barra .6s var(--ease-muelle); }
+html.js:not(.quieto) .serv.gesto .picto--bigote path { animation: bigote .7s var(--ease-out); }
+
+/* ---------- 6 · El resguardo ---------- */
+@keyframes linea-nueva { from { opacity: .15; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+html.js:not(.quieto) .resguardo__lista dd.cambia { animation: linea-nueva .32s var(--ease-out); }
+@keyframes sellar {
+  from { opacity: 0; transform: rotate(-16deg) scale(1.4); }
+  to   { opacity: .9; transform: rotate(-6deg) scale(1); }
+}
+html.js:not(.quieto) .resguardo.lista .resguardo__sello { animation: sellar .5s var(--ease-muelle) both; }
+
+/* ---------- 7 · Menú, barra fija, preguntas ---------- */
+html.js:not(.quieto) .menu {
+  opacity: 0; transform: translateY(-10px);
+  transition: opacity .16s var(--ease-out), transform .16s var(--ease-out);
+}
+html.js:not(.quieto) .menu.abierto {
+  opacity: 1; transform: none;
+  transition: opacity .22s var(--ease-out), transform .28s var(--ease-out);
+}
+html.js .menu.abierto { opacity: 1; transform: none; }
+
+html.js:not(.quieto) .fija { transition: transform .32s var(--ease-out); }
+
+@keyframes abrir-resp { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+html.js:not(.quieto) .pregunta[open] .pregunta__resp,
+html.js:not(.quieto) .serv__mas[open] p { animation: abrir-resp .3s var(--ease-out); }
+
+/* ---------- Quietud ---------- */
+html.quieto { scroll-behavior: auto !important; }
+html.quieto *, html.quieto *::before, html.quieto *::after {
+  animation: none !important;
+  transition: none !important;
+}
 @media (prefers-reduced-motion: reduce) {
-  /* Estado final completo. Nada queda oculto: es el riesgo real de un
-     sistema basado en clip-path, y aquí queda cubierto. */
   *, *::before, *::after {
-    animation-duration: .001ms !important;
+    animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: .001ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
   }
-  .firma--escribe,
-  .an-nombre,
-  .corte,
-  .lamina__marco { clip-path: none !important; opacity: 1 !important; }
-  .an-sube { opacity: 1 !important; transform: none !important; }
-  .hero__foto { transform: none !important; }
-  .serv__enl { --trazado: 1; }
 }
