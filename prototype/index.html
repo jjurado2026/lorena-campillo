@@ -2,29 +2,47 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lorena Campillo Peluquería — Peluquería boutique en San Blas, Madrid</title>
-<meta name="description" content="Peluquería boutique en Simancas, San Blas (Madrid). Seis premios nacionales e internacionales. Corte, coloración, peinados, tratamientos, maquillaje y caballero. C/ San Romualdo 51-53.">
-<meta name="theme-color" content="#0B0B0B">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Peluquería boutique en San Blas, Madrid | Lorena Campillo</title>
+<meta name="description" content="Peluquería boutique en Simancas, San Blas (Madrid), con seis premios nacionales e internacionales. Cortes, color, peinados y tratamientos. Cita: 917 54 53 21.">
+<meta name="theme-color" content="#F3F2EE">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Lorena Campillo · Peluquería boutique en San Blas">
+<meta property="og:description" content="Seis premios nacionales e internacionales. C/ San Romualdo 51-53, Madrid. Pide cita: 917 54 53 21.">
+<meta property="og:image" content="https://jjurado2026.github.io/lorena-campillo/assets/img/salon-espejos-1024.webp">
 
-<link rel="preload" href="assets/fonts/bigshoulders-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/sourceserif4-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/espejos-grade-1024.webp">
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/home.css">
-<link rel="stylesheet" href="assets/css/movimiento.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B0B0B'/%3E%3Ctext x='16' y='24' font-family='Georgia,serif' font-size='20' fill='%23A8865A' text-anchor='middle'%3E6%3C/text%3E%3C/svg%3E">
+<script>
+  /* Antes de pintar: activa el movimiento solo si hay JavaScript y nadie ha pedido quietud */
+  (function (d) {
+    var q = /[?&]ss\b/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
+    d.classList.add('js');
+    if (q) d.classList.add('quieto');
+    if (/[?&]ss\b/.test(location.search)) d.classList.add('captura');
+  })(document.documentElement);
+</script>
+
+<link rel="preload" href="assets/fonts/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/bodoni-moda-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/onest.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/img/lorena-tijeras-480.webp" imagesrcset="assets/img/lorena-tijeras-480.webp 480w, assets/img/lorena-tijeras-760.webp 760w" imagesizes="(min-width: 1024px) 30vw, (min-width: 700px) 45vw, 100vw">
+<link rel="stylesheet" href="assets/css/base.css?v=3">
+<link rel="stylesheet" href="assets/css/home.css?v=3">
+<link rel="stylesheet" href="assets/css/movimiento.css?v=3">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%230D0D0C'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23fff' text-anchor='middle'%3ELC%3C/text%3E%3C/svg%3E">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HairSalon",
   "name": "Lorena Campillo Peluquería",
-  "description": "Peluquería boutique en Madrid galardonada con seis premios nacionales e internacionales.",
+  "description": "Peluquería boutique en el barrio de Simancas (San Blas-Canillejas, Madrid), galardonada con seis premios nacionales e internacionales.",
   "url": "https://www.lorenacampillopeluqueria.com/",
   "telephone": "+34917545321",
   "email": "lorenacampillopeluqueria@gmail.com",
-  "image": "assets/img/espejos-grade-1024.webp",
+  "image": "https://jjurado2026.github.io/lorena-campillo/assets/img/salon-espejos-1024.webp",
+  "foundingDate": "2012",
+  "founder": { "@type": "Person", "name": "Lorena Campillo" },
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Calle de San Romualdo, 51-53",
@@ -33,20 +51,40 @@
     "postalCode": "28037",
     "addressCountry": "ES"
   },
+  "areaServed": ["Simancas", "San Blas-Canillejas", "Madrid"],
   "openingHoursSpecification": [
-    { "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-      "opens": "10:00", "closes": "20:30" },
-    { "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Saturday", "opens": "09:00", "closes": "15:00" }
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "10:00", "closes": "20:30" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "15:00" }
   ],
+  "award": [
+    "Q de Calidad de la Peluquería Española (2022)",
+    "Premio Europeo de Tecnología e Innovación (2021)",
+    "Premio a la Excelencia Empresarial, Instituto para la Excelencia Profesional (2019)",
+    "Estrella de Oro a la Excelencia Profesional (2018)",
+    "Medalla de Oro Europea al Mérito en el Trabajo (2017)",
+    "Medalla de Oro de la Asociación Española de Profesionales de la Imagen (2017)"
+  ],
+  "sameAs": ["https://www.facebook.com/people/Lorena-Campillo-Peluqueria/100069764804692/"],
   "makesOffer": [
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cortes de pelo" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Coloración" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Peinados" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Peinados para fiestas y eventos" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tratamientos para el cabello" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Maquillaje" } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hombres" } }
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Peluquería de caballero" } }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "¿Cómo pido cita?", "acceptedAnswer": { "@type": "Answer", "text": "Si deseas concertar una cita, o solicitar una consulta con nuestros estilistas de corte y color, llámanos al 917 54 53 21. También puedes dejarnos tu petición en el formulario de nuestra web." } },
+    { "@type": "Question", "name": "¿Qué horario tenéis?", "acceptedAnswer": { "@type": "Answer", "text": "De lunes a viernes, de 10:00 a 20:30. Sábados, de 9:00 a 15:00. Domingos, cerrado." } },
+    { "@type": "Question", "name": "¿Atendéis a hombres?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. Ofrecemos el mejor servicio para los hombres: los hombres forman parte de nuestro salón." } },
+    { "@type": "Question", "name": "¿Hacéis peinados y maquillaje para eventos?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. Peinados sofisticados para asistir a una fiesta o evento, y maquillaje de día, de noche o para fiestas, adaptándonos al evento al que vayas a asistir." } },
+    { "@type": "Question", "name": "¿Qué tratamientos hacéis?", "acceptedAnswer": { "@type": "Answer", "text": "Tratamientos para cuidado, nutrición y volumen, keratina, ondulados y alisados. Diferentes tipos de tratamientos para todo tipo de cabello." } }
   ]
 }
 </script>
@@ -55,291 +93,536 @@
 <body>
 <a class="saltar" href="#contenido">Ir al contenido</a>
 
+<!-- Pictogramas e iconos (se reutilizan con <use>) -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></symbol>
+  <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-sale" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-correo" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+  <symbol id="i-cerrar" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24"><path d="M15 8h-2a1.5 1.5 0 0 0-1.5 1.5V21M9 13h6"/><rect x="3" y="3" width="18" height="18" rx="4"/></symbol>
+  <symbol id="p-tijera" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 20 20"/><circle cx="6" cy="18" r="3"/><path d="M8.12 15.88 20 4"/></symbol>
+  <symbol id="p-color" viewBox="0 0 24 24"><path d="M3 13h13a6.5 6.5 0 0 1-13 0Z"/><path d="M11.6 9.9 20 2.5"/><path d="m9.4 12.1 2.2-2.2 1.3 1.3-2.2 2.2Z"/></symbol>
+  <symbol id="p-secador" viewBox="0 0 24 24"><path d="M13.5 5.5H8a4.5 4.5 0 0 0 0 9h5.5Z"/><path d="M13.5 7h4v5h-4"/><circle cx="8" cy="10" r="1.6"/><path d="m9 14.5 1.2 6h2.6l-.8-6"/><path d="M19.8 7.6h2M19.8 9.5h2.7M19.8 11.4h2"/></symbol>
+  <symbol id="p-gota" viewBox="0 0 24 24"><path d="M11 3.5S5 10 5 14.2a6 6 0 0 0 12 0C17 10 11 3.5 11 3.5Z"/><path d="M8.3 14.8a2.8 2.8 0 0 0 2.6 2.6"/><path d="M19 2.8v4.4M16.8 5h4.4"/></symbol>
+  <symbol id="p-carmin" viewBox="0 0 24 24"><rect x="7.5" y="14" width="9" height="7.5" rx="1"/><path d="M8.5 14v-3h7v3"/><path d="M9.8 11V6.8l4.4-2.6V11"/></symbol>
+  <symbol id="p-bigote" viewBox="0 0 24 24"><path d="M12 12.2c-1.3-1.9-3.4-2.7-5.3-1.9-1.5.6-2.2 2.1-3.7 2.2-1 .1-1.8-.5-2.1-1.4-.4 2.2 1.2 4.3 3.6 4.5 3 .3 5-1.4 7.5-2.8 2.5 1.4 4.5 3.1 7.5 2.8 2.4-.2 4-2.3 3.6-4.5-.3.9-1.1 1.5-2.1 1.4-1.5-.1-2.2-1.6-3.7-2.2-1.9-.8-4 0-5.3 1.9Z"/></symbol>
+</svg>
+
 <!-- ═══════════ CABECERA ═══════════ -->
 <header class="cab" id="cab">
-  <div class="cab__in">
-    <a class="cab__logo" href="#" aria-label="Lorena Campillo Peluquería — inicio">
-      <span class="firma firma--escribe" role="img" aria-label="Lorena Campillo"></span>
+  <div class="cab__in envoltura">
+    <a class="cab__logo" href="#inicio">
+      <img src="assets/img/logo-tinta.webp" width="1200" height="175" alt="Lorena Campillo Peluquería">
     </a>
-    <a class="cab__tel tabular" href="tel:+34917545321">
-      <svg class="cab__tel-ico" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none"
-           stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/>
-      </svg>
-      <span>917 54 53 21</span>
-    </a>
+
+    <nav class="cab__nav" aria-label="Principal">
+      <ul>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#salon">El salón</a></li>
+        <li><a href="#trayectoria">Trayectoria</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <div class="cab__acc">
+      <p class="estado estado--mini" data-estado="corto" hidden></p>
+      <a class="cab__tel" href="tel:+34917545321">
+        <svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>
+        <span>917 54 53 21</span>
+      </a>
+      <a class="boton boton--negro boton--peq" href="#cita">Pedir cita</a>
+      <button class="cab__menu" type="button" aria-expanded="false" aria-controls="menu">
+        <svg class="ico ico--abrir" aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="ico ico--cerrar" aria-hidden="true"><use href="#i-cerrar"/></svg>
+        <span class="solo-lectores">Menú</span>
+      </button>
+    </div>
   </div>
 </header>
 
+<!-- Menú móvil: fuera de la cabecera (su backdrop-filter atraparía el position:fixed) -->
+<div class="menu" id="menu" hidden>
+  <nav class="envoltura menu__in" aria-label="Menú">
+    <ul class="menu__lista">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#cita">Pedir cita</a></li>
+      <li><a href="#salon">El salón</a></li>
+      <li><a href="#trayectoria">Trayectoria</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="menu__pie">
+      <p class="estado" data-estado></p>
+      <a class="boton boton--linea" href="tel:+34917545321"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>917 54 53 21</a>
+    </div>
+  </nav>
+</div>
+
 <main id="contenido">
 
-  <!-- ═══════════ 00 · HERO ═══════════ -->
-  <section class="hero" id="hero">
-    <img class="hero__foto"
-         src="assets/img/espejos-grade-1024.webp"
-         srcset="assets/img/espejos-grade-640.webp 640w, assets/img/espejos-grade-1024.webp 1024w"
-         sizes="100vw" width="1024" height="768" fetchpriority="high"
-         alt="Sala de peinado del salón, con espejos retroiluminados de marco negro sobre azulejo negro">
-    <div class="hero__velo" aria-hidden="true"></div>
+  <!-- ═══════════ 1 · HERO: el mosaico ═══════════ -->
+  <section class="hero" id="inicio" aria-labelledby="hero-titulo">
+    <div class="envoltura mosaico mosaico--hero">
 
-    <div class="hero__in">
-      <h1 class="hero__titular">
-        <span class="oculto">Lorena Campillo, peluquería boutique en Madrid</span>
-        <span class="palabra palabra--1 an-nombre" aria-hidden="true">Lorena</span>
-        <span class="palabra palabra--2 an-nombre" aria-hidden="true">Campillo</span>
-      </h1>
-
-      <p class="hero__premios an-sube">
-        <span class="hero__cifra">6</span>
-        <span class="hero__premios-txt">Galardones nacionales<br>e internacionales</span>
-      </p>
-
-      <div class="hero__pie">
-        <p class="hero__frase an-sube">«Peluquería boutique» en San&nbsp;Blas desde 2012</p>
-        <a class="accion accion--solido hero__cta an-sube" href="#visitar">Pedir cita</a>
+      <div class="az az--titular" style="--i:0">
+        <p class="antetitulo">Desde 2012 · Simancas, San Blas</p>
+        <h1 class="hero__titulo" id="hero-titulo">Peluquería <em>boutique</em> en&nbsp;San&nbsp;Blas</h1>
+        <p class="hero__entradilla">Somos profesionales en el cuidado y elaboración del cabello y en la creación de imagen. Nos aseguramos de que cada uno de nuestros clientes quede satisfecho con el resultado.</p>
+        <div class="acciones">
+          <a class="boton boton--negro" href="#cita">Pedir cita <svg class="ico" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          <a class="boton boton--linea" href="tel:+34917545321"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>917 54 53 21</a>
+        </div>
       </div>
+
+      <figure class="az az--retrato" style="--i:3">
+        <img src="assets/img/lorena-tijeras-480.webp"
+             srcset="assets/img/lorena-tijeras-480.webp 480w, assets/img/lorena-tijeras-760.webp 760w"
+             sizes="(min-width: 1024px) 30vw, (min-width: 700px) 45vw, 100vw"
+             width="760" height="1017" fetchpriority="high"
+             alt="Lorena Campillo sonríe con unas tijeras de peluquería en la mano">
+        <figcaption>Lorena Campillo<span>estilista y propietaria</span></figcaption>
+      </figure>
+
+      <a class="az az--negro az--premios brillo" href="#trayectoria" style="--i:1">
+        <span class="premios__num" aria-hidden="true">6</span>
+        <span class="premios__txt"><span class="solo-lectores">Seis </span>premios nacionales e internacionales</span>
+        <span class="az__mas">Ver trayectoria <svg class="ico" aria-hidden="true"><use href="#i-flecha"/></svg></span>
+      </a>
+
+      <div class="az az--estado" style="--i:2">
+        <p class="az__eti">Horario</p>
+        <p class="estado estado--grande" data-estado>De lunes a sábado</p>
+        <p class="az__nota"><span class="nw">Lun–vie · 10:00–20:30</span> <span class="nw">Sáb · 9:00–15:00</span></p>
+      </div>
+
+      <a class="az az--dir" href="https://www.google.com/maps/dir/?api=1&amp;destination=Calle+de+San+Romualdo+51,+28037+Madrid" target="_blank" rel="noopener" style="--i:3">
+        <p class="az__eti">Dónde</p>
+        <p class="az__dato">C/ San Romualdo 51-53</p>
+        <p class="az__nota">Simancas · San Blas-Canillejas</p>
+        <span class="az__mas">Cómo llegar <svg class="ico" aria-hidden="true"><use href="#i-sale"/></svg><span class="solo-lectores"> (abre Google Maps)</span></span>
+      </a>
     </div>
   </section>
 
-  <!-- ═══════════ 01 · UBICACIÓN — los tres segundos ═══════════ -->
-  <section class="ubic claro" aria-label="Dónde estamos">
-    <div class="ubic__in">
-      <p class="ubic__que credito">Peluquería boutique</p>
-      <p class="ubic__donde">C/ San Romualdo 51-53 · Simancas, San Blas · Madrid</p>
-      <p class="ubic__estado credito" id="estado" data-estado>
-        <span class="ubic__punto" aria-hidden="true"></span>
-        <span data-estado-txt>L-V 10:00–20:30 · Sáb 9:00–15:00</span>
-      </p>
+  <!-- ═══════════ 2 · SERVICIOS ═══════════ -->
+  <section class="seccion servicios" id="servicios" aria-labelledby="serv-titulo">
+    <div class="envoltura">
+      <header class="cabecera-sec">
+        <p class="antetitulo">Servicios</p>
+        <h2 class="titulo-sec" id="serv-titulo">Buscamos la excelencia <em>en cada servicio</em></h2>
+        <p class="entradilla">Nuestro equipo de profesionales tiene gran experiencia en coloración del cabello, ondulados y alisados, tratamientos para cuidado, nutrición y volumen, keratina y cortes modernos.</p>
+      </header>
+
+      <ul class="serv-lista" role="list" data-carril>
+        <li class="serv">
+          <figure class="serv__foto foto" data-revela>
+            <img src="assets/img/trabajo-rizos-480.webp" srcset="assets/img/trabajo-rizos-480.webp 480w, assets/img/trabajo-rizos-800.webp 800w" sizes="(min-width: 1024px) 400px, (min-width: 700px) 48vw, 82vw" width="800" height="1067" loading="lazy" decoding="async" alt="Melena corta rizada, peinada en el salón mientras una estilista trabaja al fondo">
+          </figure>
+          <div class="serv__cuerpo">
+            <h3 class="serv__nombre">
+              <svg class="picto picto--tijera" viewBox="0 0 24 24" aria-hidden="true"><g class="p-a"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 20 20"/></g><g class="p-b"><circle cx="6" cy="18" r="3"/><path d="M8.12 15.88 20 4"/></g></svg>
+              Cortes
+            </h3>
+            <p class="serv__etiquetas">Clásico · Moderno · Asesoramiento</p>
+            <p class="serv__texto">Ofrecemos los servicios necesarios, asesoramiento, corte de pelo.</p>
+            <details class="serv__mas">
+              <summary>Leer más</summary>
+              <p>La finalidad, que salgas habiendo vivido una experiencia agradable y a la altura de las expectativas. Cuidarse el cabello, hará que tengas la imagen más sofisticada.</p>
+            </details>
+            <a class="serv__cita" href="#cita" data-elige="Cortes">Pedir cita para cortes <svg class="ico" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          </div>
+        </li>
+
+        <li class="serv">
+          <figure class="serv__foto foto" data-revela>
+            <img src="assets/img/trabajo-mechas-480.webp" srcset="assets/img/trabajo-mechas-480.webp 480w, assets/img/trabajo-mechas-800.webp 800w" sizes="(min-width: 1024px) 400px, (min-width: 700px) 48vw, 82vw" width="800" height="1067" loading="lazy" decoding="async" alt="Mechas en proceso: mechones separados con papel sobre una melena larga">
+          </figure>
+          <div class="serv__cuerpo">
+            <h3 class="serv__nombre">
+              <svg class="picto picto--color" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h13a6.5 6.5 0 0 1-13 0Z"/><g class="p-brocha"><path d="M11.6 9.9 20 2.5"/><path d="m9.4 12.1 2.2-2.2 1.3 1.3-2.2 2.2Z"/></g></svg>
+              Coloración
+            </h3>
+            <p class="serv__etiquetas">Tintes · Mechas · Decoloraciones</p>
+            <p class="serv__texto">Un servicio de peluquería que ofrece todo lo que necesites en cuanto a coloración, belleza y tratamientos.</p>
+            <details class="serv__mas">
+              <summary>Leer más</summary>
+              <p>De la mano de los mejores profesionales del sector, obteniendo de ellos la mejor imagen.</p>
+            </details>
+            <a class="serv__cita" href="#cita" data-elige="Coloración">Pedir cita para coloración <svg class="ico" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          </div>
+        </li>
+
+        <li class="serv">
+          <figure class="serv__foto foto" data-revela>
+            <img src="assets/img/trabajo-recogido-480.webp" srcset="assets/img/trabajo-recogido-480.webp 480w, assets/img/trabajo-recogido-800.webp 800w" sizes="(min-width: 1024px) 400px, (min-width: 700px) 48vw, 82vw" width="800" height="973" loading="lazy" decoding="async" alt="Recogido con ondas y tocado, frente a la pared del salón con el logotipo de Lorena Campillo">
+          </figure>
+          <div class="serv__cuerpo">
+            <h3 class="serv__nombre">
+              <svg class="picto picto--secador" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 5.5H8a4.5 4.5 0 0 0 0 9h5.5Z"/><path d="M13.5 7h4v5h-4"/><circle cx="8" cy="10" r="1.6"/><path d="m9 14.5 1.2 6h2.6l-.8-6"/><g class="p-aire"><path d="M19.8 7.6h2M19.8 9.5h2.7M19.8 11.4h2"/></g></svg>
+              Peinados
+            </h3>
+            <p class="serv__etiquetas">Fiestas · Eventos</p>
+            <p class="serv__texto">Cuando quieras hacerte un peinado sofisticado para asistir a una fiesta o evento, es el lugar más adecuado.</p>
+            <details class="serv__mas">
+              <summary>Leer más</summary>
+              <p>Pioneros en moda y tendencias, haremos que salgas llevando el mejor peinado, acorde al estilo. Nuestra característica es que te asesoramos no solo en imagen, también en qué tratamiento sería el más adecuado para el cuidado del cabello, según tus necesidades.</p>
+            </details>
+            <a class="serv__cita" href="#cita" data-elige="Peinados">Pedir cita para peinados <svg class="ico" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          </div>
+        </li>
+
+        <li class="serv">
+          <figure class="serv__foto foto" data-revela>
+            <img src="assets/img/trabajo-brillo-480.webp" srcset="assets/img/trabajo-brillo-480.webp 480w, assets/img/trabajo-brillo-800.webp 800w" sizes="(min-width: 1024px) 400px, (min-width: 700px) 48vw, 82vw" width="800" height="1068" loading="lazy" decoding="async" alt="Melena lisa con brillo y degradado de color, vista de perfil en el sillón del salón">
+          </figure>
+          <div class="serv__cuerpo">
+            <h3 class="serv__nombre">
+              <svg class="picto picto--gota" viewBox="0 0 24 24" aria-hidden="true"><g class="p-gota"><path d="M11 3.5S5 10 5 14.2a6 6 0 0 0 12 0C17 10 11 3.5 11 3.5Z"/><path d="M8.3 14.8a2.8 2.8 0 0 0 2.6 2.6"/></g><g class="p-destello"><path d="M19 2.8v4.4M16.8 5h4.4"/></g></svg>
+              Tratamientos
+            </h3>
+            <p class="serv__etiquetas">Keratina · Nutrición · Volumen</p>
+            <p class="serv__texto">Una de las especialidades de la peluquería es hacer volver a brillar tu pelo gracias a nuestros tratamientos para el cabello.</p>
+            <details class="serv__mas">
+              <summary>Leer más</summary>
+              <p>Queremos que vivas una de las mejores experiencias cuando acudas a nuestro salón: sentirte asesorada y cuidada por nuestro equipo es nuestro objetivo. Diferentes tipos de tratamientos para todo tipo de cabello.</p>
+            </details>
+            <a class="serv__cita" href="#cita" data-elige="Tratamientos">Pedir cita para tratamientos <svg class="ico" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          </div>
+        </li>
+
+        <li class="serv serv--sin-foto">
+          <div class="serv__foto serv__foto--esmalte brillo" aria-hidden="true">
+            <svg class="picto picto--carmin picto--xl" viewBox="0 0 24 24"><rect x="7.5" y="14" width="9" height="7.5" rx="1"/><path d="M8.5 14v-3h7v3"/><g class="p-barra"><path d="M9.8 11V6.8l4.4-2.6V11"/></g></svg>
+          </div>
+          <div class="serv__cuerpo">
+            <h3 class="serv__nombre">
+              <svg class="picto picto--carmin" viewBox="0 0 24 24" aria-hidden="true"><rect x="7.5" y="14" width="9" height="7.5" rx="1"/><path d="M8.5 14v-3h7v3"/><g class="p-barra"><path d="M9.8 11V6.8l4.4-2.6V11"/></g></svg>
+              Maquillaje
+            </h3>
+            <p class="serv__etiquetas">Día · Noche · Fiestas</p>
+            <p class="serv__texto">Para aquellas veces que quieras hacerte un maquillaje más sofisticado, realizamos maquillajes adaptándonos al evento al que vayas a asistir.</p>
+            <details class="serv__mas">
+              <summary>Leer más</summary>
+              <p>Maquillaje de día, de noche o para fiestas.</p>
+            </details>
+            <a class="serv__cita" href="#cita" data-elige="Maquillaje">Pedir cita para maquillaje <svg class="ico" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          </div>
+        </li>
+
+        <li class="serv">
+          <figure class="serv__foto foto" data-revela>
+            <img src="assets/img/salon-caballero-480.webp" srcset="assets/img/salon-caballero-480.webp 480w, assets/img/salon-caballero-800.webp 800w" sizes="(min-width: 1024px) 400px, (min-width: 700px) 48vw, 82vw" width="800" height="1067" loading="lazy" decoding="async" alt="Puesto de caballero del salón: espejo de marco negro, sillón blanco y láminas de barbería en la pared">
+          </figure>
+          <div class="serv__cuerpo">
+            <h3 class="serv__nombre">
+              <svg class="picto picto--bigote" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12.2c-1.3-1.9-3.4-2.7-5.3-1.9-1.5.6-2.2 2.1-3.7 2.2-1 .1-1.8-.5-2.1-1.4-.4 2.2 1.2 4.3 3.6 4.5 3 .3 5-1.4 7.5-2.8 2.5 1.4 4.5 3.1 7.5 2.8 2.4-.2 4-2.3 3.6-4.5-.3.9-1.1 1.5-2.1 1.4-1.5-.1-2.2-1.6-3.7-2.2-1.9-.8-4 0-5.3 1.9Z"/></svg>
+              Hombres
+            </h3>
+            <p class="serv__etiquetas">Corte · Imagen</p>
+            <p class="serv__texto">Ofrecemos el mejor servicio para los hombres, un salón de belleza en el que podrás vivir una de las mejores experiencias en asesoramiento e imagen.</p>
+            <details class="serv__mas">
+              <summary>Leer más</summary>
+              <p>Los hombres forman parte de nuestro salón.</p>
+            </details>
+            <a class="serv__cita" href="#cita" data-elige="Hombres">Pedir cita para caballero <svg class="ico" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+          </div>
+        </li>
+      </ul>
+      <p class="carril-pista" aria-hidden="true"><span data-carril-pos>1</span> / 6 · desliza para ver más</p>
     </div>
   </section>
 
-  <!-- ═══════════ 02 · SERVICIOS — la carta ═══════════ -->
-  <section class="serv seccion" id="servicios">
-    <div class="serv__in env">
-      <p class="serv__lema credito corte">~ Buscamos la excelencia en cada servicio ~</p>
+  <!-- ═══════════ 3 · PIDE TU CITA ═══════════ -->
+  <section class="cita" id="cita" aria-labelledby="cita-titulo">
+    <div class="envoltura cita__rejilla">
+      <header class="cita__cab">
+        <p class="antetitulo antetitulo--claro">Cita</p>
+        <h2 class="titulo-sec" id="cita-titulo">Pide tu cita <em>en un minuto</em></h2>
+        <p class="entradilla">Elige qué te hacemos y cuándo te viene bien. Llámanos con tu petición o envíanosla por email.</p>
+        <p class="estado estado--claro" data-estado></p>
+      </header>
 
-      <ol class="serv__lista" id="serv-lista">
-        <li class="serv__it corte" style="--n:1">
-          <a class="serv__enl" href="#visitar">
-            <span class="serv__ord tabular">01</span>
-            <span class="serv__nom serv__nom--corta">Cortes</span>
-            <span class="serv__sub">de pelo</span>
-          </a>
-        </li>
-        <li class="serv__it corte" style="--n:2">
-          <a class="serv__enl" href="#visitar">
-            <span class="serv__ord tabular">02</span>
-            <span class="serv__nom serv__nom--larga">Coloración</span>
-          </a>
-        </li>
-        <li class="serv__it corte" style="--n:3">
-          <a class="serv__enl" href="#visitar">
-            <span class="serv__ord tabular">03</span>
-            <span class="serv__nom serv__nom--corta">Peinados</span>
-          </a>
-        </li>
-        <li class="serv__it corte" style="--n:4">
-          <a class="serv__enl" href="#visitar">
-            <span class="serv__ord tabular">04</span>
-            <span class="serv__nom serv__nom--larga">Tratamientos</span>
-            <span class="serv__sub">para el cabello</span>
-          </a>
-        </li>
-        <li class="serv__it corte" style="--n:5">
-          <a class="serv__enl" href="#visitar">
-            <span class="serv__ord tabular">05</span>
-            <span class="serv__nom serv__nom--larga">Maquillaje</span>
-          </a>
-        </li>
-        <li class="serv__it corte" style="--n:6">
-          <a class="serv__enl" href="#visitar">
-            <span class="serv__ord tabular">06</span>
-            <span class="serv__nom serv__nom--corta">Hombres</span>
-          </a>
-        </li>
-      </ol>
+      <form class="cita__form" id="form-cita" action="mailto:lorenacampillopeluqueria@gmail.com" method="post" enctype="text/plain" novalidate>
+        <fieldset class="paso">
+          <legend><span class="paso__n">1</span>¿Qué te hacemos?</legend>
+          <p class="paso__ayuda">Puedes marcar varios.</p>
+          <div class="fichas fichas--servicios">
+            <label class="ficha"><input type="checkbox" name="servicio" value="Cortes"><span><svg class="picto" aria-hidden="true"><use href="#p-tijera"/></svg>Cortes</span></label>
+            <label class="ficha"><input type="checkbox" name="servicio" value="Coloración"><span><svg class="picto" aria-hidden="true"><use href="#p-color"/></svg>Coloración</span></label>
+            <label class="ficha"><input type="checkbox" name="servicio" value="Peinados"><span><svg class="picto" aria-hidden="true"><use href="#p-secador"/></svg>Peinados</span></label>
+            <label class="ficha"><input type="checkbox" name="servicio" value="Tratamientos"><span><svg class="picto" aria-hidden="true"><use href="#p-gota"/></svg>Tratamientos</span></label>
+            <label class="ficha"><input type="checkbox" name="servicio" value="Maquillaje"><span><svg class="picto" aria-hidden="true"><use href="#p-carmin"/></svg>Maquillaje</span></label>
+            <label class="ficha"><input type="checkbox" name="servicio" value="Hombres"><span><svg class="picto" aria-hidden="true"><use href="#p-bigote"/></svg>Hombres</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="paso">
+          <legend><span class="paso__n">2</span>¿Qué día te viene bien?</legend>
+          <div class="fichas fichas--dias" data-dias>
+            <label class="ficha"><input type="radio" name="dia" value="Lunes a viernes"><span>Lunes a viernes</span></label>
+            <label class="ficha"><input type="radio" name="dia" value="Sábado"><span>Sábado</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="paso">
+          <legend><span class="paso__n">3</span>¿Mañana o tarde?</legend>
+          <div class="fichas fichas--franjas" data-franjas>
+            <label class="ficha"><input type="radio" name="franja" value="Por la mañana"><span>Mañana<small data-horas="m">10:00–14:00</small></span></label>
+            <label class="ficha"><input type="radio" name="franja" value="Por la tarde"><span>Tarde<small data-horas="t">14:00–20:30</small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="paso paso--datos">
+          <legend><span class="paso__n">4</span>¿A nombre de quién?</legend>
+          <div class="campos">
+            <label class="campo"><span>Tu nombre</span><input name="nombre" type="text" autocomplete="given-name" maxlength="60"></label>
+            <label class="campo"><span>Tu teléfono</span><input name="telefono" type="tel" inputmode="tel" autocomplete="tel" maxlength="20"></label>
+          </div>
+        </fieldset>
+      </form>
+
+      <aside class="resguardo" aria-labelledby="res-titulo" data-resguardo>
+        <div class="resguardo__papel">
+          <p class="resguardo__cab" id="res-titulo">Tu petición</p>
+          <dl class="resguardo__lista" aria-live="polite">
+            <div><dt>Servicio</dt><dd data-r="servicio">Elige uno o varios</dd></div>
+            <div><dt>Día</dt><dd data-r="dia">—</dd></div>
+            <div><dt>Franja</dt><dd data-r="franja">—</dd></div>
+            <div><dt>Nombre</dt><dd data-r="nombre">—</dd></div>
+          </dl>
+          <p class="resguardo__sello" aria-hidden="true">Lista</p>
+          <div class="resguardo__corte" aria-hidden="true"></div>
+          <div class="resguardo__acciones">
+            <a class="boton boton--negro boton--ancho" href="tel:+34917545321" data-llamar><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Llamar y pedirla</a>
+            <a class="boton boton--linea boton--ancho" href="mailto:lorenacampillopeluqueria@gmail.com?subject=Petici%C3%B3n%20de%20cita" data-email><svg class="ico" aria-hidden="true"><use href="#i-correo"/></svg>Enviar por email</a>
+          </div>
+          <p class="resguardo__nota">Te confirmamos la hora por teléfono.</p>
+        </div>
+      </aside>
     </div>
   </section>
 
-  <!-- ═══════════ 03 · LA LÁMINA — su lema, pintado en su pared ═══════════ -->
-  <section class="lamina" aria-label="El salón">
-    <figure class="lamina__fig">
-      <div class="lamina__marco">
-        <img src="assets/img/espejos-1024.webp"
-             srcset="assets/img/espejos-640.webp 640w, assets/img/espejos-1024.webp 1024w"
-             sizes="(max-width: 900px) 100vw, 66vw"
-             width="1024" height="768" loading="lazy"
-             alt="Puestos de peinado con espejos retroiluminados y el lema rotulado en la pared">
+  <!-- ═══════════ 4 · EL SALÓN ═══════════ -->
+  <section class="seccion salon" id="salon" aria-labelledby="salon-titulo">
+    <div class="envoltura mosaico mosaico--salon">
+      <div class="az az--texto">
+        <p class="antetitulo">El salón</p>
+        <h2 class="titulo-sec" id="salon-titulo">Bienestar <em>y</em> belleza</h2>
+        <p>Mi salón nace de la fusión de los conceptos: bienestar y belleza. Por eso, puedes disfrutar de nuestros amplios servicios mientras nosotros cuidamos de tu cabello con coloraciones y tratamientos capilares así como con las mejores técnicas de corte.</p>
+        <p>Todo esto en un espacio pensado para tu completo relax y con un gran equipo de estilistas que estarán a tu disposición en todo momento.</p>
       </div>
-      <figcaption class="lamina__pie corte">
-        <p class="lamina__lema">«Magic flows<br>from our hands»</p>
-        <p class="lamina__cred credito">Rotulado en la pared del salón · C/ San Romualdo 51-53</p>
-      </figcaption>
-    </figure>
-  </section>
-
-  <!-- ═══════════ 04 · LOS SEIS GALARDONES — el pico ═══════════ -->
-  <section class="prem seccion" id="galardones">
-    <div class="prem__in env">
-
-      <div class="prem__cab">
-        <h2 class="prem__tit titular corte">
-          <span class="prem__l prem__l--1">Seis</span>
-          <span class="prem__l prem__l--2">premios</span>
-          <span class="prem__l prem__l--3">en catorce</span>
-          <span class="prem__l prem__l--4">años</span>
-        </h2>
-        <img class="prem__retrato" src="assets/img/lorena-recorte-900.webp"
-             srcset="assets/img/lorena-recorte-520.webp 520w, assets/img/lorena-recorte-900.webp 900w"
-             sizes="(max-width: 900px) 62vw, 34vw"
-             width="900" height="1200" loading="lazy"
-             alt="Lorena Campillo sosteniendo tres de sus galardones">
-      </div>
-
-      <ol class="prem__lista">
-        <li class="prem__it">
-          <span class="prem__ord tabular">01</span>
-          <span class="prem__nom">Q de Calidad de la Peluquería Española</span>
-          <span class="prem__pt" aria-hidden="true"></span>
-          <span class="prem__fec tabular">23.10.2022</span>
-        </li>
-        <li class="prem__it">
-          <span class="prem__ord tabular">02</span>
-          <span class="prem__nom">Medalla de Oro · Asociación Española de Profesionales de la Imagen</span>
-          <span class="prem__pt" aria-hidden="true"></span>
-          <span class="prem__fec tabular">12.05.2017</span>
-        </li>
-        <li class="prem__it">
-          <span class="prem__ord tabular">03</span>
-          <span class="prem__nom">Medalla de Oro Europea al Mérito en el Trabajo</span>
-          <span class="prem__pt" aria-hidden="true"></span>
-          <span class="prem__fec tabular">17.11.2017</span>
-        </li>
-        <li class="prem__it">
-          <span class="prem__ord tabular">04</span>
-          <span class="prem__nom">Premio a la Excelencia Empresarial</span>
-          <span class="prem__pt" aria-hidden="true"></span>
-          <span class="prem__fec tabular">2019</span>
-        </li>
-        <li class="prem__it">
-          <span class="prem__ord tabular">05</span>
-          <span class="prem__nom">Estrella de Oro a la Excelencia Profesional</span>
-          <span class="prem__pt" aria-hidden="true"></span>
-          <span class="prem__fec prem__fec--inst">Instituto para la Excelencia Profesional</span>
-        </li>
-        <li class="prem__it">
-          <span class="prem__ord tabular">06</span>
-          <span class="prem__nom">Premio Europeo de Tecnología e Innovación</span>
-          <span class="prem__pt" aria-hidden="true"></span>
-          <span class="prem__fec prem__fec--inst">Asoc. Europea de Industria, Tecnología e Innovación</span>
-        </li>
-      </ol>
-
-    </div>
-  </section>
-
-  <!-- ═══════════ 05 · EL SALÓN — bienestar y belleza ═══════════ -->
-  <section class="salon claro seccion" id="salon">
-    <div class="salon__in env">
-      <div class="salon__txt corte">
-        <p class="credito">El salón</p>
-        <p class="salon__def">Nos gusta definir nuestro salón como una <em class="salon__boutique">peluquería boutique</em></p>
-        <p class="salon__p">Mi salón nace de la fusión de los conceptos: bienestar y belleza. Un espacio de relax, acogedor y tranquilo.</p>
-
-        <ul class="salon__inv" aria-label="Lo que se eligió con cariño">
-          <li>La luz,</li>
-          <li>los espejos,</li>
-          <li>la música,</li>
-          <li>los sillones…</li>
-        </ul>
-        <p class="salon__p salon__p--fin">Cada objeto ha sido seleccionado con cariño. Queremos que nuestros clientes sientan que están dedicándose un tiempo para ellos mismos.</p>
-      </div>
-
-      <figure class="salon__fig corte">
-        <img src="assets/img/sala-768.webp"
-             srcset="assets/img/sala-520.webp 520w, assets/img/sala-768.webp 768w"
-             sizes="(max-width: 900px) 100vw, 34vw"
-             width="768" height="1024" loading="lazy"
-             alt="Sala de espera del salón, con banco negro y lámparas geométricas">
+      <figure class="az az--foto foto salon__espejos" data-revela>
+        <img src="assets/img/salon-espejos-640.webp" srcset="assets/img/salon-espejos-640.webp 640w, assets/img/salon-espejos-1024.webp 1024w" sizes="(min-width: 1024px) 58vw, 100vw" width="1024" height="768" loading="lazy" decoding="async" alt="La pared de espejos del salón, con marcos negros iluminados, sillones blancos y la frase «Magic flows from our hands»">
+      </figure>
+      <figure class="az az--foto foto salon__lava" data-revela>
+        <img src="assets/img/salon-lavacabezas-640.webp" srcset="assets/img/salon-lavacabezas-640.webp 640w, assets/img/salon-lavacabezas-1024.webp 1024w" sizes="(min-width: 1024px) 40vw, 50vw" width="1024" height="890" loading="lazy" decoding="async" alt="Zona de lavado con dos lavacabezas blancos ante una pared de azulejo negro brillante">
+      </figure>
+      <blockquote class="az az--negro salon__cita brillo">
+        <p>La luz, los espejos, la música, los sillones… cada objeto ha sido seleccionado con cariño y dedicación.</p>
+      </blockquote>
+      <figure class="az az--foto foto salon__pared" data-revela>
+        <img src="assets/img/salon-pared-640.webp" srcset="assets/img/salon-pared-640.webp 640w, assets/img/salon-pared-1024.webp 1024w" sizes="(min-width: 1024px) 34vw, 50vw" width="1024" height="768" loading="lazy" decoding="async" alt="Pared del salón con el logotipo de Lorena Campillo sobre una ilustración de dos barberos">
       </figure>
     </div>
   </section>
 
-  <!-- ═══════════ 06 · LA CITA — el silencio ═══════════ -->
-  <section class="cita" aria-label="Lorena Campillo">
-    <blockquote class="cita__in env">
-      <p class="cita__txt corte">
-        <span class="cita__l">La única forma</span>
-        <span class="cita__l">de conseguir el éxito</span>
-        <span class="cita__l">es <em>amando</em></span>
-        <span class="cita__l">lo que haces</span>
-      </p>
-      <footer class="cita__pie">
-        <img class="cita__adorno" src="assets/img/filete-720.webp" width="720" height="156" loading="lazy" alt="">
-        <cite class="cita__firma credito">Lorena Campillo</cite>
-      </footer>
-    </blockquote>
+  <!-- ═══════════ 5 · TRAYECTORIA ═══════════ -->
+  <section class="trayectoria" id="trayectoria" aria-labelledby="tray-titulo">
+    <div class="envoltura tray__rejilla">
+      <div class="tray__lorena">
+        <figure class="tray__foto foto" data-revela>
+          <img src="assets/img/lorena-premios-480.webp" srcset="assets/img/lorena-premios-480.webp 480w, assets/img/lorena-premios-800.webp 800w" sizes="(min-width: 1024px) 34vw, 100vw" width="800" height="1067" loading="lazy" decoding="async" alt="Lorena Campillo sostiene tres de sus galardones: una medalla, una insignia y una estrella de oro">
+        </figure>
+        <blockquote class="tray__cita">
+          <p>La única forma de conseguir el éxito es <em>amando lo que haces</em>.</p>
+          <footer>Lorena Campillo</footer>
+        </blockquote>
+      </div>
+
+      <div class="tray__texto">
+        <p class="antetitulo antetitulo--claro">Trayectoria</p>
+        <h2 class="titulo-sec" id="tray-titulo">Galardonada con seis premios <em>nacionales e internacionales</em></h2>
+        <p class="entradilla">Lorena Campillo abrió su primer salón en 2012, con tan solo 25 años. Formada con grandes estilistas del ámbito nacional e internacional, cada año investiga en los tratamientos más vanguardistas y no deja de evolucionar.</p>
+
+        <ol class="linea" data-revela>
+          <li class="hito">
+            <p class="hito__año">2022</p>
+            <div class="hito__cuerpo">
+              <p class="hito__nombre">Q de Calidad de la Peluquería Española</p>
+              <p class="hito__quien">theQhair · Gestión, Innovación, Desarrollo y Creatividad</p>
+            </div>
+            <span class="hito__logo"><img src="assets/img/premio-qhair.webp" width="300" height="300" loading="lazy" alt="theQhair"></span>
+          </li>
+          <li class="hito">
+            <p class="hito__año">2021</p>
+            <div class="hito__cuerpo">
+              <p class="hito__nombre">Premio Europeo de Tecnología e Innovación</p>
+              <p class="hito__quien">Asociación Europea de Industria, Tecnología e Innovación</p>
+            </div>
+            <span class="hito__logo"><img src="assets/img/premio-aeti.webp" width="200" height="205" loading="lazy" alt="Asociación Europea de Industria, Tecnología e Innovación"></span>
+          </li>
+          <li class="hito">
+            <p class="hito__año">2019</p>
+            <div class="hito__cuerpo">
+              <p class="hito__nombre">Premio a la Excelencia Empresarial</p>
+              <p class="hito__quien">Instituto para la Excelencia Profesional</p>
+            </div>
+            <span class="hito__logo"><img src="assets/img/premio-iep.webp" width="300" height="164" loading="lazy" alt="Instituto para la Excelencia Profesional"></span>
+          </li>
+          <li class="hito">
+            <p class="hito__año">2018</p>
+            <div class="hito__cuerpo">
+              <p class="hito__nombre">Estrella de Oro a la Excelencia Profesional</p>
+              <p class="hito__quien">Instituto para la Excelencia Profesional</p>
+            </div>
+            <span class="hito__logo"><img src="assets/img/premio-iep.webp" width="300" height="164" loading="lazy" alt=""></span>
+          </li>
+          <li class="hito">
+            <p class="hito__año">2017</p>
+            <div class="hito__cuerpo">
+              <p class="hito__nombre">Medalla de Oro Europea al Mérito en el Trabajo</p>
+              <p class="hito__quien">Asociación Europea de Economía y Competitividad</p>
+            </div>
+            <span class="hito__logo"><img src="assets/img/premio-aec.webp" width="169" height="169" loading="lazy" alt="Asociación Europea de Economía y Competitividad"></span>
+          </li>
+          <li class="hito">
+            <p class="hito__año">2017</p>
+            <div class="hito__cuerpo">
+              <p class="hito__nombre">Medalla de Oro</p>
+              <p class="hito__quien">Asociación Española de Profesionales de la Imagen</p>
+            </div>
+            <span class="hito__logo"><img src="assets/img/premio-aepi.webp" width="260" height="194" loading="lazy" alt="Asociación Española de Profesionales de la Imagen"></span>
+          </li>
+          <li class="hito hito--inicio">
+            <p class="hito__año">2012</p>
+            <div class="hito__cuerpo">
+              <p class="hito__nombre">Abre su primer salón</p>
+              <p class="hito__quien">Con 25 años, en Madrid</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
   </section>
 
-  <!-- ═══════════ 07 · VISITAR — la conversión ═══════════ -->
-  <section class="vis claro seccion" id="visitar">
-    <div class="vis__in env">
+  <!-- ═══════════ 6 · PREGUNTAS ═══════════ -->
+  <section class="seccion preguntas" id="preguntas" aria-labelledby="faq-titulo">
+    <div class="envoltura preguntas__rejilla">
+      <header class="cabecera-sec">
+        <p class="antetitulo">Preguntas</p>
+        <h2 class="titulo-sec" id="faq-titulo">Preguntas <em>rápidas</em></h2>
+      </header>
+      <div class="preguntas__lista">
+        <details class="pregunta" name="faq" open>
+          <summary>¿Cómo pido cita?<svg class="ico" aria-hidden="true"><use href="#i-mas"/></svg></summary>
+          <div class="pregunta__resp"><p>Si deseas concertar una cita, o solicitar una consulta con nuestros estilistas de corte y color, llámanos al <a href="tel:+34917545321">917 54 53 21</a>. También puedes dejarnos tu petición en el <a href="#cita">formulario de esta página</a>.</p></div>
+        </details>
+        <details class="pregunta" name="faq">
+          <summary>¿Qué horario tenéis?<svg class="ico" aria-hidden="true"><use href="#i-mas"/></svg></summary>
+          <div class="pregunta__resp"><p>De lunes a viernes, de 10:00 a 20:30. Sábados, de 9:00 a 15:00. Domingos, cerrado.</p></div>
+        </details>
+        <details class="pregunta" name="faq">
+          <summary>¿Atendéis a hombres?<svg class="ico" aria-hidden="true"><use href="#i-mas"/></svg></summary>
+          <div class="pregunta__resp"><p>Sí. Ofrecemos el mejor servicio para los hombres: los hombres forman parte de nuestro salón.</p></div>
+        </details>
+        <details class="pregunta" name="faq">
+          <summary>¿Hacéis peinados y maquillaje para eventos?<svg class="ico" aria-hidden="true"><use href="#i-mas"/></svg></summary>
+          <div class="pregunta__resp"><p>Sí. Peinados sofisticados para asistir a una fiesta o evento, y maquillaje de día, de noche o para fiestas, adaptándonos al evento al que vayas a asistir.</p></div>
+        </details>
+        <details class="pregunta" name="faq">
+          <summary>¿Qué tratamientos hacéis?<svg class="ico" aria-hidden="true"><use href="#i-mas"/></svg></summary>
+          <div class="pregunta__resp"><p>Tratamientos para cuidado, nutrición y volumen, keratina, ondulados y alisados. Diferentes tipos de tratamientos para todo tipo de cabello.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
 
-      <div class="vis__datos corte">
-        <h2 class="vis__tit titular">Pedir cita</h2>
-        <address class="vis__dir">
-          C/ San Romualdo 51-53<br>28037 Madrid
-        </address>
+  <!-- ═══════════ 7 · CONTACTO ═══════════ -->
+  <section class="seccion contacto" id="contacto" aria-labelledby="contacto-titulo">
+    <div class="envoltura mosaico mosaico--contacto">
+      <div class="az az--contacto">
+        <p class="antetitulo">Contacto</p>
+        <h2 class="titulo-sec titulo-sec--m" id="contacto-titulo">Estamos en Calle <em>San&nbsp;Romualdo</em> 51-53</h2>
+        <p class="estado" data-estado></p>
 
-        <dl class="vis__hor tabular">
-          <div class="vis__fila">
-            <dt>Lunes a viernes</dt><dd>10:00 – 20:30</dd>
-          </div>
-          <div class="vis__fila">
-            <dt>Sábados</dt><dd>9:00 – 15:00</dd>
-          </div>
-          <div class="vis__fila vis__fila--no">
-            <dt>Domingos</dt><dd>Cerrado</dd>
-          </div>
-        </dl>
+        <table class="horario">
+          <caption class="solo-lectores">Horario del salón</caption>
+          <tbody>
+            <tr data-dias="1 2 3 4 5"><th scope="row">Lunes a viernes</th><td>10:00 – 20:30</td></tr>
+            <tr data-dias="6"><th scope="row">Sábados</th><td>9:00 – 15:00</td></tr>
+            <tr data-dias="0"><th scope="row">Domingos</th><td>Cerrado</td></tr>
+          </tbody>
+        </table>
+
+        <ul class="datos" role="list">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg><span>C/ San Romualdo 51-53<br>28037 Madrid</span></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><a href="tel:+34917545321">917 54 53 21</a></li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-correo"/></svg><a href="mailto:lorenacampillopeluqueria@gmail.com">lorenacampillopeluqueria<wbr>@gmail.com</a></li>
+        </ul>
+
+        <div class="acciones">
+          <a class="boton boton--negro" href="https://www.google.com/maps/dir/?api=1&amp;destination=Calle+de+San+Romualdo+51,+28037+Madrid" target="_blank" rel="noopener">Cómo llegar <svg class="ico" aria-hidden="true"><use href="#i-sale"/></svg><span class="solo-lectores"> (abre Google Maps)</span></a>
+          <a class="boton boton--linea" href="tel:+34917545321"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Llamar</a>
+        </div>
       </div>
 
-      <div class="vis__acc corte">
-        <a class="accion accion--solido" href="tel:+34917545321">Llamar ahora</a>
-        <a class="accion accion--linea" href="mailto:lorenacampillopeluqueria@gmail.com">Escribir un correo</a>
-        <a class="accion accion--linea" href="https://www.google.com/maps/search/?api=1&amp;query=C%2F+San+Romualdo+51-53%2C+28037+Madrid" target="_blank" rel="noopener">Cómo llegar</a>
-        <p class="vis__nota">El correo y el mapa funcionan también los domingos.</p>
+      <div class="az az--mapa" data-mapa>
+        <div class="mapa__fachada">
+          <svg class="mapa__plano" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <path d="M-20 70 L420 40 M-20 170 L420 150 M-20 260 L420 250 M60 -20 L110 320 M190 -20 L215 320 M320 -20 L300 320 M-20 300 L250 -20"/>
+          </svg>
+          <span class="mapa__pin"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg></span>
+          <button class="boton boton--claro" type="button" data-cargar-mapa>Ver el mapa</button>
+          <p class="mapa__nota">El mapa se carga desde Google Maps al pulsar.</p>
+        </div>
       </div>
-
     </div>
   </section>
 
 </main>
 
-<!-- ═══════════ 08 · PIE ═══════════ -->
+<!-- ═══════════ PIE ═══════════ -->
 <footer class="pie">
-  <div class="pie__in env">
-    <span class="firma pie__firma" role="img" aria-label="Lorena Campillo"></span>
-    <p class="pie__datos tabular">
-      C/ San Romualdo 51-53 · 28037 Madrid ·
-      <a href="tel:+34917545321">917 54 53 21</a>
-    </p>
-    <p class="pie__legal">© 2026 Lorena Campillo Peluquería</p>
+  <div class="envoltura pie__rejilla">
+    <div class="pie__marca">
+      <img src="assets/img/logo-blanco.webp" width="1200" height="175" loading="lazy" alt="Lorena Campillo">
+      <p>Peluquería boutique desde 2012</p>
+    </div>
+    <div>
+      <p class="pie__tit">Dónde</p>
+      <p>C/ San Romualdo 51-53<br>28037 Madrid</p>
+    </div>
+    <div>
+      <p class="pie__tit">Horario</p>
+      <p>Lunes a viernes, 10:00–20:30<br>Sábados, 9:00–15:00<br>Domingos, cerrado</p>
+    </div>
+    <div>
+      <p class="pie__tit">Contacto</p>
+      <ul class="pie__enlaces" role="list">
+        <li><a href="tel:+34917545321">917 54 53 21</a></li>
+        <li><a href="mailto:lorenacampillopeluqueria@gmail.com">Escríbenos un email</a></li>
+        <li><a href="https://www.facebook.com/people/Lorena-Campillo-Peluqueria/100069764804692/" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-fb"/></svg>Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="envoltura pie__base">
+    <p>© 2026 Lorena Campillo Peluquería</p>
+    <p>Propuesta de diseño · <a href="https://jjuradogarciadelrio.com" target="_blank" rel="noopener">Juan Jurado</a></p>
   </div>
 </footer>
 
-<!-- Barra fija en móvil: se retira cuando llega el bloque de pedir cita -->
-<div class="barra" id="barra">
-  <a class="barra__acc tabular" href="tel:+34917545321">
-    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none"
-         stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/>
-    </svg>
-    Pedir cita · 917 54 53 21
-  </a>
-</div>
+<!-- Barra fija (móvil) -->
+<nav class="fija" aria-label="Acciones rápidas" data-fija>
+  <a href="tel:+34917545321"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Llamar</a>
+  <a class="fija__prin" href="#cita">Pedir cita</a>
+  <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Calle+de+San+Romualdo+51,+28037+Madrid" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>Cómo llegar</a>
+</nav>
 
-<script src="assets/js/movimiento.js"></script>
-<script src="assets/js/home.js"></script>
+<script src="assets/js/home.js?v=3" defer></script>
 </body>
 </html>
