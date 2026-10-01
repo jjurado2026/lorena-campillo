@@ -1,9 +1,10 @@
 /* =====================================================================
-   LORENA CAMPILLO — v3 «Azulejo»
-   Sin JavaScript la página se lee entera: servicios, horario, contacto y
-   preguntas están en el HTML. Esto añade lo útil: estado abierto/cerrado
-   en vivo (hora de Madrid), días de cita calculados con su horario, el
-   resguardo con el email ya escrito, menú, barra fija y el movimiento.
+   LORENA CAMPILLO — v4 «Luz de espejo»
+   Sin JavaScript la página se lee entera (servicios, horario, preguntas y
+   contacto están en el HTML). Esto añade lo útil y el movimiento:
+   estado abierto/cerrado en vivo, la reserva con su resguardo, la vitrina
+   de servicios, los espejos que se encienden, el hilo de la trayectoria,
+   la conversación de preguntas y los botones vivos.
    Parámetros: ?ss → sin animaciones (capturas)
                ?ahora=2026-09-29T11:30 → fija la hora de Madrid (revisión)
    ===================================================================== */
@@ -14,15 +15,74 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const raiz = document.documentElement;
   const quieto = raiz.classList.contains('quieto');
+  const captura = raiz.classList.contains('captura');
   const params = new URLSearchParams(location.search);
+  const punteroFino = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const escritorio = matchMedia('(min-width: 1024px)');
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const reiniciar = (el, clase) => { el.classList.remove(clase); void el.offsetWidth; el.classList.add(clase); };
+  const espera = ms => new Promise(r => setTimeout(r, ms));
 
   /* Capturas: todo cargado desde el principio */
-  if (raiz.classList.contains('captura')) $$('img[loading="lazy"]').forEach(i => { i.loading = 'eager'; });
+  if (captura) {
+    $$('img[loading="lazy"]').forEach(i => { i.loading = 'eager'; });
+    $$('iframe[loading="lazy"]').forEach(f => { f.loading = 'eager'; });
+  }
 
-  /* ---------- El horario: una sola fuente ----------
-     Minutos desde medianoche. 0 = domingo … 6 = sábado. */
+  /* =================================================================
+     Textos que se animan: letras del nombre, palabras de los titulares
+     ================================================================= */
+  $$('[data-letras-hero]').forEach(el => {
+    const letras = [...el.textContent.trim()];
+    const desdeElFinal = el.dataset.letrasHero === 'izq'; // «Lorena» se enciende desde el espejo hacia fuera
+    el.innerHTML = letras.map((c, i) =>
+      `<span class="lm"><span class="l" style="--d:${desdeElFinal ? letras.length - 1 - i : i}">${c}</span></span>`).join('');
+  });
+  $$('[data-palabras]').forEach(el => {
+    el.innerHTML = el.textContent.trim().split(/\s+/)
+      .map((p, i) => `<span class="p"><span class="p__in" style="--w:${i}">${p}</span></span>`).join(' ');
+  });
+  const citaSalon = $('[data-encender]');
+  let palabrasCita = [];
+  if (citaSalon) {
+    citaSalon.innerHTML = citaSalon.textContent.trim().split(/\s+/).map(w => `<span class="w">${w}</span>`).join(' ');
+    palabrasCita = $$('.w', citaSalon);
+  }
+
+  /* =================================================================
+     Botones: el texto rueda, la tinta nace donde entra el cursor y los
+     principales siguen al cursor como un imán
+     ================================================================= */
+  $$('.boton__txt').forEach(t => {
+    const html = t.innerHTML;
+    t.innerHTML = `<span class="boton__rodillo"><span>${html}</span><span aria-hidden="true">${html}</span></span>`;
+  });
+  $$('.boton').forEach(b => {
+    const origen = e => {
+      const r = b.getBoundingClientRect();
+      b.style.setProperty('--rx', `${((e.clientX - r.left) / r.width * 100).toFixed(1)}%`);
+      b.style.setProperty('--ry', `${((e.clientY - r.top) / r.height * 100).toFixed(1)}%`);
+    };
+    b.addEventListener('pointerenter', origen);
+    b.addEventListener('pointerleave', origen);
+  });
+  if (punteroFino && !quieto) {
+    $$('[data-magnetico]').forEach(b => {
+      b.addEventListener('pointermove', e => {
+        const r = b.getBoundingClientRect();
+        b.style.setProperty('--mx', `${((e.clientX - r.left - r.width / 2) * .22).toFixed(1)}px`);
+        b.style.setProperty('--my', `${((e.clientY - r.top - r.height / 2) * .34).toFixed(1)}px`);
+      });
+      b.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
+    });
+  }
+
+  /* =================================================================
+     El horario: una sola fuente
+     Minutos desde medianoche. 0 = domingo … 6 = sábado.
+     ================================================================= */
   const HORARIO = { 0: null, 1: [600, 1230], 2: [600, 1230], 3: [600, 1230], 4: [600, 1230], 5: [600, 1230], 6: [540, 900] };
-  const MEDIODIA = 840; // 14:00 separa mañana y tarde entre semana
+  const MEDIODIA = 840;
   const DIAS    = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
   const DIAS_C  = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
   const MESES   = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -50,24 +110,13 @@
   function estado(t) {
     const hoy = HORARIO[t.dia];
     if (hoy && t.min >= hoy[0] && t.min < hoy[1]) {
-      const pronto = hoy[1] - t.min <= 45;
-      return {
-        abierto: true,
-        txt: pronto ? 'Cierra pronto' : 'Abierto ahora',
-        sub: `cierra a las ${hhmm(hoy[1])}`,
-        corto: `Abierto · hasta las ${hhmm(hoy[1])}`
-      };
+      return { abierto: true, txt: hoy[1] - t.min <= 45 ? 'Cierra pronto' : 'Abierto ahora', sub: `cierra a las ${hhmm(hoy[1])}` };
     }
     for (let i = 0; i < 8; i++) {
       const d = (t.dia + i) % 7, h = HORARIO[d];
       if (!h || (i === 0 && t.min >= h[0])) continue;
       const cuando = i === 0 ? 'hoy' : i === 1 ? 'mañana' : `el ${DIAS[d]}`;
-      return {
-        abierto: false,
-        txt: 'Cerrado ahora',
-        sub: `abre ${cuando} a las ${hhmm(h[0])}`,
-        corto: `Cerrado · abre ${cuando} a las ${hhmm(h[0])}`
-      };
+      return { abierto: false, txt: 'Cerrado ahora', sub: `abre ${cuando} a las ${hhmm(h[0])}` };
     }
     return null;
   }
@@ -79,24 +128,17 @@
     $$('[data-estado]').forEach(el => {
       el.classList.toggle('es-abierto', e.abierto);
       el.classList.toggle('es-cerrado', !e.abierto);
-      el.innerHTML = el.dataset.estado === 'corto'
-        ? `<span class="estado__punto" aria-hidden="true"></span><span class="estado__txt">${e.corto}</span>`
-        : `<span class="estado__punto" aria-hidden="true"></span><span class="estado__txt">${e.txt}</span><span class="estado__sub">${e.sub}</span>`;
-      el.hidden = false;
+      el.innerHTML = `<span class="estado__punto" aria-hidden="true"></span><span class="estado__txt">${e.txt}</span><span class="estado__sub">${e.sub}</span>`;
     });
-    $$('.horario tr[data-dias]').forEach(tr => {
-      tr.classList.toggle('es-hoy', tr.dataset.dias.split(' ').includes(String(t.dia)));
-    });
+    $$('.horario tr[data-dias]').forEach(tr => tr.classList.toggle('es-hoy', tr.dataset.dias.split(' ').includes(String(t.dia))));
   }
   pintarEstado();
   setInterval(pintarEstado, 60000);
 
-  /* ---------- Cabecera, menú y barra fija ---------- */
+  /* =================================================================
+     Cabecera, menú, barra fija y botón flotante
+     ================================================================= */
   const cab = $('#cab');
-  const alScroll = () => cab.classList.toggle('con-borde', scrollY > 8);
-  addEventListener('scroll', alScroll, { passive: true });
-  alScroll();
-
   const botonMenu = $('.cab__menu');
   const menu = $('#menu');
   const menuAbierto = () => botonMenu.getAttribute('aria-expanded') === 'true';
@@ -110,90 +152,129 @@
     menu.classList.remove('abierto');
     botonMenu.setAttribute('aria-expanded', 'false');
     raiz.classList.remove('menu-abierto');
-    setTimeout(() => { if (!menuAbierto()) menu.hidden = true; }, quieto ? 0 : 170);
+    setTimeout(() => { if (!menuAbierto()) menu.hidden = true; }, quieto ? 0 : 200);
   }
   botonMenu.addEventListener('click', () => (menuAbierto() ? cerrarMenu() : abrirMenu()));
   menu.addEventListener('click', e => { if (e.target.closest('a')) cerrarMenu(); });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && menuAbierto()) { cerrarMenu(); botonMenu.focus(); }
-  });
-  matchMedia('(min-width: 1024px)').addEventListener('change', e => { if (e.matches && menuAbierto()) cerrarMenu(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuAbierto()) { cerrarMenu(); botonMenu.focus(); } });
+  escritorio.addEventListener('change', e => { if (e.matches && menuAbierto()) cerrarMenu(); });
 
-  /* Barra fija: aparece al dejar atrás el hero; se aparta en la sección de
-     cita (ya estás ahí) y mientras se escribe (el teclado ocupa la pantalla) */
   const fija = $('[data-fija]');
+  const flotante = $('[data-flotante]');
   const hero = $('#inicio');
   const seccionCita = $('#cita');
-  if (fija && hero && 'IntersectionObserver' in window) {
-    let trasHero = false, enCita = false, escribiendo = false;
-    const pintarFija = () => fija.classList.toggle('visible', trasHero && !enCita && !escribiendo);
-    new IntersectionObserver(([e]) => { trasHero = !e.isIntersecting && e.boundingClientRect.top < 0; pintarFija(); })
-      .observe(hero);
-    if (seccionCita) {
-      new IntersectionObserver(([e]) => { enCita = e.isIntersecting; pintarFija(); }, { threshold: 0.15 })
-        .observe(seccionCita);
-    }
-    document.addEventListener('focusin', e => { if (e.target.matches('input[type="text"], input[type="tel"]')) { escribiendo = true; pintarFija(); } });
-    document.addEventListener('focusout', e => { if (e.target.matches('input[type="text"], input[type="tel"]')) { escribiendo = false; pintarFija(); } });
+  const pie = $('.pie');
+  let trasHero = false, enCita = false, enPie = false, escribiendo = false;
+  const pintarFijos = () => {
+    if (fija) fija.classList.toggle('visible', trasHero && !enCita && !escribiendo);
+    if (flotante) flotante.classList.toggle('visible', trasHero && !enCita && !enPie);
+  };
+  if ('IntersectionObserver' in window) {
+    if (hero) new IntersectionObserver(([e]) => { trasHero = !e.isIntersecting && e.boundingClientRect.top < 0; pintarFijos(); }).observe(hero);
+    if (seccionCita) new IntersectionObserver(([e]) => { enCita = e.isIntersecting; pintarFijos(); }, { threshold: .12 }).observe(seccionCita);
+    if (pie) new IntersectionObserver(([e]) => { enPie = e.isIntersecting; pintarFijos(); }).observe(pie);
   }
+  document.addEventListener('focusin', e => { if (e.target.matches('input[type="text"], input[type="tel"]')) { escribiendo = true; pintarFijos(); } });
+  document.addEventListener('focusout', e => { if (e.target.matches('input[type="text"], input[type="tel"]')) { escribiendo = false; pintarFijos(); } });
 
-  /* ---------- Revelados (una vez) ---------- */
-  const revelables = $$('[data-revela]');
+  /* =================================================================
+     Lo que se enciende al entrar en pantalla (una vez)
+     ================================================================= */
+  const vistas = [
+    ['[data-palabras]', 'visible', .35],
+    ['[data-revela]', 'visible', .2],
+    ['.espejo--pared', 'encendido', .3]
+  ];
   if (!quieto && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(entradas => {
-      entradas.forEach(e => {
+    vistas.forEach(([sel, clase, umbral]) => {
+      const io = new IntersectionObserver(es => es.forEach(e => {
         if (!e.isIntersecting) return;
-        e.target.classList.add('visible');
+        e.target.classList.add(clase);
         io.unobserve(e.target);
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-    revelables.forEach(el => io.observe(el));
+      }), { threshold: umbral, rootMargin: '0px 0px -6% 0px' });
+      $$(sel).forEach(el => io.observe(el));
+    });
   } else {
-    revelables.forEach(el => el.classList.add('visible'));
+    vistas.forEach(([sel, clase]) => $$(sel).forEach(el => el.classList.add(clase)));
   }
-  addEventListener('beforeprint', () => revelables.forEach(el => el.classList.add('visible')));
 
-  /* ---------- Servicios: gesto del pictograma y carril en móvil ---------- */
-  const gesto = el => { el.classList.remove('gesto'); void el.offsetWidth; el.classList.add('gesto'); };
+  /* =================================================================
+     Servicios: la vitrina (escritorio) y el carrusel (móvil)
+     ================================================================= */
+  const gesto = el => { if (el && !quieto) reiniciar(el, 'gesto'); };
+  const carta = $('[data-carta]');
   const servs = $$('.serv');
-  servs.forEach(s => {
-    s.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') gesto(s); });
-    s.addEventListener('focusin', () => gesto(s));
-  });
-  if (!quieto && 'IntersectionObserver' in window) {
-    const ioG = new IntersectionObserver(entradas => {
-      entradas.forEach(e => {
-        if (!e.isIntersecting) return;
-        gesto(e.target);
-        ioG.unobserve(e.target);
-      });
-    }, { threshold: 0.6 });
-    servs.forEach(s => ioG.observe(s));
+  const fotosVitrina = $$('.vitrina__foto');
+  const nombreVitrina = $('[data-vitrina-nombre]');
+  const luzVitrina = $('.vitrina__luz');
+  let activo = servs[0] ? servs[0].dataset.serv : '';
+
+  function activar(id) {
+    if (!id || id === activo) return;
+    activo = id;
+    const s = servs.find(x => x.dataset.serv === id);
+    servs.forEach(x => x.classList.toggle('activo', x === s));
+    fotosVitrina.forEach(f => f.classList.toggle('activa', f.dataset.v === id));
+    if (nombreVitrina && s) {
+      nombreVitrina.textContent = $('.serv__nombre span', s).textContent;
+      if (!quieto) reiniciar(nombreVitrina, 'nuevo');
+    }
+    if (luzVitrina && !quieto) reiniciar(luzVitrina, 'pasa');
+    gesto(s);
   }
 
-  const carril = $('[data-carril]');
-  const posCarril = $('[data-carril-pos]');
-  if (carril && posCarril) {
+  if (carta) {
+    // Escritorio: el servicio que cruza el centro de la pantalla se enciende; el cursor también
+    if ('IntersectionObserver' in window && !captura) {
+      const ioCentro = new IntersectionObserver(es => {
+        if (!escritorio.matches) return;
+        es.forEach(e => { if (e.isIntersecting) activar(e.target.dataset.serv); });
+      }, { rootMargin: '-46% 0px -46% 0px' });
+      servs.forEach(s => ioCentro.observe(s));
+    }
+    servs.forEach(s => {
+      s.addEventListener('pointerenter', e => { if (escritorio.matches && e.pointerType === 'mouse') activar(s.dataset.serv); });
+      s.addEventListener('focusin', () => { if (escritorio.matches) activar(s.dataset.serv); });
+    });
+
+    // Móvil: carrusel con profundidad; la tarjeta centrada hace su gesto
+    const posCarta = $('[data-carta-pos]');
+    let centrada = -1;
+    const profundidad = () => {
+      if (escritorio.matches) { servs.forEach(s => s.style.removeProperty('--k')); return; }
+      const c = carta.getBoundingClientRect();
+      const medio = c.left + c.width / 2;
+      let mejor = 0, dMin = Infinity;
+      servs.forEach((s, i) => {
+        const r = s.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - medio);
+        if (!quieto) s.style.setProperty('--k', clamp(d / (r.width * 1.05), 0, 1).toFixed(3));
+        if (d < dMin) { dMin = d; mejor = i; }
+      });
+      if (mejor !== centrada) {
+        centrada = mejor;
+        if (posCarta) posCarta.textContent = String(mejor + 1);
+        gesto(servs[mejor]);
+      }
+    };
     let pendiente = false;
-    carril.addEventListener('scroll', () => {
-      if (pendiente) return;
-      pendiente = true;
-      requestAnimationFrame(() => {
-        pendiente = false;
-        const paso = servs[1] ? servs[1].offsetLeft - servs[0].offsetLeft : 1;
-        const i = Math.round(carril.scrollLeft / paso);
-        posCarril.textContent = String(Math.min(servs.length, Math.max(1, i + 1)));
-      });
-    }, { passive: true });
+    const programar = () => { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; profundidad(); }); };
+    carta.addEventListener('scroll', programar, { passive: true });
+    addEventListener('resize', programar);
+    profundidad();
   }
 
-  /* ---------- Pide tu cita ---------- */
+  /* =================================================================
+     Pide tu cita
+     ================================================================= */
   const form = $('#form-cita');
-  const resguardo = $('[data-resguardo]');
+  const reserva = $('[data-reserva]');
+  const ticket = $('[data-resguardo]');
   const cajaDias = $('[data-dias]');
-  const cajaFranjas = $('[data-franjas]');
+  const segmento = $('[data-franjas]');
+  const progreso = $('[data-progreso]');
   const botonEmail = $('[data-email]');
-  const nota = $('.resguardo__nota');
+  const nota = $('.ticket__nota');
   const notaBase = nota ? nota.textContent : '';
 
   /* Los próximos seis días en que abren (sin domingos; hoy solo si da tiempo) */
@@ -204,13 +285,12 @@
     for (let i = 0; fichas.length < 6 && i < 14; i++) {
       const f = new Date(Date.UTC(t.y, t.m - 1, t.d + i));
       const d = f.getUTCDay(), h = HORARIO[d];
-      if (!h) continue;
-      if (i === 0 && t.min > h[1] - 60) continue;
+      if (!h || (i === 0 && t.min > h[1] - 60)) continue;
       const cab = i === 0 ? 'Hoy' : i === 1 ? 'Mañana' : DIAS_C[d];
       const valor = `${i === 0 ? 'Hoy, ' : i === 1 ? 'Mañana, ' : ''}${DIAS[d]} ${f.getUTCDate()} de ${MESES[f.getUTCMonth()]}`;
       fichas.push(
-        `<label class="ficha"><input type="radio" name="dia" value="${valor}" data-d="${d}" data-hoy="${i === 0 ? 1 : 0}">` +
-        `<span><b>${cab}</b><small>${f.getUTCDate()} ${MESES_C[f.getUTCMonth()]}</small></span></label>`
+        `<label class="dia"><input type="radio" name="dia" value="${valor}" data-d="${d}" data-hoy="${i === 0 ? 1 : 0}" data-num="${f.getUTCDate()}" data-sem="${DIAS[d]}" data-mes="${MESES[f.getUTCMonth()]}">` +
+        `<span class="dia__cara"><b>${cab}</b><span class="dia__num">${f.getUTCDate()}</span><small>${MESES_C[f.getUTCMonth()]}</small></span></label>`
       );
     }
     cajaDias.innerHTML = fichas.join('');
@@ -218,7 +298,7 @@
 
   /* Mañana / tarde según el día: el sábado solo hay mañana; hoy, lo que quede */
   function ajustarFranjas() {
-    if (!cajaFranjas) return;
+    if (!segmento) return;
     const elegido = form.querySelector('input[name="dia"]:checked');
     const d = elegido ? +elegido.dataset.d : 1;
     const esHoy = elegido && elegido.dataset.hoy === '1';
@@ -226,18 +306,24 @@
     const h = HORARIO[d] || HORARIO[1];
     const franjas = d === 6
       ? [{ v: 'Por la mañana', n: 'Mañana', ini: h[0], fin: h[1] }]
-      : [
-          { v: 'Por la mañana', n: 'Mañana', ini: h[0], fin: MEDIODIA },
-          { v: 'Por la tarde',  n: 'Tarde',  ini: MEDIODIA, fin: h[1] }
-        ];
+      : [{ v: 'Por la mañana', n: 'Mañana', ini: h[0], fin: MEDIODIA }, { v: 'Por la tarde', n: 'Tarde', ini: MEDIODIA, fin: h[1] }];
     const antes = (form.querySelector('input[name="franja"]:checked') || {}).value;
-    cajaFranjas.innerHTML = franjas.map(f => {
+    segmento.style.setProperty('--ops', franjas.length);
+    segmento.innerHTML = franjas.map(f => {
       const pasada = esHoy && t.min > f.fin - 60;
       const empezada = esHoy && t.min > f.ini;
-      const rango = pasada ? 'ya no da tiempo' : empezada ? `hasta las ${hhmm(f.fin)}` : `${hhmm(f.ini)}–${hhmm(f.fin)}`;
-      return `<label class="ficha"><input type="radio" name="franja" value="${f.v}"${pasada ? ' disabled' : ''}${!pasada && antes === f.v ? ' checked' : ''}>` +
-             `<span>${f.n}<small>${rango}</small></span></label>`;
-    }).join('');
+      const rango = pasada ? 'ya no da tiempo' : empezada ? `hasta las ${hhmm(f.fin)}` : `${hhmm(f.ini)} a ${hhmm(f.fin)}`;
+      return `<label class="segmento__op"><input type="radio" name="franja" value="${f.v}"${pasada ? ' disabled' : ''}${!pasada && antes === f.v ? ' checked' : ''}>` +
+             `<span>${f.n} <small>${rango}</small></span></label>`;
+    }).join('') + '<span class="segmento__pulgar" aria-hidden="true"></span>';
+    moverPulgar();
+  }
+  function moverPulgar() {
+    if (!segmento) return;
+    const ops = $$('input[name="franja"]', segmento);
+    const i = ops.findIndex(o => o.checked);
+    segmento.style.setProperty('--pos', Math.max(0, i));
+    segmento.style.setProperty('--vis', i >= 0 ? 1 : 0);
   }
 
   function leer() {
@@ -250,50 +336,72 @@
       telefono: String(fd.get('telefono') || '').trim()
     };
   }
-
   function linea(clave, texto, vacio) {
-    const dd = resguardo.querySelector(`[data-r="${clave}"]`);
+    const dd = ticket.querySelector(`[data-r="${clave}"]`);
     if (!dd || dd.textContent === texto) return;
     dd.textContent = texto;
     dd.classList.toggle('vacio', vacio);
-    if (!vacio && !quieto) { dd.classList.remove('cambia'); void dd.offsetWidth; dd.classList.add('cambia'); }
+    if (!vacio && !quieto) reiniciar(dd, 'cambia');
+  }
+  /* La hoja de calendario del resguardo: el día elegido, en grande */
+  const hojaFecha = $('.ticket__fecha');
+  const hojaSem = $('[data-t-sem]');
+  const hojaNum = $('[data-t-num]');
+  const hojaMes = $('[data-t-mes]');
+  const hojaVacia = hojaFecha ? [hojaSem.textContent, hojaNum.textContent, hojaMes.textContent] : [];
+  function pintarHoja() {
+    if (!hojaFecha) return;
+    const d = form.querySelector('input[name="dia"]:checked');
+    const [sem, num, mes] = d && d.dataset.num ? [d.dataset.sem, d.dataset.num, d.dataset.mes] : d ? ['', '·', d.value] : hojaVacia;
+    if (hojaNum.textContent === num && hojaMes.textContent === mes && hojaSem.textContent === sem) return;
+    hojaSem.textContent = sem;
+    hojaNum.textContent = num;
+    hojaMes.textContent = mes;
+    hojaFecha.classList.toggle('vacia', !d);
+    if (d && !quieto) reiniciar(hojaFecha, 'pasa');
   }
 
+  let estabaLista = false;
   function pintarResguardo() {
     const v = leer();
     const franja = form.querySelector('input[name="franja"]:checked');
     const rango = franja ? franja.parentElement.querySelector('small').textContent : '';
     linea('servicio', v.servicio.length ? v.servicio.join(', ') : 'Elige uno o varios', !v.servicio.length);
-    linea('dia', v.dia || '—', !v.dia);
-    linea('franja', v.franja ? `${v.franja} (${rango})` : '—', !v.franja);
-    linea('nombre', v.nombre || '—', !v.nombre);
+    linea('dia', v.dia || 'Sin elegir', !v.dia);
+    linea('franja', v.franja ? `${v.franja} (${rango})` : 'Sin elegir', !v.franja);
+    linea('nombre', v.nombre || 'Sin escribir', !v.nombre);
+    pintarHoja();
 
-    const lista = v.servicio.length > 0 && v.dia && v.franja;
-    resguardo.classList.toggle('lista', Boolean(lista));
+    const pasos = [v.servicio.length > 0, !!v.dia, !!v.franja, !!v.nombre].filter(Boolean).length;
+    if (progreso) progreso.style.setProperty('--p', (pasos / 4).toFixed(2));
+
+    const lista = v.servicio.length > 0 && !!v.dia && !!v.franja;
+    reserva.classList.toggle('lista', lista);
+    if (lista && !estabaLista && !quieto) { reserva.classList.add('recien-lista'); setTimeout(() => reserva.classList.remove('recien-lista'), 1400); }
+    estabaLista = lista;
     if (lista && nota.classList.contains('aviso')) { nota.classList.remove('aviso'); nota.textContent = notaBase; }
 
     const cuerpo = [
-      'Hola, me gustaría pedir cita.',
-      '',
+      'Hola, me gustaría pedir cita.', '',
       `Servicio: ${v.servicio.join(', ') || 'por decidir'}`,
       `Día: ${v.dia || 'a convenir'}`,
       `Franja: ${v.franja ? `${v.franja} (${rango})` : 'a convenir'}`,
       `Nombre: ${v.nombre || '—'}`,
-      `Teléfono: ${v.telefono || '—'}`,
-      '',
-      'Gracias.'
+      `Teléfono: ${v.telefono || '—'}`, '', 'Gracias.'
     ].join('\n');
     const asunto = `Petición de cita${v.nombre ? ` · ${v.nombre}` : ''}`;
     botonEmail.href = `mailto:lorenacampillopeluqueria@gmail.com?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
   }
 
-  if (form && resguardo) {
+  if (form && reserva && ticket) {
     construirDias();
     ajustarFranjas();
     pintarResguardo();
 
     form.addEventListener('change', e => {
       if (e.target.name === 'dia') ajustarFranjas();
+      if (e.target.name === 'franja') moverPulgar();
+      if (e.target.name === 'servicio' && e.target.checked) gesto(e.target.closest('.pieza'));
       pintarResguardo();
     });
     form.addEventListener('input', e => { if (e.target.matches('input[type="text"], input[type="tel"]')) pintarResguardo(); });
@@ -317,20 +425,133 @@
     }));
   }
 
-  /* ---------- Mapa: solo al pulsar ---------- */
-  const botonMapa = $('[data-cargar-mapa]');
-  if (botonMapa) {
-    botonMapa.addEventListener('click', () => {
-      const caja = $('[data-mapa]');
-      const f = document.createElement('iframe');
-      f.src = 'https://www.google.com/maps?q=Lorena+Campillo+Peluquer%C3%ADa,+Calle+de+San+Romualdo+51,+28037+Madrid&z=16&output=embed';
-      f.title = 'Mapa: Lorena Campillo Peluquería, C/ San Romualdo 51-53, Madrid';
-      f.loading = 'lazy';
-      f.referrerPolicy = 'no-referrer-when-downgrade';
-      f.allowFullscreen = true;
-      caja.appendChild(f);
-      caja.classList.add('con-mapa');
-      f.focus();
+  /* =================================================================
+     Preguntas frecuentes: una conversación
+     ================================================================= */
+  const chat = $('[data-chat]');
+  const cajaPreguntas = $('[data-chat-preguntas]');
+  if (chat && cajaPreguntas) {
+    const burbujas = $$('.burbuja', chat);
+    const pares = [];
+    for (let i = 0; i + 1 < burbujas.length; i += 2) pares.push({ p: burbujas[i].textContent.trim(), r: burbujas[i + 1].innerHTML });
+    chat.innerHTML = '';
+    let ocupado = false, tocado = false;
+
+    const alFinal = () => chat.scrollTo({ top: chat.scrollHeight, behavior: quieto ? 'auto' : 'smooth' });
+    const decir = (quien, html) => {
+      const b = document.createElement('p');
+      b.className = `burbuja burbuja--${quien} nueva`;
+      b.innerHTML = html;
+      chat.appendChild(b);
+      alFinal();
+    };
+    const escribirse = () => {
+      const d = document.createElement('div');
+      d.className = 'escribiendo';
+      d.setAttribute('aria-hidden', 'true');
+      d.innerHTML = '<span></span><span></span><span></span>';
+      chat.appendChild(d);
+      alFinal();
+      return d;
+    };
+    async function preguntar(i) {
+      if (ocupado || !pares[i]) return;
+      ocupado = true;
+      decir('yo', pares[i].p);
+      if (!quieto) { await espera(380); const t = escribirse(); await espera(900); t.remove(); }
+      decir('salon', pares[i].r);
+      const b = cajaPreguntas.querySelector(`[data-i="${i}"]`);
+      if (b) b.classList.add('hecha');
+      ocupado = false;
+    }
+
+    decir('salon', 'Hola. Elige una pregunta y aquí tienes la respuesta.');
+    cajaPreguntas.innerHTML = pares.map((x, i) =>
+      `<button type="button" class="pregunta-btn" data-i="${i}" style="--i:${i}"><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>${x.p}</button>`).join('');
+    cajaPreguntas.hidden = false;
+    cajaPreguntas.addEventListener('click', e => {
+      const b = e.target.closest('.pregunta-btn');
+      if (!b) return;
+      tocado = true;
+      preguntar(+b.dataset.i);
     });
+
+    // La primera vez que se ve, la conversación arranca sola con la pregunta más habitual
+    if (quieto) {
+      preguntar(0);
+    } else if ('IntersectionObserver' in window) {
+      const ioChat = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        ioChat.disconnect();
+        setTimeout(() => { if (!tocado) preguntar(0); }, 700);
+      }, { threshold: .55 });
+      ioChat.observe(chat);
+    }
   }
+
+  /* =================================================================
+     Lo que se mueve con el scroll: el hero, el fondo de la cita, la
+     pared de espejos, la frase del salón y el hilo de la trayectoria
+     ================================================================= */
+  const citaFondo = $('.cita__fondo');
+  const lunas = $$('.espejo--pared .espejo__luna img');
+  const lineaTiempo = $('[data-linea]');
+  const hitos = $$('.hito');
+
+  function alScroll() {
+    const vh = innerHeight;
+    if (cab) cab.classList.toggle('con-borde', scrollY > 8);
+
+    if (hero && scrollY < hero.offsetHeight * 1.2) {
+      const sy = Math.min(scrollY, hero.offsetHeight);
+      hero.style.setProperty('--sy', sy.toFixed(1));
+      hero.style.setProperty('--giro', `${(sy * .35).toFixed(1)}deg`);
+    }
+    if (citaFondo) {
+      const r = citaFondo.parentElement.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < vh) citaFondo.style.setProperty('--zoom', (1.16 - .14 * clamp((vh - r.top) / (vh + r.height), 0, 1)).toFixed(4));
+    }
+    lunas.forEach((img, i) => {
+      const r = img.parentElement.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      const t = clamp((vh - r.top) / (vh + r.height), 0, 1);
+      img.style.setProperty('--py', `${((.5 - t) * (12 + (i % 2) * 6)).toFixed(2)}%`);
+    });
+    if (citaSalon && palabrasCita.length) {
+      const r = citaSalon.getBoundingClientRect();
+      const t = clamp((vh * .88 - r.top) / (r.height + vh * .3), 0, 1);
+      const n = Math.round(t * palabrasCita.length);
+      palabrasCita.forEach((w, i) => w.classList.toggle('lit', i < n));
+    }
+    if (lineaTiempo) {
+      const r = lineaTiempo.getBoundingClientRect();
+      const ref = vh * .62;
+      lineaTiempo.style.setProperty('--prog', clamp((ref - r.top) / r.height, 0, 1).toFixed(4));
+      hitos.forEach(h => {
+        const hr = h.getBoundingClientRect();
+        h.classList.toggle('encendido', hr.top + hr.height * .5 < ref);
+      });
+    }
+  }
+
+  if (quieto) {
+    // Quieta y completa: todo encendido, sin seguir el scroll
+    palabrasCita.forEach(w => w.classList.add('lit'));
+    hitos.forEach(h => h.classList.add('encendido'));
+    if (lineaTiempo) lineaTiempo.style.setProperty('--prog', '1');
+    addEventListener('scroll', () => { if (cab) cab.classList.toggle('con-borde', scrollY > 8); }, { passive: true });
+  } else {
+    let pendiente = false;
+    const programar = () => { if (pendiente) return; pendiente = true; requestAnimationFrame(() => { pendiente = false; alScroll(); }); };
+    addEventListener('scroll', programar, { passive: true });
+    addEventListener('resize', programar);
+    alScroll();
+  }
+
+  /* Al imprimir: todo visible */
+  addEventListener('beforeprint', () => {
+    vistas.forEach(([sel, clase]) => $$(sel).forEach(el => el.classList.add(clase)));
+    palabrasCita.forEach(w => w.classList.add('lit'));
+    hitos.forEach(h => h.classList.add('encendido'));
+  });
 })();

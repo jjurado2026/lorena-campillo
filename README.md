@@ -1,32 +1,43 @@
-# Lorena Campillo Peluquería — Propuesta de homepage (v3 «Azulejo»)
+# Lorena Campillo Peluquería — Propuesta de homepage (v4 «Luz de espejo»)
 
 Prototipo de homepage para **Lorena Campillo Peluquería**, peluquería boutique en el barrio de Simancas (San Blas-Canillejas, Madrid), galardonada con seis premios nacionales e internacionales.
 
 **El problema que resuelve:** en su web actual, lo que decide una visita a la peluquería —dónde está, cuándo abre, cómo pedir cita— no aparece en la home de escritorio y en el móvil está al final, a unas cinco pantallas de scroll. No hay forma de pedir cita salvo llamar, sus fotos de trabajos están escondidas en páginas interiores y cuatro de sus cinco páginas se titulan «My Site 3».
 
-**Dirección estética: «Azulejo».** Su salón es azulejo negro brillante con junta blanca. La home se construye como esa pared: un mosaico de piezas sobre una junta de porcelana, donde **cada azulejo responde a una pregunta** de quien busca peluquería en el móvil — ¿abrís ahora?, ¿dónde estáis?, ¿qué hacéis?, ¿cómo pido cita? Solo su blanco y negro; el latón de sus medallas, solo para los galardones. Bodoni Moda + Onest.
+**Dirección estética: «Luz de espejo».** Su salón es una pared de espejos de marco negro con luz LED detrás. La página se enciende como ellos: el hero pone su retrato **dentro de un espejo retroiluminado, entre su nombre** («Lorena · retrato · Campillo»), la reserva se apoya sobre la foto de sus espejos, el salón es una pared de espejos que se encienden al llegar y la trayectoria avanza con un hilo de oro. Su negro y su blanco; el oro de sus medallas para los premios. **Italiana** en los titulares y **Onest** en el texto.
+
+## Fotos, tal cual
+- **Hero:** la foto de su web inicial (Lorena con sus medallas), el mismo archivo, sin recortes ni filtros. El marco y la luz están fuera de la foto.
+- **Trayectoria:** la foto de Lorena de pie con fondo azul, con el mismo encuadre con el que la muestra su página de Galardones.
+- **Maquillaje:** su foto original (224 px), nítida, sobre un fondo difuminado de sí misma.
 
 ## Lo útil
-- **Abierto / cerrado en vivo**, con la hora de Madrid y su horario («Cerrado · abre mañana a las 10:00»)
-- **Pide tu cita en un minuto**: servicio, día (los próximos seis en que abren), mañana o tarde y nombre. Un **resguardo** se rellena mientras eliges y deja el email **ya escrito** o la llamada a un toque. El sábado solo ofrece mañana; hoy, solo lo que queda
-- **Los seis servicios con sus fotos reales** y su texto, y un «Pedir cita para…» que deja el servicio marcado
-- **Trayectoria**: los seis galardones con año e institución, y el 2012 en que abrió
-- **Preguntas rápidas**, **horario con el día de hoy marcado**, **mapa que se carga al pulsar** y **barra fija** en móvil (Llamar · Pedir cita · Cómo llegar), que se aparta mientras escribes
-
-## Fotos: no partimos de cero
-La auditoría del 22-sep decía «ni una sola foto de trabajos». **Sí las hay**, enterradas en `/servicios` y `/sobre-nosotros`: un rizado, un balayage, un recogido con tocado ante su logo, unas mechas con papel, Lorena con tijeras y el puesto de caballero, hechas en su salón. Esta versión las pone en primera línea.
+- Estado **abierto / cerrado en vivo** con la hora de Madrid
+- **Pide tu cita**: servicio, día (los próximos seis en que abren), mañana o tarde y nombre. El resguardo se rellena solo, con una hoja de calendario del día elegido, y deja el email ya escrito o la llamada a un toque. El sábado solo ofrece mañana; hoy, solo lo que queda
+- **Vitrina de servicios** (escritorio): el servicio que pasa por el centro se enciende y su foto aparece en la vitrina. En móvil, carrusel con profundidad
+- **Preguntas frecuentes como conversación**: se toca una pregunta y la respuesta llega en el chat
+- **Nuestra Ubicación**: dirección, horario con el día de hoy marcado, mapa y «Cómo llegar»
+- Llamadas a la acción en cada sección, botón flotante en escritorio y barra fija en móvil
 
 ## Movimiento
-Solo `transform` y `opacity`, nada en bucle.
-- **Una vez:** el mosaico se coloca pieza a pieza (el único escalonado de la página) y una banda de luz cruza el azulejo negro de los premios: **el brillo del esmalte**, que vuelve al pasar el cursor por los azulejos negros y los botones
-- **Fotos:** una capa se retira hacia arriba y la foto se asienta
-- **Pictogramas:** cada uno hace su gesto al aparecer o al pasar por encima — la tijera corta, la brocha moja, el secador sopla, el carmín sube
-- **Resguardo:** cada dato entra al elegirlo y, al completarse, se sella «Lista»
+Solo `transform` y `opacity`.
+- **Hero (una vez):** el LED del espejo parpadea y se enciende, aparece el retrato y las letras del nombre suben desde el espejo hacia fuera. Al hacer scroll, el nombre se abre y el sello de los seis premios gira
+- **Titulares:** suben palabra a palabra al entrar
+- **Botones:** la tinta crece desde donde entra el cursor y el texto se invierte a su paso; el texto rueda; el icono hace su gesto (el teléfono suena, el calendario se abre); los principales siguen al cursor como un imán
+- **Servicios:** luz que barre la vitrina al cambiar; cada pictograma hace su gesto (la tijera corta, el secador sopla)
+- **Salón:** los espejos se encienden uno a uno y las fotos se desplazan dentro del marco; la frase se ilumina palabra a palabra al leerla
+- **Trayectoria:** el hilo de oro avanza con la lectura; cada medalla se enciende y el logo gira como una moneda
+- **Preguntas:** las burbujas llegan con el indicador de «escribiendo»
 - Con `prefers-reduced-motion` o `?ss`: cero animaciones, todo visible
 
+## Comprobado, no asumido
+- **El hero cabe entero, sin scroll**, en 14 pantallas: 320×568, 360×640, 375×667, 390×844, 414×896, 844×390 (móvil horizontal), 768×1024, 820×1180, 1024×768, 1280×720, 1366×768, 1440×900, 1920×1080 y 2560×1440. La foto conserva su proporción original en todas (sin recorte) y el nombre nunca la tapa
+- Sin desbordamiento horizontal · cero errores de JavaScript · un solo `<h1>` · todas las imágenes con `alt` · dianas táctiles ≥ 44 px · foco visible
+- Reserva, chat, vitrina, menú, botón flotante, barra fija y estado del horario probados con interacción real
+- Sin JavaScript la página se lee entera (las preguntas aparecen todas, respondidas)
+
 ## Stack
-HTML, CSS y JavaScript puro. Cero dependencias, cero build. Bodoni Moda + Onest autoalojadas (134 KB). Fotos del cliente en WebP con `srcset`.
-**Carga inicial: ~308 KB** sin comprimir (su web actual pesa 390 KB solo el documento HTML).
+HTML, CSS y JavaScript puro. Cero dependencias, cero build. Italiana (10 KB) + Onest autoalojadas.
 
 ## Ver en local
 ```bash
@@ -39,19 +50,8 @@ Parámetros: `?ss` (sin animaciones, para capturas) · `?ahora=2026-09-29T18:30`
 git subtree push --prefix=prototype origin gh-pages
 ```
 
-## Comprobado, no asumido
-- Sin desbordamiento horizontal a 360, 390, 768, 1024, 1280, 1440 y 1920 px
-- Cero errores de JavaScript · un solo `<h1>` · todas las imágenes con `alt` · dianas táctiles ≥ 44 px · foco visible en claro y oscuro
-- Cita: aviso si falta servicio o día, franja desactivada si ya no da tiempo, sábado solo mañana, domingo cerrado, email redactado completo
-- Menú móvil con Escape y bloqueo de scroll · barra fija que se aparta en la cita y al escribir
-- `prefers-reduced-motion`: cero animaciones vivas y todo visible · **sin JavaScript la página se lee entera**
-- Datos estructurados `HairSalon` (horario, galardones, servicios) y `FAQPage`
-
-## Pendiente de la clienta
-Ver [_interno/copy/cambios-copy.md](_interno/copy/cambios-copy.md) (local, no se publica): validar las frases nuevas, **cómo confirman las citas** (teléfono o WhatsApp), si cierran a mediodía, fechas de dos galardones leídas de sus diplomas, más fotos de trabajos, precios y acceso a Google Business.
-
 ## Versiones
-`v1-espejo` y `v2-editorial` están etiquetadas en git.
+`v1-espejo` y `v2-editorial` están etiquetadas en git; la v3 «Azulejo» es el commit `5bd0761`.
 
 ---
 Diseño y desarrollo: **Juan Jurado** · [jjuradogarciadelrio.com](https://jjuradogarciadelrio.com)

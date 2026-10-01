@@ -1,22 +1,15 @@
 /* =====================================================================
-   LORENA CAMPILLO — v3 «Azulejo» · base
-   Su salón es azulejo negro brillante con junta blanca. La página es esa
-   pared: piezas sobre una junta de porcelana. Solo su blanco y negro;
-   el latón de las medallas, solo para los galardones.
+   LORENA CAMPILLO — v4 «Luz de espejo» · base
+   Su salón es una pared de espejos de marco negro con luz LED detrás.
+   La página se enciende como ellos. Su negro y su blanco; el oro de sus
+   medallas, solo para los premios y algún detalle de la reserva.
    ===================================================================== */
 
 @font-face {
-  font-family: 'Bodoni Moda';
-  src: url('../fonts/bodoni-moda.woff2') format('woff2');
-  font-weight: 400 900;
+  font-family: 'Italiana';
+  src: url('../fonts/italiana.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Bodoni Moda';
-  src: url('../fonts/bodoni-moda-italic.woff2') format('woff2');
-  font-weight: 400 900;
-  font-style: italic;
   font-display: swap;
 }
 @font-face {
@@ -28,65 +21,49 @@
 }
 
 :root {
-  /* Color — su blanco y negro */
-  --negro: #0D0D0C;          /* esmalte */
-  --negro-2: #1B1B19;        /* azulejo negro elevado */
-  --tinta: #121211;          /* texto sobre claro */
+  /* Color */
+  --negro: #000000;          /* su negro: cabecera, marcos, azulejo */
+  --carbon: #161616;         /* superficies sobre negro */
   --blanco: #FFFFFF;
-  --porcelana: #F3F2EE;      /* la junta: fondo de página */
-  --porcelana-2: #E9E7E1;    /* relleno de hover sobre claro */
-  --junta-linea: #DEDBD3;
-  --humo: #5B5A55;           /* texto secundario sobre claro · 6,6:1 */
-  --humo-claro: #AAA9A2;     /* texto secundario sobre negro · 8:1 */
-  --linea-osc: rgba(255, 255, 255, .12);
-  --laton: #BF9C6B;          /* solo galardones · 8,1:1 sobre negro */
-  --laton-osc: #7A5E36;      /* latón para texto sobre claro · 5,9:1 */
+  --pared: #DCDDDF;          /* el gris frío de la pared de su salón (el LED se ve más blanco que ella) */
+  --suave: #F3F3F3;          /* fondos de controles sobre blanco */
+  --linea: #DEDEDE;
+  --tinta: #000000;          /* titulares */
+  --texto: #262626;          /* texto corrido sobre claro */
+  --humo: #666666;           /* secundario sobre claro · 5,7:1 */
+  --humo-claro: #A6A6A6;     /* secundario sobre negro · 8,6:1 */
+  --oro: #C9A55C;            /* el oro de sus medallas · 9:1 sobre negro */
+  --oro-osc: #85672C;        /* oro para texto sobre blanco · 5:1 */
 
   /* Tipografía */
-  --serif: 'Bodoni Moda', 'Bodoni 72', Didot, Georgia, serif;
+  --display: 'Italiana', 'Didot', 'Bodoni 72', serif;
   --sans: 'Onest', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  /* Retícula y espaciado */
+  /* Retícula */
   --ancho: 1320px;
   --gutter: clamp(16px, 4.2vw, 48px);
-  --junta: clamp(6px, .75vw, 10px);
-  --sec: clamp(72px, 10vw, 136px);
-  --e-1: 4px;  --e-2: 8px;  --e-3: 12px; --e-4: 16px; --e-5: 24px;
-  --e-6: 32px; --e-7: 48px; --e-8: 64px; --e-9: 96px;
-  --pad-az: clamp(20px, 2.4vw, 36px);
-  --r: 6px;          /* canto de azulejo */
-  --r-peq: 4px;
-
-  /* Profundidad: base → elevado → flotante, con tinte del negro de marca */
-  --sombra-1: 0 0 0 1px rgba(13, 13, 12, .045), 0 1px 2px rgba(13, 13, 12, .05), 0 3px 8px -4px rgba(13, 13, 12, .08);
-  --sombra-2: 0 0 0 1px rgba(13, 13, 12, .05), 0 4px 10px -3px rgba(13, 13, 12, .09), 0 18px 36px -14px rgba(13, 13, 12, .20);
-  --sombra-3: 0 0 0 1px rgba(13, 13, 12, .06), 0 10px 24px -8px rgba(13, 13, 12, .18), 0 34px 70px -20px rgba(13, 13, 12, .34);
-
-  /* El esmalte: negro con luz de techo, en tres capas */
-  --esmalte:
-    linear-gradient(158deg, rgba(255, 255, 255, .09) 0%, rgba(255, 255, 255, 0) 32%),
-    radial-gradient(130% 90% at 14% 0%, rgba(255, 255, 255, .06) 0%, rgba(255, 255, 255, 0) 55%),
-    linear-gradient(180deg, #161615 0%, #0B0B0A 100%);
-  --grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --sec: clamp(80px, 11vw, 150px);
+  --cab-h: 64px;
+  --foco: #000;
 
   /* Movimiento */
-  --ease-out: cubic-bezier(.22, 1, .36, 1);
-  --ease-capa: cubic-bezier(.7, 0, .2, 1);
-  --ease-muelle: linear(0, .009, .037 1.7%, .153 3.6%, .776 10.3%, 1.001 13.8%, 1.083 16.8%, 1.101 18.4%, 1.09 20.8%, 1.018 26.9%, .996 31.2%, .99 35.4%, 1.002 46.3%, 1);
+  --e-out: cubic-bezier(.16, 1, .3, 1);
+  --e-inout: cubic-bezier(.65, 0, .35, 1);
+  --e-muelle: linear(0, .009, .037 1.7%, .153 3.6%, .776 10.3%, 1.001 13.8%, 1.083 16.8%, 1.101 18.4%, 1.09 20.8%, 1.018 26.9%, .996 31.2%, .99 35.4%, 1.002 46.3%, 1);
 }
+@media (min-width: 1024px) { :root { --cab-h: 76px; } }
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 84px; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: calc(var(--cab-h) + 12px); }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body {
   font-family: var(--sans);
   font-size: 1.0625rem;
   line-height: 1.7;
-  font-weight: 400;
-  color: var(--tinta);
-  background: var(--porcelana);
+  color: var(--texto);
+  background: var(--negro);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
@@ -98,7 +75,7 @@ button, input { font: inherit; color: inherit; }
 button { background: none; border: 0; cursor: pointer; }
 ul[role='list'], ol { list-style: none; }
 table { border-collapse: collapse; }
-::selection { background: var(--negro); color: var(--blanco); }
+::selection { background: var(--oro); color: var(--negro); }
 
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 .solo-lectores {
@@ -106,8 +83,8 @@ table { border-collapse: collapse; }
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 .saltar {
-  position: absolute; left: 12px; top: -60px; z-index: 100;
-  background: var(--negro); color: var(--blanco); padding: 12px 18px; border-radius: var(--r-peq);
+  position: absolute; left: 12px; top: -80px; z-index: 100;
+  background: var(--blanco); color: var(--negro); padding: 12px 18px; border-radius: 999px;
   text-decoration: none; font-weight: 600;
 }
 .saltar:focus { top: 12px; }
@@ -119,9 +96,14 @@ table { border-collapse: collapse; }
   padding-inline: var(--gutter);
 }
 
-/* ---------- Iconos ---------- */
+:where(a, button, summary, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 3px;
+}
+
+/* ---------- Iconos y pictogramas ---------- */
 .ico {
-  width: 1.1em; height: 1.1em; flex-shrink: 0;
+  width: 1.15em; height: 1.15em; flex-shrink: 0; overflow: visible;
   fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
 }
 .picto {
@@ -130,117 +112,150 @@ table { border-collapse: collapse; }
 }
 
 /* ---------- Tipografía ---------- */
-.antetitulo {
-  display: flex; align-items: center; gap: 10px;
-  font-size: .75rem; line-height: 1.3; font-weight: 600;
-  letter-spacing: .16em; text-transform: uppercase;
-  color: var(--humo);
-}
-/* El azulejo metro (2:1) como marca de sección */
-.antetitulo::before {
-  content: ''; width: 16px; height: 8px; flex-shrink: 0;
-  border-radius: 1.5px; background: var(--negro);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22);
-}
-.antetitulo--claro { color: var(--humo-claro); }
-.antetitulo--claro::before { background: var(--blanco); box-shadow: none; }
-
-.titulo-sec {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: clamp(2.15rem, 1.35rem + 3.1vw, 4.1rem);
-  line-height: 1.04;
-  letter-spacing: 0;
-  font-optical-sizing: auto;
+.titulo {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 1.55rem + 4.6vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: .005em;
+  color: var(--tinta);
   text-wrap: balance;
 }
-.titulo-sec em { font-style: italic; font-weight: 400; }
-.titulo-sec--m { font-size: clamp(2rem, 1.4rem + 2.2vw, 3.2rem); }
-
+.titulo--versal {
+  text-transform: uppercase; letter-spacing: .14em;
+  /* «TRAYECTORIA» mide ~8,4 em con su espaciado: nunca más ancho que la pantalla */
+  font-size: min(clamp(2.75rem, 1.55rem + 4.6vw, 6rem), calc((100vw - 2 * var(--gutter)) / 8.6));
+}
 .entradilla {
-  font-size: clamp(1.0625rem, 1rem + .3vw, 1.1875rem);
+  font-size: clamp(1.0625rem, 1rem + .35vw, 1.2rem);
   line-height: 1.7;
   color: var(--humo);
-  max-width: 58ch;
+  max-width: 54ch;
   text-wrap: pretty;
 }
 
-/* ---------- Botones ---------- */
+/* Titulares que suben palabra a palabra (las máscaras las pone el JS) */
+.p { display: inline-block; overflow: hidden; vertical-align: top; padding: .1em .02em .18em; margin: -.1em -.02em -.18em; }
+.p__in { display: inline-block; }
+
+/* =====================================================================
+   BOTONES
+   Un mismo gesto en todos: la tinta (o la luz) crece desde donde entra
+   el cursor y el texto se invierte a su paso; el texto rueda, el icono
+   hace su gesto y los principales siguen al cursor como un imán.
+   ===================================================================== */
 .boton {
+  --mx: 0px; --my: 0px; --s: 1;
+  --rx: 50%; --ry: 50%;
+  --b-fondo: var(--negro);     /* fondo en reposo */
+  --b-tinta: var(--blanco);    /* lo que crece al pasar */
+  --b-borde: transparent;
   position: relative; isolation: isolate; overflow: hidden;
   display: inline-flex; align-items: center; justify-content: center; gap: .6em;
-  min-height: 50px; padding: 0 1.35em;
-  border-radius: var(--r-peq);
-  font-size: .9688rem; font-weight: 600; line-height: 1.1; letter-spacing: .005em;
-  text-decoration: none; white-space: nowrap;
-  -webkit-tap-highlight-color: transparent;
-  transition: transform .16s var(--ease-out);
-}
-.boton:active { transform: scale(.97); }
-.boton:focus-visible { outline: 2px solid var(--tinta); outline-offset: 3px; }
-.boton .ico { transition: transform .22s var(--ease-out); }
-.boton:hover .ico:has(use[href='#i-flecha']) { transform: translateX(3px); }
-
-.boton--negro {
+  min-height: 54px; padding: 0 1.55em;
+  border-radius: 999px;
+  font-family: var(--sans); font-size: 1rem; font-weight: 600; line-height: 1; letter-spacing: .01em;
   color: var(--blanco);
-  background: var(--esmalte);
-  background-color: var(--negro);
-  box-shadow: var(--sombra-2), inset 0 1px 0 rgba(255, 255, 255, .12);
+  background: var(--b-fondo);
+  box-shadow: inset 0 0 0 1.5px var(--b-borde);
+  text-decoration: none; white-space: nowrap;
+  transform: translate(var(--mx), var(--my)) scale(var(--s));
+  transition: transform .6s var(--e-muelle);
+  -webkit-tap-highlight-color: transparent;
 }
-.boton--negro:hover { background: var(--negro); }
-/* El brillo del esmalte cruza el botón */
-.boton--negro::after {
-  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .26) 50%, transparent 70%);
-  transform: translateX(-120%);
-  transition: transform .75s var(--ease-out);
+/* La mancha que crece desde el cursor */
+.boton::before {
+  content: ''; position: absolute; z-index: 0;
+  left: var(--rx); top: var(--ry);
+  width: 260%; aspect-ratio: 1; border-radius: 50%;
+  background: var(--b-tinta);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform .65s var(--e-out);
+  pointer-events: none;
 }
-.boton--negro:hover::after { transform: translateX(120%); }
+/* Texto e icono, siempre por encima e invertidos donde pasa la mancha */
+.boton > .ico, .boton > .boton__txt { position: relative; z-index: 2; mix-blend-mode: difference; color: var(--blanco); }
+.boton:active { --s: .95; transition-duration: .14s; }
+@media (hover: hover) {
+  .boton:hover::before { transform: translate(-50%, -50%) scale(1); }
+}
 
-.boton--linea {
-  color: var(--tinta);
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--tinta);
+/* El texto rueda: el JS duplica la etiqueta */
+.boton__txt { display: inline-flex; }
+.boton__rodillo { display: inline-flex; flex-direction: column; height: 1.2em; overflow: hidden; line-height: 1.2; }
+.boton__rodillo > span { display: block; transition: transform .55s var(--e-out); }
+@media (hover: hover) {
+  .boton:hover .boton__rodillo > span { transform: translateY(-100%); }
 }
-.boton--linea::before {
-  content: ''; position: absolute; inset: 0; z-index: -1;
-  background: var(--porcelana-2);
-  transform: scaleY(0); transform-origin: bottom;
-  transition: transform .3s var(--ease-out);
-}
-.boton--linea:hover::before { transform: scaleY(1); }
 
-.boton--claro { color: var(--tinta); background: var(--blanco); box-shadow: var(--sombra-2); }
-.boton--claro::before {
-  content: ''; position: absolute; inset: 0; z-index: -1;
-  background: var(--porcelana-2);
-  transform: scaleY(0); transform-origin: bottom;
-  transition: transform .3s var(--ease-out);
-}
-.boton--claro:hover::before { transform: scaleY(1); }
-
-.boton--peq { min-height: 42px; padding: 0 1.1em; font-size: .9063rem; }
+/* Variantes (sobre oscuro / sobre claro) */
+.boton--luz { --b-fondo: var(--blanco); --b-tinta: var(--negro); --b-borde: var(--blanco); --foco: var(--blanco); }
+.boton--tinta { --b-fondo: var(--negro); --b-tinta: var(--blanco); --b-borde: var(--negro); }
+.boton--contorno { --b-fondo: var(--blanco); --b-tinta: var(--negro); --b-borde: var(--negro); }
+.boton--contorno-claro { --b-fondo: var(--negro); --b-tinta: var(--blanco); --b-borde: rgba(255, 255, 255, .7); --foco: var(--blanco); }
+.boton--peq { min-height: 44px; padding: 0 1.2em; font-size: .9375rem; }
 .boton--ancho { width: 100%; }
+.boton--luz, .boton--tinta { box-shadow: inset 0 0 0 1.5px var(--b-borde), 0 14px 30px -16px rgba(0, 0, 0, .55); }
 
-.acciones { display: flex; flex-wrap: wrap; gap: 10px; }
+/* Destello de llamada: una sola vez, en el botón principal del hero */
+.boton[data-llamativo]::after {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(201, 165, 92, .55) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
 
-/* ---------- Estado abierto / cerrado (monocromo, sin latido) ---------- */
-.estado {
-  display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 10px;
-  font-size: .9375rem; line-height: 1.4; font-weight: 500;
+/* Gestos de los iconos */
+@keyframes timbre {
+  0%, 100% { transform: rotate(0); }
+  12% { transform: rotate(-18deg); } 24% { transform: rotate(15deg); }
+  36% { transform: rotate(-12deg); } 48% { transform: rotate(9deg); }
+  60% { transform: rotate(-5deg); } 72% { transform: rotate(2deg); }
 }
-.estado__punto {
-  width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
-  background: currentColor;
-  box-shadow: 0 0 0 3px rgba(13, 13, 12, .1);
+@keyframes hoja { 0%, 100% { transform: none; } 40% { transform: translateY(-3px) rotate(-8deg); } 70% { transform: translateY(1px) rotate(3deg); } }
+@keyframes bote { 0%, 100% { transform: none; } 30% { transform: translateY(-5px); } 55% { transform: translateY(0); } 72% { transform: translateY(-2px); } }
+@keyframes sobre { 0%, 100% { transform: none; } 40% { transform: translateY(-3px) rotate(-6deg); } }
+@keyframes baja { 0%, 100% { transform: none; } 35% { transform: translateY(4px); } 60% { transform: translateY(0); } 80% { transform: translateY(2px); } }
+.ico--tel { transform-origin: 50% 50%; }
+@media (hover: hover) {
+  .boton:hover .ico--tel, .cab__tel:hover .ico--tel { animation: timbre .8s var(--e-out); }
+  .boton:hover .ico--cal { animation: hoja .7s var(--e-out); }
+  .boton:hover .ico--pin { animation: bote .8s var(--e-out); }
+  .boton:hover .ico--correo { animation: sobre .6s var(--e-out); }
+  .enlace:hover .ico--abajo { animation: baja .8s var(--e-out); }
 }
+
+/* Enlace de texto con subrayado que se dibuja */
+.enlace {
+  position: relative; display: inline-flex; align-items: center; gap: .45em;
+  min-height: 44px; font-weight: 600; text-decoration: none;
+}
+.enlace span { position: relative; }
+.enlace span::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -3px; height: 1.5px;
+  background: currentColor; transform: scaleX(.25); transform-origin: left;
+  transition: transform .45s var(--e-out);
+}
+.enlace:hover span::after, .enlace:focus-visible span::after { transform: scaleX(1); }
+.enlace--claro { color: var(--blanco); }
+.enlace:active { opacity: .7; }
+
+.acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+
+/* ---------- Estado abierto / cerrado (sin latido) ---------- */
+.estado { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; font-size: .9375rem; line-height: 1.4; font-weight: 500; }
+.estado__punto { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; background: currentColor; box-shadow: 0 0 0 3px rgba(0, 0, 0, .1); }
 .estado.es-cerrado .estado__punto { background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
 .estado__txt { font-weight: 600; }
 .estado__sub { color: var(--humo); font-weight: 400; }
+.estado--claro { color: var(--blanco); }
 .estado--claro .estado__sub { color: var(--humo-claro); }
-.estado--claro .estado__punto { box-shadow: 0 0 0 3px rgba(255, 255, 255, .14); }
-.estado--claro.es-cerrado .estado__punto { box-shadow: inset 0 0 0 1.5px currentColor; }
+.estado--claro .estado__punto { background: var(--oro); box-shadow: 0 0 0 3px rgba(201, 165, 92, .2); }
+.estado--claro.es-cerrado .estado__punto { background: transparent; box-shadow: inset 0 0 0 1.5px var(--oro); }
 
-/* ---------- Secciones ---------- */
-.seccion { padding-block: var(--sec); }
-.cabecera-sec { display: grid; gap: 18px; margin-bottom: clamp(32px, 4.5vw, 56px); }
+/* Utilidades de visibilidad por tamaño */
+.solo-movil { display: inline; }
+.sin-movil { display: none; }
+@media (min-width: 700px) {
+  .solo-movil { display: none; }
+  .sin-movil { display: inline; }
+}
