@@ -7,7 +7,7 @@ Prototipo de homepage para **Lorena Campillo Peluquería**, peluquería boutique
 **Dirección estética: «Luz de espejo».** Su salón es una pared de espejos de marco negro con luz LED detrás. La página se enciende como ellos: el hero pone su retrato **dentro de un espejo retroiluminado, entre su nombre** («Lorena · retrato · Campillo»), la reserva se apoya sobre la foto de sus espejos, el salón es una pared de espejos que se encienden al llegar y la trayectoria avanza con un hilo de oro. Su negro y su blanco; el oro de sus medallas para los premios. **Italiana** en los titulares y **Onest** en el texto.
 
 ## Fotos, tal cual
-- **Hero:** la foto de su web inicial (Lorena con sus medallas), el mismo archivo, sin recortes ni filtros. El marco y la luz están fuera de la foto.
+- **Hero:** la foto de su web inicial (Lorena con sus medallas), el mismo archivo (SHA-256 idéntico al de Wix), sin recortes ni filtros. El marco y la luz están fuera de la foto.
 - **Trayectoria:** la foto de Lorena de pie con fondo azul, con el mismo encuadre con el que la muestra su página de Galardones.
 - **Maquillaje:** su foto original (224 px), nítida, sobre un fondo difuminado de sí misma.
 
@@ -51,7 +51,7 @@ git subtree push --prefix=prototype origin gh-pages
 ```
 
 ## Versiones
-`v1-espejo` y `v2-editorial` están etiquetadas en git; la v3 «Azulejo» es el commit `5bd0761`.
+Las anteriores están etiquetadas en git: `v1-espejo`, `v2-editorial` y `v3-azulejo`.
 
 ---
 Diseño y desarrollo: **Juan Jurado** · [jjuradogarciadelrio.com](https://jjuradogarciadelrio.com)
