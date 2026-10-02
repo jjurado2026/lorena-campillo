@@ -76,6 +76,23 @@
       b.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
     });
   }
+  /* El color sigue al cursor: en cada grupo, la mancha del botón que deja de
+     estar coloreado se recoge hacia el que se toca, y al salir del grupo
+     vuelve al principal por el lado por donde se fue el cursor */
+  $$('.hero__acciones, .acciones, .ticket__acciones, [data-grupo-botones]').forEach(g => {
+    const botones = $$('.boton', g);
+    if (botones.length < 2) return;
+    const hacia = (b, x, y) => {
+      const r = b.getBoundingClientRect();
+      b.style.setProperty('--rx', `${clamp((x - r.left) / r.width * 100, -20, 120).toFixed(1)}%`);
+      b.style.setProperty('--ry', `${clamp((y - r.top) / r.height * 100, -20, 120).toFixed(1)}%`);
+    };
+    botones.forEach(b => b.addEventListener('pointerenter', () => {
+      const r = b.getBoundingClientRect();
+      botones.forEach(o => { if (o !== b) hacia(o, r.left + r.width / 2, r.top + r.height / 2); });
+    }));
+    g.addEventListener('pointerleave', e => botones.forEach(o => hacia(o, e.clientX, e.clientY)));
+  });
 
   /* =================================================================
      El horario: una sola fuente

@@ -81,7 +81,6 @@ html.js:not(.quieto) .gesto .picto--bigote path { animation: bigote .7s var(--e-
 html.js:not(.quieto) .ticket__lista dd.cambia { animation: linea-nueva .4s var(--e-out); }
 html.js:not(.quieto) .reserva.lista .ticket__sello { animation: sellar .55s var(--e-muelle) both; }
 html.js:not(.quieto) .reserva.recien-lista [data-llamar] { animation: latido .7s var(--e-out) .35s; }
-html.js:not(.quieto) .reserva.recien-lista [data-llamar]::before { transform: translate(-50%, -50%) scale(0); }
 
 /* ---------- 4 · El salón: los espejos se encienden ---------- */
 html.js:not(.quieto) .espejo--pared .espejo__marco::before { opacity: 0; }
