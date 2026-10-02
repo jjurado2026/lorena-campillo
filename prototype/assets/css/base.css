@@ -143,13 +143,17 @@ table { border-collapse: collapse; }
    Un mismo gesto en todos: la tinta (o la luz) crece desde donde entra
    el cursor y el texto se invierte a su paso; el texto rueda, el icono
    hace su gesto y los principales siguen al cursor como un imán.
+   El color sigue al cursor: solo se colorea el botón que está debajo.
+   En cada grupo, el principal va coloreado en reposo y cede el color al
+   botón que se toca; al salir del grupo, el color vuelve a él.
    ===================================================================== */
 .boton {
   --mx: 0px; --my: 0px; --s: 1;
   --rx: 50%; --ry: 50%;
-  --b-fondo: var(--negro);     /* fondo en reposo */
-  --b-tinta: var(--blanco);    /* lo que crece al pasar */
-  --b-borde: transparent;
+  --pintado: 0;                /* 1 = coloreado: la mancha cubre el botón */
+  --b-fondo: var(--blanco);    /* fondo sin colorear */
+  --b-tinta: var(--negro);     /* el color que crece */
+  --b-borde: var(--negro);
   position: relative; isolation: isolate; overflow: hidden;
   display: inline-flex; align-items: center; justify-content: center; gap: .6em;
   min-height: 54px; padding: 0 1.55em;
@@ -169,16 +173,13 @@ table { border-collapse: collapse; }
   left: var(--rx); top: var(--ry);
   width: 260%; aspect-ratio: 1; border-radius: 50%;
   background: var(--b-tinta);
-  transform: translate(-50%, -50%) scale(0);
+  transform: translate(-50%, -50%) scale(var(--pintado));
   transition: transform .65s var(--e-out);
   pointer-events: none;
 }
 /* Texto e icono, siempre por encima e invertidos donde pasa la mancha */
 .boton > .ico, .boton > .boton__txt { position: relative; z-index: 2; mix-blend-mode: difference; color: var(--blanco); }
 .boton:active { --s: .95; transition-duration: .14s; }
-@media (hover: hover) {
-  .boton:hover::before { transform: translate(-50%, -50%) scale(1); }
-}
 
 /* El texto rueda: el JS duplica la etiqueta */
 .boton__txt { display: inline-flex; }
@@ -188,14 +189,22 @@ table { border-collapse: collapse; }
   .boton:hover .boton__rodillo > span { transform: translateY(-100%); }
 }
 
-/* Variantes (sobre oscuro / sobre claro) */
-.boton--luz { --b-fondo: var(--blanco); --b-tinta: var(--negro); --b-borde: var(--blanco); --foco: var(--blanco); }
-.boton--tinta { --b-fondo: var(--negro); --b-tinta: var(--blanco); --b-borde: var(--negro); }
-.boton--contorno { --b-fondo: var(--blanco); --b-tinta: var(--negro); --b-borde: var(--negro); }
-.boton--contorno-claro { --b-fondo: var(--negro); --b-tinta: var(--blanco); --b-borde: rgba(255, 255, 255, .7); --foco: var(--blanco); }
+/* Variantes: sobre oscuro el color es la luz (blanco); sobre claro, la tinta (negro).
+   Rellenos (luz, tinta) = principales, coloreados en reposo; contornos = secundarios */
+.boton--luz, .boton--contorno-claro { --b-fondo: var(--negro); --b-tinta: var(--blanco); --b-borde: rgba(255, 255, 255, .7); --foco: var(--blanco); }
+.boton--luz { --b-borde: var(--blanco); }
+.boton--tinta, .boton--contorno { --b-fondo: var(--blanco); --b-tinta: var(--negro); --b-borde: var(--negro); }
 .boton--peq { min-height: 44px; padding: 0 1.2em; font-size: .9375rem; }
 .boton--ancho { width: 100%; }
-.boton--luz, .boton--tinta { box-shadow: inset 0 0 0 1.5px var(--b-borde), 0 14px 30px -16px rgba(0, 0, 0, .55); }
+
+/* El color sigue al cursor (y al foco del teclado) */
+.boton--luz, .boton--tinta { --pintado: 1; }
+.boton:focus-visible { --pintado: 1; }
+:where(.hero__acciones, .acciones, .ticket__acciones, [data-grupo-botones]):has(.boton:focus-visible) .boton:not(:focus-visible) { --pintado: 0; }
+@media (hover: hover) {
+  .boton:hover { --pintado: 1; }
+  :where(.hero__acciones, .acciones, .ticket__acciones, [data-grupo-botones]):has(.boton:hover) .boton:not(:hover) { --pintado: 0; }
+}
 
 /* Destello de llamada: una sola vez, en el botón principal del hero */
 .boton[data-llamativo]::after {
