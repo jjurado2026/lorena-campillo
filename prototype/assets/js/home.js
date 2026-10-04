@@ -32,11 +32,10 @@
   /* =================================================================
      Textos que se animan: letras del nombre, palabras de los titulares
      ================================================================= */
+  // Las letras del nombre se encienden una a una, como un rótulo de luz, de «L» a «o»
+  let letraHero = 0;
   $$('[data-letras-hero]').forEach(el => {
-    const letras = [...el.textContent.trim()];
-    const desdeElFinal = el.dataset.letrasHero === 'izq'; // «Lorena» se enciende desde el espejo hacia fuera
-    el.innerHTML = letras.map((c, i) =>
-      `<span class="lm"><span class="l" style="--d:${desdeElFinal ? letras.length - 1 - i : i}">${c}</span></span>`).join('');
+    el.innerHTML = [...el.textContent.trim()].map(c => `<span class="l" style="--d:${letraHero++}">${c}</span>`).join('');
   });
   $$('[data-palabras]').forEach(el => {
     el.innerHTML = el.textContent.trim().split(/\s+/)
@@ -151,6 +150,98 @@
   }
   pintarEstado();
   setInterval(pintarEstado, 60000);
+
+  /* =================================================================
+     Hero: el tocador
+     Las bombillas se agrandan hacia el cursor (o el dedo), los objetos
+     del marco flotan con él, la polaroid pasa sus trabajos y todo se
+     para cuando el hero no se ve
+     ================================================================= */
+  const heroTocador = $('#inicio');
+  const espejoHero = heroTocador && $('.tocador__espejo', heroTocador);
+  if (espejoHero) {
+    const bombillas = $$('.bombilla', espejoHero);
+    let centros = [], punto = null, pendienteLuz = false, enVista = true;
+
+    // Centros de las bombillas respecto al hero (se rehacen al cambiar el tamaño)
+    const medirLuces = () => {
+      const h = heroTocador.getBoundingClientRect();
+      centros = bombillas.map(b => { const r = b.getBoundingClientRect(); return [r.left + r.width / 2 - h.left, r.top + r.height / 2 - h.top]; });
+    };
+    const pintarLuz = () => {
+      pendienteLuz = false;
+      if (!punto) return;
+      const [x, y, w, h] = punto;
+      const radio = espejoHero.offsetWidth * .45;
+      bombillas.forEach((b, i) => {
+        const t = Math.max(0, 1 - Math.hypot(centros[i][0] - x, centros[i][1] - y) / radio);
+        const k = (1 + .55 * t * t).toFixed(2);
+        if (b.style.getPropertyValue('--k-luz') !== k) b.style.setProperty('--k-luz', k);
+      });
+      heroTocador.style.setProperty('--px', clamp(x / w * 2 - 1, -1, 1).toFixed(3));
+      heroTocador.style.setProperty('--py', clamp(y / h * 2 - 1, -1, 1).toFixed(3));
+    };
+    const acercar = e => {
+      if (!centros.length) medirLuces();
+      const h = heroTocador.getBoundingClientRect();
+      punto = [e.clientX - h.left, e.clientY - h.top, h.width, h.height];
+      if (!pendienteLuz) { pendienteLuz = true; requestAnimationFrame(pintarLuz); }
+    };
+    const soltar = () => {
+      punto = null;
+      bombillas.forEach(b => b.style.removeProperty('--k-luz'));
+      heroTocador.style.removeProperty('--px');
+      heroTocador.style.removeProperty('--py');
+    };
+
+    // La polaroid: cada pocos segundos, otro trabajo y su servicio (solo fotos ya cargadas)
+    const fotos = $$('.polaroid__foto img', espejoHero);
+    const pies = $$('.polaroid__pie > span', espejoHero);
+    const polaroid = $('.objeto--polaroid', espejoHero);
+    let actual = 0, encima = false;
+    const cargada = f => f.complete && f.naturalWidth > 0;
+    const pasarFoto = () => {
+      if (!enVista || encima || document.hidden) return;
+      let sig = (actual + 1) % fotos.length;
+      for (let n = 0; n < fotos.length && !cargada(fotos[sig]); n++) sig = (sig + 1) % fotos.length;
+      if (sig === actual) return;
+      fotos[actual].classList.remove('activa');
+      fotos[sig].classList.add('activa');
+      pies.forEach(p => p.classList.remove('sale'));
+      pies[actual].classList.replace('activa', 'sale');
+      pies[sig].classList.add('activa');
+      actual = sig;
+    };
+
+    if (!quieto) {
+      heroTocador.addEventListener('pointermove', acercar, { passive: true });
+      heroTocador.addEventListener('pointerdown', acercar, { passive: true });
+      heroTocador.addEventListener('pointerleave', soltar);
+      heroTocador.addEventListener('pointercancel', soltar);
+      heroTocador.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') setTimeout(soltar, 700); });
+      addEventListener('resize', () => { centros = []; });
+
+      if (fotos.length > 1 && pies.length === fotos.length) {
+        const empezar = () => {
+          fotos.forEach(f => { if (f.dataset.src) { f.src = f.dataset.src; f.removeAttribute('data-src'); } });
+          setInterval(pasarFoto, 3600);
+        };
+        if (document.readyState === 'complete') setTimeout(empezar, 2000);
+        else addEventListener('load', () => setTimeout(empezar, 2000), { once: true });
+        if (polaroid) {
+          polaroid.addEventListener('pointerenter', () => { encima = true; });
+          polaroid.addEventListener('pointerleave', () => { encima = false; });
+        }
+      }
+
+      // Fuera de pantalla (o con la pestaña oculta) no se mueve nada
+      const pausar = () => heroTocador.classList.toggle('en-pausa', !enVista || document.hidden);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(([e]) => { enVista = e.isIntersecting; pausar(); }).observe(heroTocador);
+      }
+      document.addEventListener('visibilitychange', pausar);
+    }
+  }
 
   /* =================================================================
      Cabecera, menú, barra fija y botón flotante
@@ -583,9 +674,7 @@
     if (cab) cab.classList.toggle('con-borde', scrollY > 8);
 
     if (hero && scrollY < hero.offsetHeight * 1.2) {
-      const sy = Math.min(scrollY, hero.offsetHeight);
-      hero.style.setProperty('--sy', sy.toFixed(1));
-      hero.style.setProperty('--giro', `${(sy * .35).toFixed(1)}deg`);
+      hero.style.setProperty('--sy', Math.min(scrollY, hero.offsetHeight).toFixed(1));
     }
     if (citaFondo) {
       const r = citaFondo.parentElement.getBoundingClientRect();
