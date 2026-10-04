@@ -523,6 +523,29 @@ html.menu-abierto { overflow: hidden; }
 .espejo--pared .espejo__marco::before { box-shadow: 0 0 10px 3px #fff, 0 0 34px 10px rgba(255, 255, 255, .95), 0 0 90px 30px rgba(255, 255, 255, .7); }
 .espejo__luna { position: relative; display: block; overflow: hidden; aspect-ratio: 10 / 17; background: #111; }
 .espejo__luna img { position: absolute; left: 0; top: -9%; width: 100%; height: 118%; object-fit: cover; transform: translateY(var(--py, 0%)); }
+/* La luz que responde al cursor (la mueve movimiento.css; en reposo no se ve nada).
+   La pared apila aparte: el LED de cada espejo queda detrás de todos los marcos.
+   El halo de la revelación (::before del marco), que siempre ha quedado bajo el
+   fondo de la sección, se recorta dentro de su marco: el reposo no cambia. */
+.pared { isolation: isolate; }
+.espejo--pared { position: relative; }
+.espejo--pared .espejo__marco { overflow: hidden; }
+/* El LED: la fuente queda metida tras el marco (inset) y solo asoma su luz, nunca su borde */
+.espejo--pared::before {
+  content: ''; position: absolute; inset: 22px; z-index: -1; border-radius: 3px; pointer-events: none;
+  box-shadow: 0 0 16px 26px #fff, 0 0 50px 36px rgba(255, 255, 255, .9), 0 0 130px 60px rgba(255, 255, 255, .6);
+  opacity: 0;
+}
+/* En la luna: un velo para bajar la luz y el reflejo del cristal */
+.espejo--pared .espejo__luna::before,
+.espejo--pared .espejo__luna::after { content: ''; position: absolute; pointer-events: none; opacity: 0; }
+.espejo--pared .espejo__luna::before { inset: 0; z-index: 1; background: var(--negro); }
+.espejo--pared .espejo__luna::after {
+  inset: -12% -40%; z-index: 2;
+  background: linear-gradient(110deg, transparent 38%, rgba(255, 255, 255, .38) 47%, transparent 53%, transparent 55.4%, rgba(255, 255, 255, .34) 56.4%, transparent 57.4%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 6%, #000 36%, #000 64%, transparent 94%);
+  mask-image: linear-gradient(180deg, transparent 6%, #000 36%, #000 64%, transparent 94%);
+}
 .salon__pie { display: grid; gap: 36px; margin-top: clamp(40px, 6vw, 90px); }
 .salon__cita p {
   font-family: var(--display); font-size: clamp(2.1rem, 1.3rem + 3vw, 4.4rem); line-height: 1.1;

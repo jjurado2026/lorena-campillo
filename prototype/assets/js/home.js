@@ -216,6 +216,59 @@
   }
 
   /* =================================================================
+     El salón: los espejos responden al cursor
+     El que miras se vuelve hacia ti y se le enciende el LED; los demás
+     bajan la luz y se giran un poco hacia el cursor (movimiento.css).
+     Sin bucles: se pinta al mover. En táctil, un toque lo enciende.
+     ================================================================= */
+  const pared = $('[data-pared]');
+  if (pared && !quieto) {
+    const espejos = $$('.espejo--pared', pared);
+    if (punteroFino) {
+      // La caja de maquetación (sin transformaciones), en coordenadas de página
+      const caja = el => { let x = 0, y = 0; for (let e = el; e; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; } return { x, y, w: el.offsetWidth, h: el.offsetHeight }; };
+      let mirado = null, cx = 0, cy = 0, pendiente = false;
+      const pintar = () => {
+        pendiente = false;
+        if (!mirado) return;
+        const x = cx + scrollX, y = cy + scrollY;
+        espejos.forEach(f => {
+          const c = caja(f);
+          if (f === mirado) {
+            f.style.setProperty('--mira-x', clamp((x - c.x) / c.w * 2 - 1, -1, 1).toFixed(3));
+            f.style.setProperty('--mira-y', clamp((y - c.y) / c.h * 2 - 1, -1, 1).toFixed(3));
+            return;
+          }
+          // Los demás se vuelven hacia el cursor como hacia alguien de pie ante la pared
+          const dx = x - c.x - c.w / 2, dy = y - c.y - c.h / 2, lejos = c.w * 2.4;
+          f.style.setProperty('--hacia-x', (dx / Math.hypot(dx, lejos)).toFixed(3));
+          f.style.setProperty('--hacia-y', (dy / Math.hypot(dy, lejos)).toFixed(3));
+        });
+      };
+      const programar = () => { if (pendiente) return; pendiente = true; requestAnimationFrame(pintar); };
+      espejos.forEach(f => {
+        f.addEventListener('pointerenter', e => {
+          if (e.pointerType === 'touch') return;
+          if (mirado && mirado !== f) mirado.classList.remove('mirado');
+          cx = e.clientX; cy = e.clientY; mirado = f;
+          pintar();
+          f.classList.add('mirado');
+          pared.classList.add('mirando');
+        });
+        f.addEventListener('pointermove', e => { if (e.pointerType !== 'touch') { cx = e.clientX; cy = e.clientY; programar(); } });
+        f.addEventListener('pointerleave', () => {
+          f.classList.remove('mirado');
+          if (mirado === f) { mirado = null; pared.classList.remove('mirando'); }
+        });
+      });
+      // Con la rueda, el espejo pasa bajo el cursor quieto
+      addEventListener('scroll', () => { if (mirado) programar(); }, { passive: true });
+    } else {
+      espejos.forEach(f => f.addEventListener('click', () => reiniciar(f, 'toque')));
+    }
+  }
+
+  /* =================================================================
      Servicios: la vitrina (escritorio) y el carrusel (móvil)
      ================================================================= */
   const gesto = el => { if (el && !quieto) reiniciar(el, 'gesto'); };
