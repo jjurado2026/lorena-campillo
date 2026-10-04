@@ -333,177 +333,234 @@ html.menu-abierto { overflow: hidden; }
 
 /* =====================================================================
    3 · PIDE TU CITA: la tarjeta de reserva sobre sus espejos
+   Compacta: cada servicio en una línea, los días en una tira estrecha y
+   el resguardo como un talón al lado. Lo que deja libre la tarjeta lo
+   ganan el titular y la foto de su salón, que se ve alrededor.
    ===================================================================== */
 .cita {
   position: relative; isolation: isolate; overflow: hidden;
-  padding-block: var(--sec);
+  padding-block: clamp(80px, min(11vw, 16svh), 150px);
   color: var(--blanco); background: var(--negro);
   --foco: var(--blanco);
 }
-.cita__fondo { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; opacity: .55; transform: scale(var(--zoom, 1.1)); }
+.cita__fondo { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; opacity: .72; transform: scale(var(--zoom, 1.1)); }
+/* Oscuro bajo el texto; más claro alrededor de la tarjeta, donde se ven sus espejos */
 .cita::before {
   content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
-    linear-gradient(100deg, rgba(0, 0, 0, .95) 0%, rgba(0, 0, 0, .84) 40%, rgba(0, 0, 0, .6) 100%),
-    linear-gradient(to top, rgba(0, 0, 0, .7), transparent 45%);
+    linear-gradient(100deg, rgba(0, 0, 0, .9) 0%, rgba(0, 0, 0, .78) 36%, rgba(0, 0, 0, .42) 66%, rgba(0, 0, 0, .58) 100%),
+    linear-gradient(to top, rgba(0, 0, 0, .6), transparent 42%);
 }
-.cita__rejilla { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+.cita__rejilla { display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px; }
 .cita__intro { display: grid; gap: 22px; justify-items: start; align-content: start; }
 .cita__intro .titulo { color: var(--blanco); }
-.cita__intro .entradilla { color: rgba(255, 255, 255, .78); }
+.cita__intro .entradilla { color: rgba(255, 255, 255, .8); max-width: 38ch; }
 
 .reserva {
   position: relative;
-  display: grid;
+  display: grid; grid-template-columns: minmax(0, 1fr);
+  width: 100%; max-width: 700px;
   background: var(--blanco); color: var(--texto);
-  border-radius: 16px;
+  border-radius: 14px;
   box-shadow: 0 50px 90px -40px rgba(0, 0, 0, .9), 0 0 0 1px rgba(255, 255, 255, .08);
   --foco: var(--negro);
 }
-.reserva__progreso { position: absolute; left: 0; right: 0; top: 0; height: 4px; overflow: hidden; border-radius: 16px 16px 0 0; background: #EEE; }
+.reserva__progreso { position: absolute; left: 0; right: 0; top: 0; height: 3px; overflow: hidden; border-radius: 14px 14px 0 0; background: #EEE; }
 .reserva__progreso span {
   display: block; height: 100%;
   background: linear-gradient(90deg, #A9843C, #E3CC92 55%, #B8913F);
   transform-origin: left; transform: scaleX(var(--p, 0));
-  transition: transform .8s var(--e-out);
 }
-.reserva__form { display: grid; gap: 30px; padding: 32px 20px 28px; }
+.reserva__form { display: grid; gap: 22px; padding: 24px 16px 22px; }
 .paso { border: 0; min-width: 0; }
-.paso legend { display: flex; align-items: center; gap: 12px; padding: 0; margin-bottom: 14px; font-size: 1.0625rem; font-weight: 600; color: var(--tinta); }
+.paso legend { display: flex; align-items: center; gap: 10px; padding: 0; margin-bottom: 10px; font-size: .9375rem; font-weight: 600; line-height: 1.3; color: var(--tinta); }
+/* El número del paso, en Onest (el «1» de Italiana se lee como una «I»); se rellena al completarlo */
 .paso__n {
-  width: 30px; height: 30px; flex-shrink: 0; display: grid; place-items: center;
-  border-radius: 50%; border: 1px solid var(--tinta);
-  font-family: var(--display); font-size: 1.05rem; line-height: 1;
+  width: 22px; height: 22px; flex-shrink: 0; display: grid; place-items: center;
+  border-radius: 50%; box-shadow: inset 0 0 0 1px var(--tinta);
+  font-size: .75rem; font-weight: 600; line-height: 1; font-variant-numeric: lining-nums tabular-nums;
 }
+.paso:has(input:checked) .paso__n,
+.paso:has(input[name="nombre"]:not(:placeholder-shown)) .paso__n { background: var(--negro); color: var(--blanco); }
 
-/* Paso 1: las piezas de servicio */
-.mosaico-serv { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+/* Paso 1: los servicios, cada uno en una línea (pictograma y nombre) */
+.mosaico-serv { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .pieza { position: relative; display: block; }
-.pieza input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 2; }
+.pieza input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 3; }
 .pieza__cara {
-  position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 12px;
-  min-height: 96px; height: 100%; padding: 14px 14px 13px;
-  border-radius: 12px; background: var(--suave);
-  font-weight: 600; font-size: .98rem; line-height: 1.2; color: var(--tinta);
-  box-shadow: inset 0 0 0 1px transparent;
-  transition: transform .45s var(--e-muelle);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; align-items: center; gap: 10px;
+  min-height: 44px; height: 100%; padding: 0 12px 0 11px;
+  border-radius: 10px; background: var(--suave);
+  font-size: .875rem; font-weight: 600; line-height: 1.2;
 }
-.pieza__cara .picto { width: 30px; height: 30px; }
-.pieza:hover .pieza__cara { transform: translateY(-3px); box-shadow: inset 0 0 0 1px var(--tinta); }
-.pieza input:active + .pieza__cara { transform: scale(.96); }
-.pieza input:checked + .pieza__cara { background: var(--negro); color: var(--blanco); box-shadow: 0 16px 30px -18px rgba(0, 0, 0, .7); }
+/* La tinta que llena lo elegido desde donde se toca: el mismo gesto que los botones */
+.pieza__cara::before, .dia__cara::before {
+  content: ''; position: absolute; z-index: 0; left: var(--rx, 50%); top: var(--ry, 50%);
+  width: 250%; aspect-ratio: 1; border-radius: 50%;
+  background: var(--negro); pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+}
+/* Pictograma y nombre se invierten justo donde pasa la tinta */
+.pieza__cara > .picto, .pieza__nombre { position: relative; z-index: 1; color: var(--blanco); mix-blend-mode: difference; }
+.pieza__cara > .picto { width: 20px; height: 20px; }
+.pieza__nombre { white-space: nowrap; }
+.pieza:hover .pieza__cara { transform: translateY(-2px); box-shadow: inset 0 0 0 1px var(--tinta); }
+.pieza input:checked + .pieza__cara { box-shadow: 0 14px 26px -16px rgba(0, 0, 0, .7); }
+.pieza input:checked + .pieza__cara::before { transform: translate(-50%, -50%) scale(1); }
+.pieza input:active + .pieza__cara { transform: scale(.97); }
 .pieza input:focus-visible + .pieza__cara { outline: 2px solid var(--negro); outline-offset: 3px; }
+/* El visto de oro: al final de la línea si cabe; en móviles estrechos, prendido en la esquina del pictograma */
 .pieza__ok {
-  position: absolute; top: 10px; right: 10px; width: 24px; height: 24px; display: grid; place-items: center;
+  position: absolute; z-index: 2; left: 22px; top: calc(50% + 1px);
+  width: 16px; height: 16px; display: grid; place-items: center;
   border-radius: 50%; background: var(--oro); color: var(--negro);
-  transform: scale(0); transition: transform .45s var(--e-muelle);
+  box-shadow: 0 0 0 2px var(--negro);
+  opacity: 0; transform: scale(.4);
 }
-.pieza__ok .ico { width: 14px; height: 14px; stroke-width: 2.6; }
-.pieza input:checked + .pieza__cara .pieza__ok { transform: scale(1); }
+.pieza__ok .ico { width: 10px; height: 10px; stroke-width: 3.2; }
+.pieza input:checked + .pieza__cara .pieza__ok { opacity: 1; transform: none; }
 
-/* Paso 2: la tira de días */
-.dias { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+/* Paso 2: los días, en una tira estrecha */
+.dias { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
 .dia { position: relative; display: block; }
-.dia input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 2; }
+.dia input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 3; }
 .dia__cara {
-  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-  min-height: 84px; height: 100%; padding: 10px 4px 14px; overflow: hidden;
-  border-radius: 12px; background: var(--suave); color: var(--tinta); text-align: center;
-  transition: transform .45s var(--e-muelle);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 60px; height: 100%; padding: 6px 2px 9px;
+  border-radius: 10px; background: var(--suave); text-align: center; line-height: 1.15;
 }
-.dia__cara b { font-size: .8rem; font-weight: 600; }
+.dia__cara::before { width: 330%; }
+.dia__cara > * { position: relative; z-index: 1; color: var(--blanco); mix-blend-mode: difference; }
+.dia__cara b { font-size: .6875rem; font-weight: 600; }
 /* Números en Onest: el «1» de Italiana se confunde con una «I» */
-.dia__num { font-family: var(--sans); font-weight: 300; font-size: 1.9rem; line-height: 1.05; font-variant-numeric: lining-nums tabular-nums; }
-.dia__cara small { font-size: .74rem; color: var(--humo); }
+.dia__num { font-family: var(--sans); font-weight: 400; font-size: 1.25rem; line-height: 1.15; font-variant-numeric: lining-nums tabular-nums; }
+.dia__cara small { font-size: .6875rem; color: #999; }
+/* El subrayado de oro del día elegido */
 .dia__cara::after {
-  content: ''; position: absolute; left: 22%; right: 22%; bottom: 8px; height: 2px; border-radius: 2px;
-  background: var(--oro); transform: scaleX(0); transition: transform .5s var(--e-out);
+  content: ''; position: absolute; z-index: 2; left: 32%; right: 32%; bottom: 5px; height: 2px; border-radius: 2px;
+  background: var(--oro); transform: scaleX(0);
 }
-.dia:hover .dia__cara { transform: translateY(-3px); }
-.dia input:checked + .dia__cara { background: var(--negro); color: var(--blanco); transform: translateY(-4px); box-shadow: 0 16px 30px -18px rgba(0, 0, 0, .7); }
-.dia input:checked + .dia__cara small { color: rgba(255, 255, 255, .7); }
+.dia:hover .dia__cara { transform: translateY(-2px); box-shadow: inset 0 0 0 1px var(--tinta); }
+.dia input:checked + .dia__cara { transform: translateY(-3px); box-shadow: 0 14px 26px -16px rgba(0, 0, 0, .7); }
+.dia input:checked + .dia__cara::before { transform: translate(-50%, -50%) scale(1); }
 .dia input:checked + .dia__cara::after { transform: scaleX(1); }
+.dia input:active + .dia__cara { transform: scale(.95); }
 .dia input:focus-visible + .dia__cara { outline: 2px solid var(--negro); outline-offset: 3px; }
 
-/* Paso 3: el selector de franja, con un pulgar que se desliza */
-.segmento { position: relative; display: grid; grid-template-columns: repeat(var(--ops, 2), minmax(0, 1fr)); padding: 5px; border-radius: 999px; background: var(--suave); }
+/* Paso 3: mañana o tarde, con un pulgar que se desliza */
+.segmento { position: relative; display: grid; grid-template-columns: repeat(var(--ops, 2), minmax(0, 1fr)); padding: 4px; border-radius: 999px; background: var(--suave); }
 .segmento__op { position: relative; z-index: 1; display: block; }
 .segmento__op input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
 .segmento__op span {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 56px; padding: 6px 10px; border-radius: 999px;
-  font-weight: 600; line-height: 1.2; color: var(--tinta);
+  display: flex; flex-wrap: wrap; align-items: baseline; align-content: center; justify-content: center; gap: 0 7px;
+  min-height: 44px; padding: 4px 12px; border-radius: 999px; text-align: center;
+  font-size: .875rem; font-weight: 600; line-height: 1.25; color: var(--tinta);
 }
 .segmento__op small { font-size: .75rem; font-weight: 400; color: var(--humo); }
-.segmento__op:has(input:checked) span { color: var(--blanco); }
+/* Móvil: el horario siempre debajo, en las dos franjas por igual */
+@media (max-width: 559px) { .segmento__op span { flex-direction: column; align-items: center; } }
+.segmento__op:hover span { box-shadow: inset 0 0 0 1px var(--tinta); }
+.segmento__op:has(input:checked) span { color: var(--blanco); box-shadow: none; }
 .segmento__op:has(input:checked) small { color: rgba(255, 255, 255, .72); }
-.segmento__op:has(input:disabled) span { opacity: .45; }
+.segmento__op:has(input:disabled) span { opacity: .45; box-shadow: none; }
 .segmento__op:has(input:disabled) input { cursor: not-allowed; }
+.segmento__op:has(input:enabled:active) span { transform: scale(.97); }
 .segmento__op input:focus-visible + span { outline: 2px solid var(--negro); outline-offset: 2px; }
 .segmento__pulgar {
-  position: absolute; top: 5px; bottom: 5px; left: 5px;
-  width: calc((100% - 10px) / var(--ops, 2));
+  position: absolute; top: 4px; bottom: 4px; left: 4px;
+  width: calc((100% - 8px) / var(--ops, 2));
   border-radius: 999px; background: var(--negro);
   transform: translateX(calc(var(--pos, 0) * 100%));
   opacity: var(--vis, 0);
-  transition: transform .5s var(--e-muelle), opacity .25s var(--e-out);
 }
 
-/* Paso 4: campos con la etiqueta que sube */
-.campos { display: grid; gap: 12px; }
+/* Paso 4: nombre y teléfono, con la etiqueta que sube */
+.campos { display: grid; gap: 8px; }
 .campo { position: relative; display: block; }
 .campo input {
-  width: 100%; height: 60px; padding: 22px 16px 6px;
-  border: 1px solid var(--linea); border-radius: 12px; background: var(--blanco);
-  font-size: 1.0625rem; color: var(--tinta);
-  transition: border-color .2s;
+  width: 100%; height: 48px; padding: 17px 14px 3px;
+  border: 1px solid var(--linea); border-radius: 10px; background: var(--blanco);
+  font-size: 1rem; color: var(--tinta);
 }
 .campo input:hover { border-color: var(--humo); }
 .campo input:focus-visible { outline: 2px solid var(--negro); outline-offset: 2px; border-color: var(--negro); }
 .campo span {
-  position: absolute; left: 17px; top: 50%; pointer-events: none;
-  color: var(--humo); transform-origin: left center; transform: translateY(-50%);
-  transition: transform .3s var(--e-out);
+  position: absolute; left: 15px; top: 50%; pointer-events: none;
+  font-size: .9375rem; line-height: 1.2; color: var(--humo);
+  transform-origin: left center; transform: translateY(-50%);
 }
-.campo input:focus + span, .campo input:not(:placeholder-shown) + span { transform: translateY(-118%) scale(.78); }
+.campo input:focus + span, .campo input:not(:placeholder-shown) + span { transform: translateY(-118%) scale(.76); }
 
-/* El resguardo */
-.ticket { position: relative; padding: 28px 20px 26px; background: #F7F7F7; border-top: 2px dashed #D6D6D6; border-radius: 0 0 16px 16px; }
-.ticket__cab { font-family: var(--display); font-size: 2.3rem; line-height: 1.05; color: var(--tinta); margin-bottom: 12px; }
-.ticket__lista > div { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 11px 0; border-bottom: 1px dotted #CFCFCF; }
-.ticket__lista dt { font-size: .82rem; color: var(--humo); }
-.ticket__lista dd { font-weight: 600; line-height: 1.4; color: var(--tinta); overflow-wrap: anywhere; }
+/* El resguardo: un talón que se rellena solo, con la hoja del día y el sello */
+.ticket {
+  position: relative;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-content: start;
+  grid-template-areas: "cab fecha" "sello fecha" "lista lista" "acciones acciones" "nota nota";
+  column-gap: 14px;
+  padding: 22px 16px 20px;
+  background: #F7F7F7; border-top: 2px dashed #D6D6D6; border-radius: 0 0 14px 14px;
+}
+.ticket__cab { grid-area: cab; font-family: var(--display); font-size: 1.75rem; line-height: 1.05; color: var(--tinta); }
+.ticket__lista { grid-area: lista; margin-top: 10px; }
+.ticket__lista > div { display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px dotted #CFCFCF; }
+.ticket__lista dt { font-size: .75rem; color: var(--humo); }
+.ticket__lista dd { font-size: .875rem; font-weight: 600; line-height: 1.35; color: var(--tinta); overflow-wrap: anywhere; }
 .ticket__lista dd.vacio { font-weight: 400; color: #8A8A8A; }
 .ticket__sello {
-  position: absolute; top: 22px; right: 18px;
-  padding: 6px 12px 5px; border: 2px solid var(--oro-osc); border-radius: 4px;
-  font-family: var(--display); font-size: 1.15rem; letter-spacing: .1em; color: var(--oro-osc);
+  grid-area: sello; justify-self: start; align-self: center;
+  padding: 4px 10px 3px; border: 2px solid var(--oro-osc); border-radius: 4px;
+  font-family: var(--display); font-size: 1.05rem; line-height: 1.2; letter-spacing: .1em; color: var(--oro-osc);
   opacity: 0; transform: rotate(-8deg);
 }
 .reserva.lista .ticket__sello { opacity: 1; }
-.ticket__acciones { display: grid; gap: 10px; margin-top: 22px; }
-.ticket__nota { margin-top: 14px; font-size: .875rem; line-height: 1.5; color: var(--humo); }
+.ticket__acciones { grid-area: acciones; display: grid; gap: 8px; margin-top: 16px; }
+.ticket .boton { min-height: 48px; padding-inline: 1.2em; font-size: .9375rem; }
+.ticket__nota { grid-area: nota; margin-top: 10px; font-size: .8125rem; line-height: 1.45; color: var(--humo); }
 .ticket__nota.aviso { color: var(--tinta); font-weight: 600; }
 
-@media (min-width: 560px) {
-  .mosaico-serv { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* Móviles muy estrechos: todo cabe sin perder el pictograma */
+@media (max-width: 359px) {
+  .reserva__form, .ticket { padding-inline: 12px; }
+  .pieza__cara { gap: 7px; padding: 0 8px; font-size: .8125rem; }
+  .pieza__cara > .picto { width: 18px; height: 18px; }
+  .pieza__ok { left: 17px; }
+}
+@media (min-width: 360px) {
+  /* Seis días en fila, nunca más anchos de 60 px */
+  .dias { grid-template-columns: repeat(6, minmax(0, 60px)); justify-content: space-between; }
   .campos { grid-template-columns: 1fr 1fr; }
-  .reserva__form { padding: 38px 32px 32px; }
-  .ticket { padding: 32px; }
 }
+@media (min-width: 414px) {
+  .pieza__ok { position: relative; left: auto; top: auto; margin-left: auto; width: 18px; height: 18px; box-shadow: none; }
+  .pieza__ok .ico { width: 11px; height: 11px; }
+}
+@media (min-width: 560px) {
+  .reserva__form { padding: 26px 24px 24px; }
+  .ticket { padding: 24px 24px 22px; }
+}
+/* El resguardo pasa al lado, como el talón de un billete; el sello cae en el hueco sobre los botones */
 @media (min-width: 720px) {
-  .dias { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .reserva { grid-template-columns: minmax(0, 1fr) minmax(0, 252px); }
+  .reserva__form { gap: 20px; }
+  .ticket {
+    grid-template-areas: "cab fecha" "lista lista" "sello sello" "acciones acciones" "nota nota";
+    grid-template-rows: auto auto 1fr auto auto;
+    padding: 26px 20px 22px;
+    border-top: 0; border-left: 2px dashed #D6D6D6; border-radius: 0 14px 14px 0;
+  }
+  .ticket__lista { margin-top: 14px; }
+  .ticket__sello { justify-self: end; margin: 14px 8px 4px 0; font-size: 1.25rem; }
 }
-@media (min-width: 900px) {
-  .reserva { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); }
-  .ticket { border-top: 0; border-left: 2px dashed #D6D6D6; border-radius: 0 16px 16px 0; display: flex; flex-direction: column; }
-  .ticket__acciones { margin-top: auto; padding-top: 22px; }
-}
-@media (min-width: 900px) and (max-width: 1179px) {
-  .dias { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* Tableta en vertical: la tarjeta, de margen a margen */
+@media (min-width: 720px) and (max-width: 899px) {
+  .reserva { max-width: none; }
 }
 @media (min-width: 1180px) {
-  .cita__rejilla { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: clamp(40px, 5vw, 72px); align-items: center; }
+  .cita__rejilla { grid-template-columns: minmax(0, 1fr) minmax(0, 680px); column-gap: clamp(48px, 6vw, 112px); align-items: center; }
+  .cita__intro { gap: 28px; }
+  .cita__intro .titulo { font-size: clamp(5.75rem, 2rem + 5vw, 8rem); }
 }
 
 /* =====================================================================
@@ -788,19 +845,19 @@ html.menu-abierto { overflow: hidden; }
   .cab .boton { display: none; }
 }
 
-/* La hoja de calendario del resguardo (escritorio): el día elegido, en grande */
-.ticket__fecha { display: none; }
-@media (min-width: 900px) {
-  .ticket__fecha {
-    display: grid; justify-items: start; align-content: center; gap: 4px;
-    margin-top: 26px; padding: 18px 0 4px;
-  }
-  .ticket__sem { font-size: .95rem; font-weight: 600; color: var(--tinta); }
-  .ticket__num { font-family: var(--sans); font-weight: 200; font-size: 5.2rem; line-height: 1; color: var(--tinta); font-variant-numeric: lining-nums; }
-  .ticket__sello { top: auto; bottom: 200px; right: 26px; }
-  .ticket__mes { font-size: .95rem; color: var(--humo); }
-  .ticket__fecha.vacia .ticket__num { color: #C9C9C9; }
+/* La hoja de calendario del resguardo: el día elegido, como la hoja de un taco */
+.ticket__fecha {
+  grid-area: fecha; align-self: start;
+  display: grid; justify-items: center;
+  width: 68px; overflow: hidden;
+  border-radius: 8px; background: var(--blanco);
+  box-shadow: 0 0 0 1px var(--linea), 0 10px 22px -12px rgba(0, 0, 0, .4);
+  perspective: 240px;
 }
+.ticket__sem { justify-self: stretch; padding: 3px 4px; background: var(--negro); color: var(--blanco); font-size: .6875rem; font-weight: 600; line-height: 1.25; text-align: center; }
+.ticket__num { padding-top: 2px; font-family: var(--sans); font-weight: 300; font-size: 1.875rem; line-height: 1.1; color: var(--tinta); font-variant-numeric: lining-nums tabular-nums; }
+.ticket__mes { padding-bottom: 6px; font-size: .6875rem; line-height: 1.25; color: var(--humo); }
+.ticket__fecha.vacia .ticket__num { color: #C9C9C9; }
 /* El pie: horario en tres bloques cortos */
 .pie__rejilla > div > p + p { margin-top: 6px; }
 .pie b { font-weight: 600; }
