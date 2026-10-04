@@ -26,9 +26,9 @@
 <link rel="preload" href="assets/fonts/italiana.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/onest.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/lorena-premios.jpg" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/base.css?v=6">
-<link rel="stylesheet" href="assets/css/home.css?v=6">
-<link rel="stylesheet" href="assets/css/movimiento.css?v=6">
+<link rel="stylesheet" href="assets/css/base.css?v=7">
+<link rel="stylesheet" href="assets/css/home.css?v=7">
+<link rel="stylesheet" href="assets/css/movimiento.css?v=7">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23000'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23fff' text-anchor='middle'%3ELC%3C/text%3E%3C/svg%3E">
 
 <script type="application/ld+json">
@@ -161,39 +161,123 @@
 
 <main id="contenido">
 
-  <!-- ═══════════ 1 · HERO: su retrato, entre su nombre ═══════════ -->
+  <!-- ═══════════ 1 · HERO: el tocador ═══════════ -->
   <section class="hero" id="inicio" aria-labelledby="hero-titulo">
     <div class="hero__escena envoltura">
-      <h1 class="hero__titulo" id="hero-titulo">
-        <span class="solo-lectores">Lorena Campillo, peluquería boutique en San Blas, Madrid</span>
-        <span class="hero__nombre hero__nombre--a" aria-hidden="true" data-letras-hero="izq">Lorena</span>
-        <span class="hero__nombre hero__nombre--b" aria-hidden="true" data-letras-hero="der">Campillo</span>
-        <span class="hero__sub" aria-hidden="true">Peluquería boutique en San Blas, Madrid</span>
-      </h1>
+      <div class="hero__texto">
+        <h1 class="hero__titulo" id="hero-titulo">
+          <span class="solo-lectores">Lorena Campillo, peluquería boutique en San Blas, Madrid</span>
+          <span class="hero__nombre" aria-hidden="true"><span class="hero__palabra" data-letras-hero>Lorena</span> <span class="hero__palabra" data-letras-hero>Campillo</span></span>
+        </h1>
+        <p class="hero__sub" aria-hidden="true">Peluquería boutique en San Blas, Madrid</p>
+        <div class="hero__acciones">
+          <a class="boton boton--luz" href="#cita" data-magnetico data-llamativo><svg class="ico ico--cal" aria-hidden="true"><use href="#i-cal"/></svg><span class="boton__txt">Pedir cita</span></a>
+          <a class="boton boton--contorno-claro" href="tel:+34917545321" aria-label="Llamar al 917 54 53 21"><svg class="ico ico--tel" aria-hidden="true"><use href="#i-tel"/></svg><span class="boton__txt"><span class="solo-movil">Llamar</span><span class="sin-movil">917 54 53 21</span></span></a>
+          <a class="enlace enlace--claro" href="#servicios"><span>Ver servicios</span><svg class="ico ico--abajo" aria-hidden="true"><use href="#i-abajo"/></svg></a>
+        </div>
+      </div>
 
-      <!-- Foto de su web, tal cual: mismo archivo, sin recortes ni filtros -->
-      <figure class="espejo hero__espejo">
-        <span class="espejo__marco">
-          <img src="assets/img/lorena-premios.jpg" width="1097" height="1463" fetchpriority="high"
+      <!-- El tocador: su foto, tal cual (mismo archivo, sin recortes ni filtros), en un espejo de bombillas -->
+      <div class="tocador">
+        <div class="tocador__espejo">
+          <span class="tocador__luz" aria-hidden="true"></span>
+          <span class="tocador__marco" aria-hidden="true">
+            <i class="bombilla" style="--x:4.17%;--y:3.26%;--i:0"></i>
+            <i class="bombilla" style="--x:19.44%;--y:3.26%;--i:1"></i>
+            <i class="bombilla" style="--x:34.72%;--y:3.26%;--i:2"></i>
+            <i class="bombilla" style="--x:50.00%;--y:3.26%;--i:3"></i>
+            <i class="bombilla" style="--x:65.28%;--y:3.26%;--i:4"></i>
+            <i class="bombilla" style="--x:80.56%;--y:3.26%;--i:5"></i>
+            <i class="bombilla" style="--x:95.83%;--y:3.26%;--i:6"></i>
+            <i class="bombilla" style="--x:95.83%;--y:14.95%;--i:7"></i>
+            <i class="bombilla" style="--x:95.83%;--y:26.63%;--i:8"></i>
+            <i class="bombilla" style="--x:95.83%;--y:38.32%;--i:9"></i>
+            <i class="bombilla" style="--x:95.83%;--y:50.00%;--i:10"></i>
+            <i class="bombilla" style="--x:95.83%;--y:61.68%;--i:11"></i>
+            <i class="bombilla" style="--x:95.83%;--y:73.37%;--i:12"></i>
+            <i class="bombilla" style="--x:95.83%;--y:85.05%;--i:13"></i>
+            <i class="bombilla" style="--x:95.83%;--y:96.74%;--i:14"></i>
+            <i class="bombilla" style="--x:80.56%;--y:96.74%;--i:15"></i>
+            <i class="bombilla" style="--x:65.28%;--y:96.74%;--i:16"></i>
+            <i class="bombilla" style="--x:50.00%;--y:96.74%;--i:17"></i>
+            <i class="bombilla" style="--x:34.72%;--y:96.74%;--i:18"></i>
+            <i class="bombilla" style="--x:19.44%;--y:96.74%;--i:19"></i>
+            <i class="bombilla" style="--x:4.17%;--y:96.74%;--i:20"></i>
+            <i class="bombilla" style="--x:4.17%;--y:85.05%;--i:21"></i>
+            <i class="bombilla" style="--x:4.17%;--y:73.37%;--i:22"></i>
+            <i class="bombilla" style="--x:4.17%;--y:61.68%;--i:23"></i>
+            <i class="bombilla" style="--x:4.17%;--y:50.00%;--i:24"></i>
+            <i class="bombilla" style="--x:4.17%;--y:38.32%;--i:25"></i>
+            <i class="bombilla" style="--x:4.17%;--y:26.63%;--i:26"></i>
+            <i class="bombilla" style="--x:4.17%;--y:14.95%;--i:27"></i>
+          </span>
+          <img class="tocador__foto" src="assets/img/lorena-premios.jpg" width="1097" height="1463" fetchpriority="high"
                alt="Lorena Campillo sonriente, con tres de sus galardones en las manos: una medalla de oro, una insignia y una estrella dorada">
-        </span>
-      </figure>
+          <span class="tocador__labio" aria-hidden="true"></span>
 
-      <a class="sello" href="#trayectoria" aria-label="Seis premios nacionales e internacionales. Ver la trayectoria">
-        <svg class="sello__svg" viewBox="0 0 120 120" aria-hidden="true">
-          <defs><path id="sello-circulo" d="M60 60m-47 0a47 47 0 1 1 94 0a47 47 0 1 1-94 0"/></defs>
-          <g class="sello__giro">
-            <text class="sello__texto"><textPath href="#sello-circulo" textLength="292">seis premios nacionales e internacionales ✦ 2017 – 2022 ✦</textPath></text>
-          </g>
-          <circle class="sello__aro" cx="60" cy="60" r="33"/>
-          <text class="sello__num" x="60" y="77" text-anchor="middle">6</text>
-        </svg>
-      </a>
-
-      <div class="hero__acciones">
-        <a class="boton boton--luz" href="#cita" data-magnetico data-llamativo><svg class="ico ico--cal" aria-hidden="true"><use href="#i-cal"/></svg><span class="boton__txt">Pedir cita</span></a>
-        <a class="boton boton--contorno-claro" href="tel:+34917545321" aria-label="Llamar al 917 54 53 21"><svg class="ico ico--tel" aria-hidden="true"><use href="#i-tel"/></svg><span class="boton__txt"><span class="solo-movil">Llamar</span><span class="sin-movil">917 54 53 21</span></span></a>
-        <a class="enlace enlace--claro" href="#servicios"><span>Ver servicios</span><svg class="ico ico--abajo" aria-hidden="true"><use href="#i-abajo"/></svg></a>
+          <!-- Lo que una estilista mete en el marco de su espejo: cada cosa lleva a una parte de la página -->
+          <nav class="tocador__objetos" aria-label="Descubre el salón">
+            <a class="objeto objeto--polaroid" href="#servicios" aria-label="Ver servicios" style="--n:0">
+              <span class="objeto__flota">
+                <span class="objeto__cuerpo">
+                  <span class="polaroid" aria-hidden="true">
+                    <span class="polaroid__foto">
+                      <img class="activa" src="assets/img/trabajo-rizos-480.webp" width="480" height="640" loading="lazy" decoding="async" fetchpriority="low" alt="">
+                      <img data-src="assets/img/trabajo-mechas-480.webp" width="480" height="640" decoding="async" alt="">
+                      <img data-src="assets/img/trabajo-recogido-480.webp" width="480" height="584" decoding="async" alt="">
+                      <img data-src="assets/img/trabajo-brillo-480.webp" width="480" height="641" decoding="async" alt="">
+                      <img data-src="assets/img/salon-caballero-480.webp" width="480" height="640" decoding="async" alt="">
+                    </span>
+                    <span class="polaroid__pie"><span class="activa">Cortes</span><span>Coloración</span><span>Peinados</span><span>Tratamientos</span><span>Hombres</span></span>
+                  </span>
+                </span>
+                <span class="objeto__rotulo">Servicios</span>
+              </span>
+            </a>
+            <a class="objeto objeto--tarjeta" href="#cita" aria-label="Pide tu cita en un minuto" style="--n:1">
+              <span class="objeto__flota">
+                <span class="objeto__cuerpo">
+                  <span class="tarjeta" aria-hidden="true">
+                    <span class="tarjeta__casa">Lorena Campillo</span>
+                    <span class="tarjeta__titulo">Pide tu cita</span>
+                    <span class="tarjeta__lineas"><span>Día</span><span>Hora</span></span>
+                  </span>
+                </span>
+                <span class="objeto__rotulo">Cita<span class="sin-movil"> en un minuto</span></span>
+              </span>
+            </a>
+            <a class="objeto objeto--copia" href="#salon" aria-label="Conoce el salón" style="--n:2">
+              <span class="objeto__flota">
+                <span class="objeto__cuerpo">
+                  <span class="copia" aria-hidden="true"><img src="assets/img/salon-espejos-640.webp" width="640" height="480" loading="lazy" decoding="async" fetchpriority="low" alt=""></span>
+                </span>
+                <span class="objeto__rotulo">El salón</span>
+              </span>
+            </a>
+            <a class="objeto objeto--roseta" href="#trayectoria" aria-label="Seis premios nacionales e internacionales: ver la trayectoria" style="--n:3">
+              <span class="objeto__flota">
+                <span class="roseta__vaiven">
+                  <span class="objeto__cuerpo">
+                    <span class="roseta" aria-hidden="true">
+                      <span class="roseta__cola roseta__cola--a"></span>
+                      <span class="roseta__cola roseta__cola--b"></span>
+                      <span class="roseta__plisado"><span class="roseta__centro">6</span></span>
+                    </span>
+                  </span>
+                </span>
+                <span class="objeto__rotulo"><span class="solo-movil">Premios</span><span class="sin-movil">Seis premios</span></span>
+              </span>
+            </a>
+            <a class="objeto objeto--nota" href="#preguntas" aria-label="Preguntas frecuentes" style="--n:4">
+              <span class="objeto__flota">
+                <span class="objeto__cuerpo">
+                  <span class="nota" aria-hidden="true"><span class="nota__texto">¿Atendéis a hombres?</span></span>
+                </span>
+                <span class="objeto__rotulo">Preguntas<span class="sin-movil"> frecuentes</span></span>
+              </span>
+            </a>
+          </nav>
+        </div>
       </div>
     </div>
   </section>
@@ -628,6 +712,6 @@
   <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Calle+de+San+Romualdo+51,+28037+Madrid" target="_blank" rel="noopener"><svg class="ico ico--pin" aria-hidden="true"><use href="#i-pin"/></svg>Cómo llegar</a>
 </nav>
 
-<script src="assets/js/home.js?v=6" defer></script>
+<script src="assets/js/home.js?v=7" defer></script>
 </body>
 </html>

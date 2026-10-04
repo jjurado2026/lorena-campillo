@@ -85,7 +85,16 @@ html.menu-abierto { overflow: hidden; }
 }
 
 /* =====================================================================
-   1 · HERO: su retrato entre su nombre
+   1 · HERO: el tocador
+   Su retrato, en el espejo de tocador de una estilista: marco negro con
+   bombillas y, metidas en el marco, cinco cosas de verdad que llevan al
+   resto de la página (sus trabajos, la cita, el salón, sus premios y una
+   pregunta). Tres composiciones según el hueco: vertical (móvil y
+   tableta), a dos lados (escritorio) y compacta (móvil en horizontal).
+   Siempre cabe entero, sin scroll, y nada tapa ni recorta la foto.
+   El espejo se mide en --u, la centésima parte del alto de la foto:
+   marco 90 × 115 u, foto 75 × 100 u, banda de bombillas 7,5 u. Los
+   objetos se miden en --uo (--u × --k) y crecen siempre hacia fuera.
    ===================================================================== */
 .hero {
   position: relative; isolation: isolate; overflow: hidden;
@@ -94,141 +103,316 @@ html.menu-abierto { overflow: hidden; }
   min-height: 300px;
   background: var(--negro); color: var(--blanco);
   --foco: var(--blanco);
-}
-/* Una luz de techo muy suave sobre el negro */
-.hero::before {
-  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(60% 55% at 50% 42%, rgba(255, 255, 255, .07), transparent 70%);
+  container-type: size;
 }
 
 .hero__escena {
   position: relative;
   height: 100%;
-  max-width: 1760px;
   display: grid;
-  /* Composición vertical: Lorena · retrato · Campillo · subtítulo · botones */
+  /* Vertical: nombre · tocador · subtítulo · botones */
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
-  row-gap: clamp(4px, 1.3svh, 14px);
-  padding-block: clamp(8px, 2svh, 28px) clamp(12px, 2.6svh, 32px);
-  --nombre: clamp(2.6rem, min(calc((100vw - 2 * var(--gutter)) / 3.8), 10.5svh), 8.5rem);
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-areas: 'nombre' 'tocador' 'sub' 'acciones';
+  justify-items: center;
+  row-gap: clamp(4px, 1.1cqh, 12px);
+  padding-block: clamp(6px, 1.3cqh, 18px) clamp(10px, 2cqh, 24px);
 }
-
-.hero__titulo {
-  grid-column: 1; grid-row: 1 / 5;
-  display: grid; grid-template-rows: subgrid; grid-template-columns: subgrid;
-  font-weight: 400;
-}
+.hero__texto { display: contents; }
+.hero__titulo { grid-area: nombre; font-weight: 400; text-align: center; margin-bottom: clamp(0px, .9cqh, 10px); }
+/* Su nombre, como un rótulo de luz: las letras se encienden con las bombillas */
 .hero__nombre {
+  display: block;
   font-family: var(--display); font-weight: 400;
-  font-size: var(--nombre); line-height: .92; letter-spacing: .01em;
-  white-space: nowrap;
+  font-size: min(calc((100cqw - 2 * var(--gutter)) / 7.15), 8cqh, 6.5rem);
+  line-height: .95; letter-spacing: .01em; white-space: nowrap;
+  text-shadow: 0 0 .4em rgba(255, 255, 255, .28);
 }
-.hero__nombre--a { grid-row: 1; justify-self: start; align-self: end; }
-.hero__nombre--b { grid-row: 3; justify-self: end; align-self: start; }
+.hero__palabra { display: inline-block; }
+.hero__nombre .l { display: inline-block; }
 .hero__sub {
-  grid-row: 4; justify-self: center; align-self: center;
-  font-size: clamp(.94rem, .8rem + .5vw, 1.15rem); font-weight: 500; letter-spacing: .02em;
+  grid-area: sub;
+  font-size: clamp(.875rem, .8rem + .4vw, 1.0625rem); font-weight: 500; line-height: 1.35; letter-spacing: .02em;
   color: rgba(255, 255, 255, .78); text-align: center;
 }
-
-/* El espejo: marco negro con luz LED detrás. La foto no se toca. */
-.espejo { margin: 0; }
-.hero__espejo {
-  grid-column: 1; grid-row: 2; z-index: 1;
-  min-height: 0; height: 100%;
-  display: flex; justify-content: center; align-items: center;
-}
-.espejo__marco {
-  position: relative; display: block;
-  --pad: clamp(7px, 1.1svh, 13px);
-  padding: var(--pad);
-  background: var(--negro);
-  border-radius: 3px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
-}
-.hero__espejo .espejo__marco { height: 100%; }
-.hero__espejo img {
-  display: block; height: 100%; width: auto; max-width: calc(100vw - 2 * var(--gutter) - 26px);
-  object-fit: contain; /* nunca recorta: si sobra hueco, queda dentro del marco negro */
-}
-/* El halo de la luz LED */
-.espejo__marco::before {
-  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
-  box-shadow: 0 0 18px 2px rgba(255, 255, 255, .72), 0 0 70px 16px rgba(255, 255, 255, .22);
-}
-
-/* El sello de los premios */
-.sello {
-  grid-column: 1; grid-row: 1; justify-self: end; align-self: center; z-index: 2;
-  display: block; width: clamp(64px, 9svh, 120px); aspect-ratio: 1;
-  color: var(--blanco); text-decoration: none; border-radius: 50%;
-  transition: transform .6s var(--e-muelle);
-}
-.sello:hover { transform: scale(1.06); }
-.sello:active { transform: scale(.96); }
-.sello__svg { width: 100%; height: 100%; overflow: visible; }
-.sello__giro { transform-origin: 60px 60px; transform: rotate(var(--giro, 0deg)); }
-.sello__texto { font-family: var(--sans); font-size: 9.6px; font-weight: 500; letter-spacing: .06em; fill: rgba(255, 255, 255, .86); }
-.sello__aro { fill: none; stroke: rgba(201, 165, 92, .6); stroke-width: 1; }
-.sello__num { font-family: var(--display); font-size: 46px; fill: var(--oro); }
-
 .hero__acciones {
-  grid-row: 5; justify-self: center; z-index: 2;
-  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 10px;
+  grid-area: acciones;
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px;
 }
-.hero__acciones .enlace { flex-basis: 100%; justify-content: center; min-height: 44px; }
-
-/* Pantallas muy bajas: el enlace a servicios se va al pie del hero */
-@media (max-height: 600px) {
-  .hero__acciones .enlace { display: none; }
+/* En vertical, los objetos del espejo ya llevan a cada parte: el enlace solo si sobra alto */
+.hero__acciones .enlace { display: none; flex-basis: 100%; justify-content: center; }
+/* Móviles muy estrechos: los dos botones caben en una fila */
+@media (max-width: 380px) {
+  .hero__acciones .boton { min-height: 48px; padding: 0 1.1em; }
+}
+@media (min-width: 600px) and (min-height: 900px) {
+  .hero__acciones .enlace { display: inline-flex; }
 }
 
-/* ---- Composición diagonal (escritorio y tableta en horizontal) ---- */
+/* ---- El tocador: el espejo, su luz y lo que hay metido en el marco ---- */
+.tocador {
+  grid-area: tocador; justify-self: stretch; align-self: stretch; min-height: 0;
+  container-type: size;
+  display: grid; place-items: center;
+  /* Escala de los objetos y lo que sobresalen del marco, en uo: arriba, derecha, abajo, izquierda */
+  --k: 1; --pt: 22; --pr: 1.5; --pb: 21.5; --pl: 1.5;
+}
+.tocador__espejo {
+  --fh: min(
+    calc(100cqh / (1.15 + var(--k) * (var(--pt) + var(--pb)) / 100)),
+    calc(100cqw / (.9 + var(--k) * (var(--pl) + var(--pr)) / 100)),
+    var(--fh-max, 1500px));
+  --u: calc(var(--fh) / 100);
+  --uo: calc(var(--u) * var(--k));
+  position: relative;
+  width: calc(var(--u) * 90); height: calc(var(--u) * 115);
+  margin: calc(var(--uo) * var(--pt)) calc(var(--uo) * var(--pr)) calc(var(--uo) * var(--pb)) calc(var(--uo) * var(--pl));
+}
+/* La luz que el espejo echa sobre la pared */
+.tocador__luz {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, .15), rgba(255, 255, 255, .055) 55%, rgba(255, 255, 255, 0));
+  transform: scale(1.9, 1.45);
+}
+/* El marco: laca negra ancha, con canto de luz */
+.tocador__marco {
+  position: absolute; inset: 0; z-index: 1;
+  border-radius: calc(var(--u) * 1.8);
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, 0) 24%, rgba(255, 255, 255, 0) 76%, rgba(255, 255, 255, .05)),
+    linear-gradient(var(--carbon), #050505);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .2),
+    inset 0 0 0 calc(var(--u) * .7) rgba(0, 0, 0, .55),
+    0 calc(var(--u) * 3) calc(var(--u) * 9) rgba(0, 0, 0, .8);
+}
+/* Bombillas de camerino: cristal, casquillo y halo. El halo queda debajo de la foto */
+.bombilla {
+  position: absolute; left: var(--x); top: var(--y);
+  width: calc(var(--u) * 3.9); height: calc(var(--u) * 3.9); border-radius: 50%;
+  transform: translate(-50%, -50%) scale(var(--k-luz, 1));
+  background: radial-gradient(circle at 36% 32%, #5C5C5C, #262626 62%, #0E0E0E);
+  box-shadow: 0 0 0 calc(var(--u) * .45) #0A0A0A, 0 0 0 calc(var(--u) * .45 + 1px) rgba(255, 255, 255, .16);
+}
+.bombilla::before {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, #FFFFFF 0 34%, #F4F4F4 55%, #D6D6D6 80%, #B4B4B4);
+  box-shadow: 0 0 calc(var(--u) * .9) rgba(255, 255, 255, .95);
+}
+.bombilla::after {
+  content: ''; position: absolute; left: 50%; top: 50%; z-index: -1; pointer-events: none;
+  width: 560%; height: 560%; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(255, 255, 255, .44), rgba(255, 255, 255, .15) 38%, rgba(255, 255, 255, 0));
+}
+/* La foto, intacta y por encima de todo lo del espejo */
+.tocador__foto {
+  position: absolute; z-index: 4;
+  left: calc(var(--u) * 7.5); top: calc(var(--u) * 7.5);
+  width: calc(var(--u) * 75); height: calc(var(--u) * 100);
+  max-width: none;
+  object-fit: contain; /* nunca recorta */
+  background: var(--negro);
+}
+/* El canto interior del marco: lo que se mete en el espejo queda debajo de él */
+.tocador__labio {
+  position: absolute; z-index: 5; pointer-events: none;
+  left: calc(var(--u) * 6.1); top: calc(var(--u) * 6.1);
+  width: calc(var(--u) * 77.8); height: calc(var(--u) * 102.8);
+  border: calc(var(--u) * 1.4) solid #070707;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .13);
+}
+
+/* ---- Los objetos: cada uno es un enlace ----
+   El enlace nunca baja de 44 px y solo crece hacia fuera del espejo; el objeto
+   se ancla dentro por el lado que toca el marco (--fx, --fy) */
+.objeto {
+  position: absolute; z-index: 3;
+  width: max(44px, calc(var(--uo) * var(--ow))); height: max(44px, calc(var(--uo) * var(--oh)));
+  color: var(--negro); text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.objeto:focus-visible { outline: none; }
+/* Flota con el cursor (el JS pone --px y --py) */
+.objeto__flota {
+  position: absolute; left: var(--fx, 50%); top: var(--fy, 50%);
+  width: calc(var(--uo) * var(--ow)); height: calc(var(--uo) * var(--oh));
+  transform: translate(calc(var(--fx, 50%) * -1), calc(var(--fy, 50%) * -1)) translate(calc(var(--px, 0) * var(--prof, 5px)), calc(var(--py, 0) * var(--prof, 5px)));
+}
+/* Gira desde donde está metido en el marco */
+.objeto__cuerpo { position: absolute; inset: 0; transform-origin: var(--pivote, 50% 50%); transform: rotate(var(--r, 0deg)); }
+.objeto:focus-visible .objeto__cuerpo { outline: 2px solid var(--blanco); outline-offset: 5px; }
+/* El rótulo: sale siempre hacia fuera del espejo, nunca sobre la foto */
+.objeto__rotulo {
+  position: absolute; z-index: 2; left: var(--lx, 50%); top: var(--ly, 100%);
+  transform: translate(var(--ltx, -50%), var(--lty, 0px)) translateY(8px) scale(.9);
+  opacity: 0;
+  padding: .38em .85em .42em; border-radius: 999px;
+  background: rgba(0, 0, 0, .88); color: var(--blanco);
+  font-family: var(--sans); font-size: .8125rem; font-weight: 600; line-height: 1.15; white-space: nowrap;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .38), 0 10px 22px -10px rgba(0, 0, 0, .9);
+  pointer-events: none;
+}
+.objeto:focus-visible .objeto__rotulo { opacity: 1; transform: translate(var(--ltx, -50%), var(--lty, 0px)); }
+@media (hover: hover) {
+  .objeto:hover .objeto__rotulo { opacity: 1; transform: translate(var(--ltx, -50%), var(--lty, 0px)); }
+}
+/* En pantallas táctiles y en el móvil, los rótulos se ven siempre */
+@media (hover: none), (max-width: 699px) {
+  .objeto__rotulo { opacity: 1; transform: translate(var(--ltx, -50%), var(--lty, 0px)); font-size: .6875rem; padding: .34em .75em .38em; }
+}
+
+/* La polaroid (formato mini, 54 × 86): pasa sus trabajos, con el nombre del servicio escrito abajo */
+.polaroid {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  padding: 7.4% 7.4% 0;
+  border-radius: 3% / 1.9%;
+  background: linear-gradient(165deg, #FFFFFF 45%, #ECECEC);
+  box-shadow: 0 calc(var(--uo) * .9) calc(var(--uo) * 2.4) rgba(0, 0, 0, .6);
+}
+.polaroid__foto { position: relative; display: block; flex: none; aspect-ratio: 3 / 4; overflow: hidden; background: #F4F4F4; }
+.polaroid__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; }
+.polaroid__foto img.activa { opacity: 1; }
+.polaroid__pie { position: relative; flex: 1; display: grid; place-items: center; overflow: hidden; }
+.polaroid__pie > span {
+  grid-area: 1 / 1;
+  font-family: var(--display); font-size: calc(var(--uo) * 2.5); line-height: 1.1; white-space: nowrap;
+  color: var(--negro); opacity: 0;
+}
+.polaroid__pie > span.activa { opacity: 1; }
+
+/* Una copia en papel del salón: la pared de espejos */
+.copia {
+  position: absolute; inset: 0; padding: 5%;
+  background: #FFFFFF;
+  box-shadow: 0 calc(var(--uo) * .9) calc(var(--uo) * 2.4) rgba(0, 0, 0, .6);
+}
+.copia img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+/* La tarjeta de cita del salón, con el día y la hora por rellenar */
+.tarjeta {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: 0 9%;
+  border-radius: calc(var(--uo) * .8);
+  background: linear-gradient(170deg, #FFFFFF 50%, #F1F1F1);
+  box-shadow: 0 calc(var(--uo) * .9) calc(var(--uo) * 2.4) rgba(0, 0, 0, .6);
+}
+.tarjeta__casa { font-family: var(--display); font-size: calc(var(--uo) * 1.75); line-height: 1; letter-spacing: .06em; color: var(--humo); }
+.tarjeta__titulo { margin-top: 5%; font-family: var(--display); font-size: calc(var(--uo) * 3.9); line-height: 1; color: var(--negro); }
+.tarjeta__lineas {
+  display: flex; gap: 10%; width: 100%; margin-top: 9%;
+  font-size: calc(var(--uo) * 1.45); font-weight: 500; line-height: 1; color: var(--humo);
+}
+.tarjeta__lineas span { flex: 1; padding-bottom: 2px; border-bottom: 1px solid #BDBDBD; }
+
+/* Una nota doblada, con una de las preguntas que más le hacen */
+.nota {
+  position: absolute; inset: 0;
+  display: grid; place-items: center; padding: 8% 11%;
+  background: linear-gradient(170deg, #F4F4F4 0 47%, var(--pared) 48% 100%);
+  box-shadow: 0 calc(var(--uo) * .9) calc(var(--uo) * 2.4) rgba(0, 0, 0, .6);
+}
+.nota::after {
+  content: ''; position: absolute; right: 0; top: 0; width: 20%; aspect-ratio: 1;
+  background: linear-gradient(225deg, var(--negro) 50%, #C4C5C8 50%);
+}
+.nota__texto { font-family: var(--display); font-size: calc(var(--uo) * 2.75); line-height: 1.12; text-align: center; color: var(--negro); }
+
+/* La escarapela de oro de sus seis premios, prendida en el marco */
+.roseta__vaiven { position: absolute; inset: 0; transform-origin: var(--pivote, 50% 25%); }
+.roseta { position: absolute; inset: 0; }
+.roseta__plisado {
+  position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 1; border-radius: 50%;
+  display: grid; place-items: center;
+  background: repeating-conic-gradient(from 3deg, #E3CC92 0 6deg, #A9843C 6deg 12deg);
+  box-shadow: 0 calc(var(--uo) * .8) calc(var(--uo) * 2) rgba(0, 0, 0, .65), inset 0 0 0 max(1px, calc(var(--uo) * .3)) rgba(133, 103, 44, .9);
+}
+.roseta__centro {
+  width: 64%; aspect-ratio: 1; border-radius: 50%;
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 40% 34%, #262626, var(--negro) 72%);
+  box-shadow: inset 0 0 0 max(1px, calc(var(--uo) * .28)) var(--oro), 0 0 0 max(1px, calc(var(--uo) * .35)) #85672C;
+  font-family: var(--sans); font-weight: 300; font-size: calc(var(--uo) * var(--ow) * .38); line-height: 1;
+  color: var(--oro); font-variant-numeric: lining-nums;
+}
+.roseta__cola {
+  position: absolute; top: 28%; width: 36%; height: 72%;
+  background: linear-gradient(90deg, #85672C, var(--oro) 28%, #E3CC92 50%, var(--oro) 72%, #85672C);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 86%, 0 100%);
+  transform-origin: 50% 0;
+}
+.roseta__cola--a { left: 14%; transform: rotate(13deg); }
+.roseta__cola--b { right: 14%; transform: rotate(-13deg); }
+
+/* ---- Vertical: dos objetos asoman por arriba del marco y tres por abajo ----
+   (posición del enlace; --fx/--fy anclan el objeto por el lado del marco; --l* colocan el rótulo) */
+.objeto--nota     { --ow: 20; --oh: 15.5; --r: -6deg; --pivote: 74% 92%; --fx: 0%; --fy: 100%; left: calc(var(--u) * -1.5); bottom: calc(100% - var(--u) * 4); --lx: 0%; --ly: 0%; --ltx: 0%; --lty: -55%; }
+.objeto--polaroid { --ow: 16; --oh: 25.5; --r: 7deg; --pivote: 34% 94%; --fx: 100%; --fy: 100%; right: calc(var(--u) * 2.5); bottom: calc(100% - var(--u) * 5.2); --lx: 100%; --ly: 0%; --ltx: -100%; --lty: -55%; }
+.objeto--tarjeta  { --ow: 26; --oh: 15.6; --r: 4deg; --pivote: 50% 6%; --fx: 0%; --fy: 0%; left: calc(var(--u) * -1.5); top: calc(var(--u) * 108.8); --lx: 0%; --ly: 100%; --ltx: 0%; --lty: -45%; }
+.objeto--roseta   { --ow: 13; --oh: 25; --r: 0deg; --pivote: 50% 26%; --fx: 50%; --fy: 0%; left: calc(50% - max(22px, var(--uo) * 6.5)); top: calc(var(--u) * 108); --lx: 50%; --ly: 100%; --ltx: -50%; --lty: -35%; }
+.objeto--copia    { --ow: 23.5; --oh: 18.2; --r: -5deg; --pivote: 50% 6%; --fx: 100%; --fy: 0%; right: calc(var(--u) * -1.5); top: calc(var(--u) * 108.8); --lx: 100%; --ly: 100%; --ltx: -100%; --lty: -45%; }
+
+/* ---- A dos lados (escritorio) y compacta (móvil en horizontal): los objetos asoman por los costados ---- */
+@media (min-width: 900px) and (min-aspect-ratio: 5/4), (orientation: landscape) and (max-height: 540px) and (max-width: 1023px) {
+  .tocador { --pt: 1; --pr: 20; --pb: 1; --pl: 22.5; }
+  .objeto--polaroid { --ow: 21; --oh: 33.4; --r: 7deg; --pivote: 6% 50%; --fx: 0%; --fy: 0%; left: calc(var(--u) * 85); right: auto; top: calc(var(--u) * 4); bottom: auto; --lx: 4%; --ly: 100%; --ltx: 0%; --lty: 16px; }
+  .objeto--copia    { --ow: 25; --oh: 19.4; --r: -6deg; --pivote: 6% 50%; --fx: 0%; --fy: 0%; left: calc(var(--u) * 83.6); right: auto; top: calc(var(--u) * 83); --lx: 6%; --ly: 100%; --ltx: 0%; --lty: 12px; }
+  .objeto--roseta   { --ow: 17; --oh: 34; --r: -3deg; --pivote: 50% 25%; --fx: 100%; --fy: 0%; left: auto; right: calc(100% - var(--u) * 6.5); top: calc(var(--u) * 10); --lx: 96%; --ly: 100%; --ltx: -100%; --lty: 6px; }
+  .objeto--nota     { --ow: 19; --oh: 17; --r: -7deg; --pivote: 92% 50%; --fx: 100%; --fy: 0%; left: auto; right: calc(100% - var(--u) * 5.5); top: calc(var(--u) * 56); bottom: auto; --lx: 96%; --ly: 100%; --ltx: -100%; --lty: 14px; }
+  .objeto--tarjeta  { --ow: 27; --oh: 16.5; --r: 5deg; --pivote: 90% 50%; --fx: 100%; --fy: 0%; left: auto; right: calc(100% - var(--u) * 6); top: calc(var(--u) * 92); --lx: 96%; --ly: 0%; --ltx: -100%; --lty: calc(-100% - 14px); }
+}
+
+/* ---- A dos lados (escritorio y tableta en horizontal) ---- */
 @media (min-width: 900px) and (min-aspect-ratio: 5/4) {
   .hero__escena {
-    --mh: min(calc(100svh - var(--cab-h) - 196px), 780px);
-    --mw: calc(var(--mh) * .75 + 26px);
-    --hueco: clamp(20px, 2.6vw, 48px);
-    --lado: calc((min(100vw - 20px, 1760px) - 2 * var(--gutter) - var(--mw) - 2 * var(--hueco)) / 2);
-    --nombre: clamp(2.6rem, min(calc(var(--lado) / 3.78), 14svh), 11rem);
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto auto;
-    column-gap: var(--hueco);
-    row-gap: clamp(8px, 1.6svh, 18px);
+    --pad: clamp(14px, 2.4cqh, 30px);
+    /* El ancho del tocador sale del alto: el marco y lo que asoma por los lados */
+    --col: min(calc((100cqh - 2 * var(--pad)) / 1.17 * 1.325), calc((min(100cqw, var(--ancho-escena, 1760px)) - 2 * var(--gutter)) * .65));
+    max-width: var(--ancho-escena, 1760px);
+    grid-template-columns: minmax(0, 1fr) var(--col);
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: 'texto tocador';
+    column-gap: clamp(20px, 2.6vw, 48px);
+    padding-block: var(--pad);
   }
-  .hero__titulo { grid-column: 1 / -1; grid-row: 1 / 4; }
-  .hero__nombre--a { grid-column: 1; grid-row: 1; justify-self: end; align-self: end; margin-bottom: .1em; }
-  .hero__nombre--b { grid-column: 3; grid-row: 2; justify-self: start; align-self: start; margin-top: .06em; }
-  .hero__sub { grid-column: 1 / -1; grid-row: 3; }
-  .hero__espejo { grid-column: 2; grid-row: 1 / 3; }
-  /* El marco abraza la foto: nunca queda hueco negro debajo */
-  .hero__espejo .espejo__marco { height: min(100%, calc(var(--mh) + 2 * var(--pad))); }
-  .hero__espejo img { max-width: none; }
-  .sello { grid-column: 3; grid-row: 1; justify-self: start; align-self: start; margin-top: 4svh; width: clamp(96px, 13svh, 136px); }
-  .hero__acciones { grid-column: 1 / -1; grid-row: 4; }
-  .hero__acciones .enlace { flex-basis: auto; margin-left: 10px; }
+  .hero__texto {
+    grid-area: texto; justify-self: stretch; min-width: 0;
+    display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    container-type: inline-size;
+  }
+  .hero__titulo { text-align: left; margin-bottom: 0; }
+  .hero__nombre { font-size: min(calc(100cqw / 3.85), 19cqh, 11rem); line-height: .9; white-space: normal; }
+  .hero__palabra { display: block; }
+  .hero__sub { margin-top: clamp(14px, 2.6cqh, 28px); text-align: left; font-size: clamp(1rem, .9rem + .3vw, 1.2rem); }
+  .hero__acciones { justify-content: flex-start; margin-top: clamp(18px, 3.4cqh, 36px); }
+  .hero__acciones .enlace { display: inline-flex; flex-basis: auto; margin-left: 8px; }
 }
 
-/* ---- Composición compacta (móvil en horizontal) ---- */
+/* ---- Compacta (móvil en horizontal): el tocador a la izquierda ---- */
 @media (orientation: landscape) and (max-height: 540px) and (max-width: 1023px) {
   .hero__escena {
-    --nombre: clamp(2rem, 11svh, 3.6rem);
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto auto;
-    column-gap: clamp(18px, 4vw, 40px);
-    row-gap: 6px;
-    padding-block: 10px 12px;
+    --col: calc((100cqh - 16px) / 1.17 * 1.325);
+    grid-template-columns: var(--col) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: 'tocador texto';
+    column-gap: clamp(14px, 3vw, 32px);
+    padding-block: 8px;
   }
-  .hero__titulo { grid-column: 2; grid-row: 1 / 4; }
-  .hero__nombre--a { grid-row: 1; justify-self: start; align-self: end; }
-  .hero__nombre--b { grid-row: 2; justify-self: start; align-self: start; padding-left: .8em; }
-  .hero__sub { grid-row: 3; justify-self: start; text-align: left; }
-  .hero__espejo { grid-column: 1; grid-row: 1 / 5; }
-  .hero__espejo img { max-width: 40vw; }
-  .sello { grid-column: 2; grid-row: 1; justify-self: end; align-self: start; width: 70px; }
-  .hero__acciones { grid-column: 2; grid-row: 4; justify-self: start; justify-content: flex-start; }
+  .hero__texto {
+    grid-area: texto; justify-self: stretch; min-width: 0;
+    display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 10px;
+  }
+  .hero__titulo { text-align: left; margin-bottom: 0; }
+  .hero__nombre { font-size: min(calc((100cqw - var(--col) - 2 * var(--gutter) - 32px) / 7.15), 15cqh, 3.6rem); }
+  .hero__sub { text-align: left; }
+  .hero__acciones { justify-content: flex-start; }
   .hero__acciones .enlace { display: none; }
+  .objeto__rotulo { opacity: 1; transform: translate(var(--ltx, -50%), var(--lty, 0px)); font-size: .6875rem; padding: .34em .75em .38em; }
+  .objeto__rotulo .sin-movil { display: none; }
+  .objeto__rotulo .solo-movil { display: inline; }
 }
 
 /* =====================================================================
@@ -862,8 +1046,7 @@ html.menu-abierto { overflow: hidden; }
 .pie__rejilla > div > p + p { margin-top: 6px; }
 .pie b { font-weight: 600; }
 
-/* Pantallas muy altas: el retrato tiene tope, así que el conjunto se agrupa en el centro */
-@media (min-width: 900px) and (min-aspect-ratio: 5/4) {
-  .hero { display: grid; grid-template-rows: minmax(0, 1fr); align-items: center; }
-  .hero__escena { height: min(100%, calc(var(--mh) + 330px)); }
+/* Pantallas muy grandes: la escena se abre para que el espejo llene el alto */
+@media (min-width: 1800px) and (min-height: 1000px) and (min-aspect-ratio: 5/4) {
+  .hero__escena { --ancho-escena: 2160px; }
 }
