@@ -118,7 +118,10 @@ html.menu-abierto { overflow: hidden; }
   row-gap: clamp(4px, 1.1cqh, 12px);
   padding-block: clamp(6px, 1.3cqh, 18px) clamp(10px, 2cqh, 24px);
 }
-.hero__texto { display: contents; }
+/* En vertical las piezas se reparten por la rejilla del hero (nombre arriba,
+   tocador en medio, subtítulo y botones abajo): ni el envoltorio del texto
+   ni el del bloque forman caja. */
+.hero__texto, .hero__bloque { display: contents; }
 .hero__titulo { grid-area: nombre; font-weight: 400; text-align: center; margin-bottom: clamp(0px, .9cqh, 10px); }
 /* Su nombre, como un rótulo de luz: las letras se encienden con las bombillas */
 .hero__nombre {
@@ -154,8 +157,10 @@ html.menu-abierto { overflow: hidden; }
   grid-area: tocador; justify-self: stretch; align-self: stretch; min-height: 0;
   container-type: size;
   display: grid; place-items: center;
-  /* Escala de los objetos y lo que sobresalen del marco, en uo: arriba, derecha, abajo, izquierda */
-  --k: 1; --pt: 22; --pr: 1.5; --pb: 21.5; --pl: 1.5;
+  /* Lo que sobresale del marco, en uo: arriba, derecha, abajo, izquierda.
+     Solo cuelga la escarapela por abajo, así que arriba no se reserva nada
+     y el espejo puede crecer y acercarse al nombre. */
+  --k: 1; --pt: 2; --pr: 1.5; --pb: 21.5; --pl: 1.5;
 }
 .tocador__espejo {
   --fh: min(
@@ -347,22 +352,16 @@ html.menu-abierto { overflow: hidden; }
 .roseta__cola--a { left: 14%; transform: rotate(13deg); }
 .roseta__cola--b { right: 14%; transform: rotate(-13deg); }
 
-/* ---- Vertical: dos objetos asoman por arriba del marco y tres por abajo ----
-   (posición del enlace; --fx/--fy anclan el objeto por el lado del marco; --l* colocan el rótulo) */
-.objeto--nota     { --ow: 20; --oh: 15.5; --r: -6deg; --pivote: 74% 92%; --fx: 0%; --fy: 100%; left: calc(var(--u) * -1.5); bottom: calc(100% - var(--u) * 4); --lx: 0%; --ly: 0%; --ltx: 0%; --lty: -55%; }
-.objeto--polaroid { --ow: 16; --oh: 25.5; --r: 7deg; --pivote: 34% 94%; --fx: 100%; --fy: 100%; right: calc(var(--u) * 2.5); bottom: calc(100% - var(--u) * 5.2); --lx: 100%; --ly: 0%; --ltx: -100%; --lty: -55%; }
-.objeto--tarjeta  { --ow: 26; --oh: 15.6; --r: 4deg; --pivote: 50% 6%; --fx: 0%; --fy: 0%; left: calc(var(--u) * -1.5); top: calc(var(--u) * 108.8); --lx: 0%; --ly: 100%; --ltx: 0%; --lty: -45%; }
+/* ---- Vertical: la escarapela cuelga centrada bajo el marco ----
+   (--fx/--fy la anclan al lado del marco; --l* colocan el rótulo) */
 .objeto--roseta   { --ow: 13; --oh: 25; --r: 0deg; --pivote: 50% 26%; --fx: 50%; --fy: 0%; left: calc(50% - max(22px, var(--uo) * 6.5)); top: calc(var(--u) * 108); --lx: 50%; --ly: 100%; --ltx: -50%; --lty: -35%; }
-.objeto--copia    { --ow: 23.5; --oh: 18.2; --r: -5deg; --pivote: 50% 6%; --fx: 100%; --fy: 0%; right: calc(var(--u) * -1.5); top: calc(var(--u) * 108.8); --lx: 100%; --ly: 100%; --ltx: -100%; --lty: -45%; }
 
 /* ---- A dos lados (escritorio) y compacta (móvil en horizontal): los objetos asoman por los costados ---- */
 @media (min-width: 900px) and (min-aspect-ratio: 5/4), (orientation: landscape) and (max-height: 540px) and (max-width: 1023px) {
-  .tocador { --pt: 1; --pr: 20; --pb: 1; --pl: 22.5; }
-  .objeto--polaroid { --ow: 21; --oh: 33.4; --r: 7deg; --pivote: 6% 50%; --fx: 0%; --fy: 0%; left: calc(var(--u) * 85); right: auto; top: calc(var(--u) * 4); bottom: auto; --lx: 4%; --ly: 100%; --ltx: 0%; --lty: 16px; }
-  .objeto--copia    { --ow: 25; --oh: 19.4; --r: -6deg; --pivote: 6% 50%; --fx: 0%; --fy: 0%; left: calc(var(--u) * 83.6); right: auto; top: calc(var(--u) * 83); --lx: 6%; --ly: 100%; --ltx: 0%; --lty: 12px; }
+  /* Solo cuelga la escarapela por la izquierda: el margen derecho ya no
+     reserva sitio para objetos, y el izquierdo solo el que ella ocupa. */
+  .tocador { --pt: 1; --pr: 1.5; --pb: 1; --pl: 11; }
   .objeto--roseta   { --ow: 17; --oh: 34; --r: -3deg; --pivote: 50% 25%; --fx: 100%; --fy: 0%; left: auto; right: calc(100% - var(--u) * 6.5); top: calc(var(--u) * 10); --lx: 96%; --ly: 100%; --ltx: -100%; --lty: 6px; }
-  .objeto--nota     { --ow: 19; --oh: 17; --r: -7deg; --pivote: 92% 50%; --fx: 100%; --fy: 0%; left: auto; right: calc(100% - var(--u) * 5.5); top: calc(var(--u) * 56); bottom: auto; --lx: 96%; --ly: 100%; --ltx: -100%; --lty: 14px; }
-  .objeto--tarjeta  { --ow: 27; --oh: 16.5; --r: 5deg; --pivote: 90% 50%; --fx: 100%; --fy: 0%; left: auto; right: calc(100% - var(--u) * 6); top: calc(var(--u) * 92); --lx: 96%; --ly: 0%; --ltx: -100%; --lty: calc(-100% - 14px); }
 }
 
 /* ---- A dos lados (escritorio y tableta en horizontal) ---- */
@@ -370,19 +369,44 @@ html.menu-abierto { overflow: hidden; }
   .hero__escena {
     --pad: clamp(14px, 2.4cqh, 30px);
     /* El ancho del tocador sale del alto: el marco y lo que asoma por los lados */
-    --col: min(calc((100cqh - 2 * var(--pad)) / 1.17 * 1.325), calc((min(100cqw, var(--ancho-escena, 1760px)) - 2 * var(--gutter)) * .65));
+    --col: min(calc((100cqh - 2 * var(--pad)) / 1.17 * 1.2), calc((min(100cqw, var(--ancho-escena, 1760px)) - 2 * var(--gutter)) * .56));
     max-width: var(--ancho-escena, 1760px);
     grid-template-columns: minmax(0, 1fr) var(--col);
     grid-template-rows: minmax(0, 1fr);
     grid-template-areas: 'texto tocador';
-    column-gap: clamp(20px, 2.6vw, 48px);
+    column-gap: clamp(16px, 2vw, 32px);
     padding-block: var(--pad);
+    /* El sobrante del espejo (su tamaño lo manda el alto) se compensa aquí,
+       para que la escena quede ópticamente centrada en la ventana. */
+    padding-left: clamp(16px, 5vw, 96px);
   }
+  /* El texto es un bloque en bandera izquierda, arrimado al espejo: se
+     alinea como conjunto, nunca cada línea por su cuenta (eso descolocaba
+     el subtítulo y los botones contra el margen derecho). */
+  /* La columna conserva su ancho (el nombre se dimensiona en cqw y no puede
+     depender de su propio contenido). El bloque de texto se arrima al
+     espejo empujándose con un margen izquierdo automático, y todo dentro
+     sigue en bandera izquierda. */
   .hero__texto {
     grid-area: texto; justify-self: stretch; min-width: 0;
-    display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    display: flex; flex-direction: column; justify-content: center;
+    align-items: stretch;
     container-type: inline-size;
   }
+  /* El bloque se mueve como una pieza: su ancho lo fija el nombre y se
+     arrima al espejo con margin-left:auto. Dentro, todo en bandera
+     izquierda, como estaba. */
+  .hero__bloque {
+    width: max-content; max-width: 100%;
+    margin-left: auto;
+    display: flex; flex-direction: column; align-items: flex-start;
+  }
+  /* El espejo se queda corto respecto a su columna porque su tamaño lo manda
+     el alto: se arrima al texto y el sobrante queda contra el borde. */
+  .tocador { justify-items: start; }
+  /* El bloque entero se arrima al espejo, pero NUNCA se estrecha: el nombre
+     manda su propio ancho y no puede partirse ni dejar letras huérfanas. */
+  .hero__texto > * { width: max-content; max-width: 100%; }
   .hero__titulo { text-align: left; margin-bottom: 0; }
   .hero__nombre { font-size: min(calc(100cqw / 3.85), 19cqh, 11rem); line-height: .9; white-space: normal; }
   .hero__palabra { display: block; }
