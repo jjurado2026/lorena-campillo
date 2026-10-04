@@ -1,10 +1,10 @@
-# Lorena Campillo Peluquería — Propuesta de homepage (v4 «Luz de espejo»)
+# Lorena Campillo Peluquería — Propuesta de homepage (v5 «Luz de espejo»)
 
 Prototipo de homepage para **Lorena Campillo Peluquería**, peluquería boutique en el barrio de Simancas (San Blas-Canillejas, Madrid), galardonada con seis premios nacionales e internacionales.
 
 **El problema que resuelve:** en su web actual, lo que decide una visita a la peluquería —dónde está, cuándo abre, cómo pedir cita— no aparece en la home de escritorio y en el móvil está al final, a unas cinco pantallas de scroll. No hay forma de pedir cita salvo llamar, sus fotos de trabajos están escondidas en páginas interiores y cuatro de sus cinco páginas se titulan «My Site 3».
 
-**Dirección estética: «Luz de espejo».** Su salón es una pared de espejos de marco negro con luz LED detrás. La página se enciende como ellos: el hero pone su retrato **dentro de un espejo retroiluminado, entre su nombre** («Lorena · retrato · Campillo»), la reserva se apoya sobre la foto de sus espejos, el salón es una pared de espejos que se encienden al llegar y la trayectoria avanza con un hilo de oro. Su negro y su blanco; el oro de sus medallas para los premios. **Italiana** en los titulares y **Onest** en el texto.
+**Dirección estética: «Luz de espejo».** Su salón es una pared de espejos de marco negro con luz LED detrás. La página se enciende como ellos: el hero pone su retrato **en un espejo de camerino con bombillas**, con fotos y notas metidas en el marco (un trabajo, el salón, los seis premios, una tarjeta de cita, una pregunta) que llevan a cada sección, la reserva se apoya sobre la foto de sus espejos, el salón es una pared de espejos que se encienden al llegar y la trayectoria avanza con un hilo de oro. Su negro y su blanco; el oro de sus medallas para los premios. **Italiana** en los titulares y **Onest** en el texto.
 
 ## Fotos, tal cual
 - **Hero:** la foto de su web inicial (Lorena con sus medallas), el mismo archivo (SHA-256 idéntico al de Wix), sin recortes ni filtros. El marco y la luz están fuera de la foto.
@@ -21,11 +21,11 @@ Prototipo de homepage para **Lorena Campillo Peluquería**, peluquería boutique
 
 ## Movimiento
 Solo `transform` y `opacity`.
-- **Hero (una vez):** el LED del espejo parpadea y se enciende, aparece el retrato y las letras del nombre suben desde el espejo hacia fuera. Al hacer scroll, el nombre se abre y el sello de los seis premios gira
+- **Hero:** las bombillas del espejo se encienden una a una y los objetos del marco se balancean al pasar el cursor
 - **Titulares:** suben palabra a palabra al entrar
-- **Botones:** la tinta crece desde donde entra el cursor y el texto se invierte a su paso; el texto rueda; el icono hace su gesto (el teléfono suena, el calendario se abre); los principales siguen al cursor como un imán
+- **Botones:** solo se colorea el que está bajo el cursor (el principal, en reposo); la tinta crece desde donde entra el cursor y el texto se invierte a su paso; el texto rueda; el icono hace su gesto (el teléfono suena, el calendario se abre); los principales siguen al cursor como un imán
 - **Servicios:** luz que barre la vitrina al cambiar; cada pictograma hace su gesto (la tijera corta, el secador sopla)
-- **Salón:** los espejos se encienden uno a uno y las fotos se desplazan dentro del marco; la frase se ilumina palabra a palabra al leerla
+- **Salón:** los espejos se encienden uno a uno y las fotos se desplazan dentro del marco; al pasar el cursor, el espejo se gira hacia ti, se le enciende el LED y un reflejo cruza el cristal; la frase se ilumina palabra a palabra al leerla
 - **Trayectoria:** el hilo de oro avanza con la lectura; cada medalla se enciende y el logo gira como una moneda
 - **Preguntas:** las burbujas llegan con el indicador de «escribiendo»
 - Con `prefers-reduced-motion` o `?ss`: cero animaciones, todo visible
