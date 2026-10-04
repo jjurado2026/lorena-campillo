@@ -77,10 +77,38 @@ html.js:not(.quieto) .gesto .picto--bigote path { animation: bigote .7s var(--e-
 /* ---------- 3 · Cita ---------- */
 @keyframes linea-nueva { from { opacity: .15; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @keyframes sellar { from { opacity: 0; transform: rotate(-22deg) scale(1.5); } to { opacity: 1; transform: rotate(-8deg) scale(1); } }
-@keyframes latido { 0%, 100% { transform: translate(var(--mx), var(--my)) scale(1); } 40% { transform: translate(var(--mx), var(--my)) scale(1.045); } }
+/* El latido usa la propiedad scale: no pisa el transform del botón (imán y pulsación) */
+@keyframes latido { 0%, 100% { scale: 1; } 40% { scale: 1.045; } }
+@keyframes paso-hecho { from { transform: scale(.6); } to { transform: none; } }
 html.js:not(.quieto) .ticket__lista dd.cambia { animation: linea-nueva .4s var(--e-out); }
 html.js:not(.quieto) .reserva.lista .ticket__sello { animation: sellar .55s var(--e-muelle) both; }
 html.js:not(.quieto) .reserva.recien-lista [data-llamar] { animation: latido .7s var(--e-out) .35s; }
+/* Al elegir: la tinta llena la pieza o el día desde donde se toca, el visto salta y el número del paso se rellena.
+   La tinta entra despacio y se retira deprisa. */
+html.js:not(.quieto) .reserva__progreso span { transition: transform .8s var(--e-out); }
+html.js:not(.quieto) .pieza__cara, html.js:not(.quieto) .dia__cara { transition: transform .45s var(--e-muelle); }
+html.js:not(.quieto) .pieza__cara::before, html.js:not(.quieto) .dia__cara::before { transition: transform .4s var(--e-out); }
+html.js:not(.quieto) .pieza input:checked + .pieza__cara::before, html.js:not(.quieto) .dia input:checked + .dia__cara::before { transition-duration: .65s; }
+html.js:not(.quieto) .pieza__ok { transition: opacity .2s var(--e-out), transform .5s var(--e-muelle); }
+html.js:not(.quieto) .pieza input:checked + .pieza__cara .pieza__ok { transition-delay: .14s; }
+html.js:not(.quieto) .dia__cara::after { transition: transform .5s var(--e-out); }
+html.js:not(.quieto) .dia input:checked + .dia__cara::after { transition-delay: .18s; }
+html.js:not(.quieto) .segmento__pulgar { transition: transform .5s var(--e-muelle), opacity .25s var(--e-out); }
+html.js:not(.quieto) .segmento__op span { transition: transform .3s var(--e-muelle); }
+html.js:not(.quieto) .campo span { transition: transform .3s var(--e-out); }
+html.js:not(.quieto) .paso:has(input:checked) .paso__n,
+html.js:not(.quieto) .paso:has(input[name="nombre"]:not(:placeholder-shown)) .paso__n { animation: paso-hecho .55s var(--e-muelle); }
+/* Al pasar el cursor por un servicio, su pictograma hace el gesto */
+@media (hover: hover) {
+  html.js:not(.quieto) .pieza:hover .picto--tijera .p-a { animation: tijera-a .62s var(--e-out); }
+  html.js:not(.quieto) .pieza:hover .picto--tijera .p-b { animation: tijera-b .62s var(--e-out); }
+  html.js:not(.quieto) .pieza:hover .picto--color .p-brocha { animation: brocha .7s var(--e-muelle); }
+  html.js:not(.quieto) .pieza:hover .picto--secador .p-aire { animation: aire .45s var(--e-out) 2; }
+  html.js:not(.quieto) .pieza:hover .picto--gota .p-gota { animation: gota .6s var(--e-muelle); }
+  html.js:not(.quieto) .pieza:hover .picto--gota .p-destello { animation: chispa .6s var(--e-out); }
+  html.js:not(.quieto) .pieza:hover .picto--carmin .p-barra { animation: barra .6s var(--e-muelle); }
+  html.js:not(.quieto) .pieza:hover .picto--bigote path { animation: bigote .7s var(--e-out); }
+}
 
 /* ---------- 4 · El salón: los espejos se encienden ---------- */
 html.js:not(.quieto) .espejo--pared .espejo__marco::before { opacity: 0; }

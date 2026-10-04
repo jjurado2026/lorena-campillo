@@ -438,7 +438,7 @@
     const rango = franja ? franja.parentElement.querySelector('small').textContent : '';
     linea('servicio', v.servicio.length ? v.servicio.join(', ') : 'Elige uno o varios', !v.servicio.length);
     linea('dia', v.dia || 'Sin elegir', !v.dia);
-    linea('franja', v.franja ? `${v.franja} (${rango})` : 'Sin elegir', !v.franja);
+    linea('franja', v.franja ? `${v.franja} (${rango.replace(/ /g, '\u00a0')})` : 'Sin elegir', !v.franja); // el horario no se parte
     linea('nombre', v.nombre || 'Sin escribir', !v.nombre);
     pintarHoja();
 
@@ -476,6 +476,16 @@
     });
     form.addEventListener('input', e => { if (e.target.matches('input[type="text"], input[type="tel"]')) pintarResguardo(); });
     form.addEventListener('submit', e => e.preventDefault());
+
+    /* La tinta de cada servicio y cada día nace donde se toca (con teclado, desde el centro) */
+    form.addEventListener('pointerdown', e => {
+      const opcion = e.target.closest('.pieza, .dia');
+      const cara = opcion && $('.pieza__cara, .dia__cara', opcion);
+      if (!cara) return;
+      const r = cara.getBoundingClientRect();
+      cara.style.setProperty('--rx', `${((e.clientX - r.left) / r.width * 100).toFixed(1)}%`);
+      cara.style.setProperty('--ry', `${((e.clientY - r.top) / r.height * 100).toFixed(1)}%`);
+    });
 
     /* Sin servicio y día, el email no sale vacío: se avisa y se lleva al hueco */
     botonEmail.addEventListener('click', e => {
