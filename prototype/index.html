@@ -13,6 +13,18 @@
 <meta property="og:image" content="https://jjurado2026.github.io/lorena-campillo/assets/img/lorena-premios.jpg">
 
 <script>
+  /* La propuesta se ve 10 días desde su envío (5 de octubre de 2026): desde el 15 de octubre a las
+     00:00 de Madrid, el aviso de caducada. En local (file://) no caduca, para poder seguir
+     generando capturas; ?caducada lo simula. */
+  (function () {
+    var fin = Date.UTC(2026, 9, 14, 22, 0);
+    if (/[?&]caducada\b/.test(location.search) || (location.protocol !== 'file:' && Date.now() >= fin)) {
+      document.documentElement.style.display = 'none';
+      location.replace('caducada.html');
+    }
+  })();
+</script>
+<script>
   /* Antes de pintar: movimiento solo con JavaScript y si nadie ha pedido quietud */
   (function (d) {
     var captura = /[?&]ss\b/.test(location.search);
