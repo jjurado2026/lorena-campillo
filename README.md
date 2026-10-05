@@ -4,7 +4,7 @@ Prototipo de homepage para **Lorena Campillo Peluquería**, peluquería boutique
 
 **El problema que resuelve:** en su web actual, lo que decide una visita a la peluquería —dónde está, cuándo abre, cómo pedir cita— no aparece en la home de escritorio y en el móvil está al final, a unas cinco pantallas de scroll. No hay forma de pedir cita salvo llamar, sus fotos de trabajos están escondidas en páginas interiores y cuatro de sus cinco páginas se titulan «My Site 3».
 
-**Dirección estética: «Luz de espejo».** Su salón es una pared de espejos de marco negro con luz LED detrás. La página se enciende como ellos: el hero pone su retrato **en un espejo de camerino con bombillas**, con fotos y notas metidas en el marco (un trabajo, el salón, los seis premios, una tarjeta de cita, una pregunta) que llevan a cada sección, la reserva se apoya sobre la foto de sus espejos, el salón es una pared de espejos que se encienden al llegar y la trayectoria avanza con un hilo de oro. Su negro y su blanco; el oro de sus medallas para los premios. **Italiana** en los titulares y **Onest** en el texto.
+**Dirección estética: «Luz de espejo».** Su salón es una pared de espejos de marco negro con luz LED detrás. La página se enciende como ellos: el hero pone su retrato **en un espejo de camerino con bombillas**, del que cuelga la escarapela de sus seis premios (lleva a la trayectoria), la reserva se apoya sobre la foto de sus espejos, el salón es una pared de espejos que se encienden al llegar y la trayectoria avanza con un hilo de oro. Su negro y su blanco; el oro de sus medallas para los premios. **Italiana** en los titulares y **Onest** en el texto.
 
 ## Fotos, tal cual
 - **Hero:** la foto de su web inicial (Lorena con sus medallas), el mismo archivo (SHA-256 idéntico al de Wix), sin recortes ni filtros. El marco y la luz están fuera de la foto.
@@ -21,7 +21,7 @@ Prototipo de homepage para **Lorena Campillo Peluquería**, peluquería boutique
 
 ## Movimiento
 Solo `transform` y `opacity`.
-- **Hero:** las bombillas del espejo se encienden una a una y los objetos del marco se balancean al pasar el cursor
+- **Hero:** las bombillas del espejo se encienden una a una y la escarapela se balancea al pasar el cursor
 - **Titulares:** suben palabra a palabra al entrar
 - **Botones:** solo se colorea el que está bajo el cursor (el principal, en reposo); la tinta crece desde donde entra el cursor y el texto se invierte a su paso; el texto rueda; el icono hace su gesto (el teléfono suena, el calendario se abre); los principales siguen al cursor como un imán
 - **Servicios:** luz que barre la vitrina al cambiar; cada pictograma hace su gesto (la tijera corta, el secador sopla)
