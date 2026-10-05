@@ -384,14 +384,15 @@ html.menu-abierto { overflow: hidden; }
   .hero__texto {
     grid-area: texto; justify-self: stretch; min-width: 0;
     display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-    /* Un poco de aire por la izquierda: el texto no se pega al borde */
-    padding-left: clamp(8px, 2.4cqw, 44px);
+    /* Aire por la izquierda: el texto no se pega al borde de la ventana */
+    padding-left: clamp(16px, 4.6cqw, 84px);
     container-type: inline-size;
   }
   .hero__titulo { text-align: left; margin-bottom: 0; }
   .hero__nombre { font-size: min(calc(100cqw / 3.85), 19cqh, 11rem); line-height: .9; white-space: normal; }
   .hero__palabra { display: block; }
-  .hero__sub { margin-top: clamp(14px, 2.6cqh, 28px); text-align: left; font-size: clamp(1rem, .9rem + .3vw, 1.2rem); }
+  /* El subtítulo es una sola frase: no se parte dejando «Madrid» solo. */
+  .hero__sub { margin-top: clamp(14px, 2.6cqh, 28px); text-align: left; font-size: clamp(1rem, .9rem + .3vw, 1.2rem); white-space: nowrap; }
   .hero__acciones { justify-content: flex-start; margin-top: clamp(18px, 3.4cqh, 36px); }
   .hero__acciones .enlace { display: inline-flex; flex-basis: auto; margin-left: 8px; }
 }
