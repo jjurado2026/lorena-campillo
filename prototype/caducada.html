@@ -64,24 +64,6 @@
   .aviso__mas a:active { opacity: .7; }
   .aviso__frases { display: grid; gap: .5em; }
 
-  /* El botón: la luz crece desde el centro al pasar el cursor */
-  .boton {
-    position: relative; isolation: isolate; overflow: hidden;
-    display: inline-flex; align-items: center; gap: .6em;
-    min-height: 54px; padding: 0 1.6em; border-radius: 999px;
-    background: var(--blanco); color: var(--negro); text-decoration: none;
-    font-weight: 600; font-size: 1rem; line-height: 1;
-    transition: transform .6s var(--e-muelle);
-  }
-  .boton::before {
-    content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
-    background: var(--oro); transform: scaleX(0); transform-origin: left;
-    transition: transform .55s var(--e-out);
-  }
-  .boton svg { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .boton:hover::before, .boton:focus-visible::before { transform: scaleX(1); }
-  .boton:hover { transform: translateY(-2px); }
-  .boton:active { transform: scale(.96); transition-duration: .14s; }
 
   /* La home entera, dentro de un espejo con su LED */
   .espejo { justify-self: center; display: grid; gap: 16px; justify-items: center; margin: 0; }
@@ -97,7 +79,6 @@
     display: block; width: min(300px, 70vw); height: var(--alto);
     overflow: hidden; background: #111;
   }
-  .espejo figcaption { font-size: .875rem; color: var(--humo-claro); text-align: center; }
 
   @media (min-width: 900px) {
     .aviso { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(48px, 6vw, 96px); }
@@ -133,10 +114,6 @@
         <h1>No puedes ver esta página porque han pasado más de <span class="num">10</span> días desde su envío.</h1>
         <p class="aviso__mas">Si sigues con interés, escríbeme a <a href="mailto:jjuradogarciadelrio@gmail.com?subject=Propuesta%20web%20Lorena%20Campillo">jjuradogarciadelrio<wbr>@gmail.com</a>.</p>
       </div>
-      <a class="boton" href="mailto:jjuradogarciadelrio@gmail.com?subject=Propuesta%20web%20Lorena%20Campillo">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>
-        Escribir un email
-      </a>
     </div>
 
     <figure class="espejo">
@@ -145,7 +122,6 @@
           <img src="assets/img/home-entera.jpg" width="576" height="4071" alt="Miniatura de la home propuesta para Lorena Campillo Peluquería, completa de arriba abajo: el retrato de Lorena en un espejo de camerino, los servicios, la reserva de cita, el salón, la trayectoria, las preguntas frecuentes y la ubicación">
         </span>
       </span>
-      <figcaption>La propuesta de home, entera</figcaption>
     </figure>
   </main>
 </body>
